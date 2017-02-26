@@ -1,7 +1,15 @@
 package experiment;
 
 public class BoardCell {
-	public int row, column;
+	private int row, column;
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
 
 	public BoardCell(int row, int column) {
 		super();

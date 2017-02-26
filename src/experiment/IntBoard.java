@@ -56,6 +56,8 @@ public class IntBoard {
 		
 	}
 	
+	
+	//adds to adjacency map. Checks if key is already in the map
 	private void addToAdjMap(BoardCell key, BoardCell value){
 		if(adjMtx.containsKey(key))
 			adjMtx.get(key).add(value);
@@ -68,11 +70,47 @@ public class IntBoard {
 	}
 	
 	public void calcTargets(BoardCell startCell, int pathLength){
+		targets.clear();
+		visited.clear();
+		calcTargetsRecursion(startCell, pathLength);
 	
 	}
 	
+	private void calcTargetsRecursion(BoardCell currentCell, int pathLength){
+		
+		for(BoardCell option: adjMtx.get(currentCell)){
+			boolean didVisit = false;
+			
+			if(!visited.isEmpty()){
+				
+				for(BoardCell past:visited){
+					if(past.equals(option))didVisit = true;
+				}
+			}
+			if(!didVisit){
+				//visited.add(currentCell);
+				if(pathLength<2) {
+					targets.add(option);
+				}
+				else{
+					visited.add(currentCell);
+					calcTargetsRecursion(option, pathLength -1);
+					visited.remove(currentCell);
+				}
+				//visited.remove(currentCell);
+					
+			}
+			
+		}
+		
+		
+				
+	}
+	
+	
+	
 	public Set<BoardCell> getTargets(){
-		return null;
+		return targets;
 	}
 	public Set<BoardCell> getAdjList(BoardCell cell){
 		return adjMtx.get(cell);
