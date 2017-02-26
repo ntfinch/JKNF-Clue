@@ -28,6 +28,8 @@ public class IntBoard {
 		
 	}
 	
+	
+	//Calculate map of valid adjacent positions
 	private void calcAdjacencies(){
 		BoardCell boardKey;
 		BoardCell boardValue;
@@ -70,35 +72,35 @@ public class IntBoard {
 	}
 	
 	public void calcTargets(BoardCell startCell, int pathLength){
+		//Reset variables and calculated target spots
 		targets.clear();
 		visited.clear();
 		calcTargetsRecursion(startCell, pathLength);
 	
 	}
 	
+	//Find all the targets 
 	private void calcTargetsRecursion(BoardCell currentCell, int pathLength){
-		
 		for(BoardCell option: adjMtx.get(currentCell)){
+			//Check if the option was a past position
 			boolean didVisit = false;
-			
 			if(!visited.isEmpty()){
-				
 				for(BoardCell past:visited){
 					if(past.equals(option))didVisit = true;
 				}
 			}
+			
+			//Do something with object if it was not a past position
 			if(!didVisit){
-				//visited.add(currentCell);
 				if(pathLength<2) {
-					targets.add(option);
+					targets.add(option); // add if it number of steps has been met. 
 				}
 				else{
+					//keep going along path if still have more steps
 					visited.add(currentCell);
 					calcTargetsRecursion(option, pathLength -1);
 					visited.remove(currentCell);
-				}
-				//visited.remove(currentCell);
-					
+				}	
 			}
 			
 		}
