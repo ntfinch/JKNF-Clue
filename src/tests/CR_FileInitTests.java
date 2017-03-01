@@ -104,6 +104,8 @@ public class CR_FileInitTests {
 	public void testRoomInitials() {
 		// Test first cell in room
 		assertEquals('C', board.getCellAt(0, 0).getInitial());
+		
+		System.out.println(board.getCellAt(4, 8).getInitial());
 		assertEquals('R', board.getCellAt(4, 8).getInitial());
 		assertEquals('B', board.getCellAt(9, 0).getInitial());
 		// Test last cell in room
