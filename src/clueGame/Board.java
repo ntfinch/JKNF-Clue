@@ -9,6 +9,9 @@ import java.util.Scanner;
 import clueGame.BoardCell;
 
 public class Board {
+	//HELLO   JORDAN
+	
+	
 		// variable used for singleton pattern
 		private static Board theInstance = new Board();
 		// ctor is private to ensure only one can be created
