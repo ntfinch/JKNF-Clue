@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import clueGame.BoardCell;
 
@@ -21,7 +22,8 @@ public class Board {
 		private final int MAX_BOAR_SIZE = 50;
 		private BoardCell[][] grid;
 		private int numRows,numCols;
-		Map<Character, String> legendMap;
+		private Map<Character, String> legendMap;
+		private Set<BoardCell> adjList;
 		
 		// this method returns the only Board
 		public static Board getInstance() {
@@ -193,5 +195,16 @@ public class Board {
 		}
 		public BoardCell getCellAt(int x, int y){
 			return grid[y][x];
+		}
+		public Set<BoardCell> getAdjList(int i, int j) {
+			return null;
+		}
+		public void calcTargets(int i, int j, int k) {
+			// TODO Auto-generated method stub
+			
+		}
+		public Set<BoardCell> getTargets() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 }
