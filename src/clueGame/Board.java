@@ -102,6 +102,83 @@ public class Board {
 			
 			
 		}
+		
+		public void loadRoomConfig() throws BadConfigFormatException{
+			//Create Legend
+			FileReader reader = null;
+			try {
+				reader = new FileReader(legend);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Scanner in = new Scanner(reader);
+			legendMap = new HashMap<Character, String>();
+			while(in.hasNextLine()){
+				String line = in.nextLine();
+				int tracker = 3;
+				while(line.charAt(tracker)!=',') tracker++;
+				legendMap.put(line.charAt(0), line.substring(3,tracker));
+				System.out.println(line.substring(tracker+2));
+				if(!line.substring(tracker+2).equals("Card")&&!line.substring(tracker+2).equals("Other"))
+					throw new BadConfigFormatException();
+			}
+		}
+		public void loadBoardConfig()throws BadConfigFormatException{
+			int numColsPast = -1;
+			FileReader reader = null;
+			try {
+				reader = new FileReader(layout);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			grid = new BoardCell[MAX_BOAR_SIZE][MAX_BOAR_SIZE];
+			Scanner in = new Scanner(reader);
+			numRows=0;
+			String line="";
+			while(in.hasNextLine()){
+				line = in.nextLine();
+				numCols = 0;
+				char last = ',';
+				for(int i = 0; i<line.length();i++){
+					if(last == ','){
+						if(!legendMap.containsKey(line.charAt(i)))throw new BadConfigFormatException();
+						grid[numCols][numRows] = new BoardCell(numCols,numRows,line.charAt(i));
+						numCols++;
+					}
+					else if(line.charAt(i)!=','){
+						System.out.println("did it");
+						if(grid[numCols-1][numRows]!=null){
+							switch(line.charAt(i)){
+							case 'D':
+								grid[numCols-1][numRows].setToDoorway(DoorDirection.DOWN);
+								break;
+							case 'U':
+								grid[numCols-1][numRows].setToDoorway(DoorDirection.UP);
+								break;
+							case 'R':
+								grid[numCols-1][numRows].setToDoorway(DoorDirection.RIGHT);
+								break;
+							case 'L':
+								grid[numCols-1][numRows].setToDoorway(DoorDirection.LEFT);
+								break;
+							default:
+								grid[numCols-1][numRows].setToDoorway(DoorDirection.NONE);
+								break;
+							}
+						}
+						
+					}
+					last = line.charAt(i);
+				}
+				if(numColsPast!=-1 && numColsPast!= numCols)
+					throw new BadConfigFormatException();
+				numColsPast= numCols;
+				numRows++;
+				
+			}
+		}
 		public Map<Character, String> getLegend(){
 			return legendMap;
 		}
