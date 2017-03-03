@@ -16,5 +16,5 @@ public class BoardCell {
 		this.row = row;
 		this.column = column;
 	}
-	
+
 }
