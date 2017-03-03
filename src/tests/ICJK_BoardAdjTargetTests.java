@@ -24,33 +24,37 @@ public class ICJK_BoardAdjTargetTests {
 		// Board is singleton, get the only instance and initialize it		
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("CR_ClueLayout.csv", "CR_ClueLegend.txt");		
+		board.setConfigFiles("ICJK_ClueLayout.csv", "ICJK_legend.txt");			
 		board.initialize();
 	}
 
-	// Ensure that player does not move around within room
-	// These cells are ORANGE on the planning spreadsheet
+	
+	//Parameter Syntax : (row, column)
+	
+	
+	// Enforces how players cannot move inside of rooms
+	// Represented by PURPLE cells on excel sheet
 	@Test
-	public void testAdjacenciesInsideRooms()
+	public void testAdjacenciesWithinRooms()
 	{
 		// Test a corner
-		Set<BoardCell> testList = board.getAdjList(0, 0);
-		assertEquals(0, testList.size());
-		// Test one that has walkway underneath
-		testList = board.getAdjList(4, 0);
-		assertEquals(0, testList.size());
-		// Test one that has walkway above
-		testList = board.getAdjList(15, 20);
-		assertEquals(0, testList.size());
-		// Test one that is in middle of room
-		testList = board.getAdjList(18, 11);
-		assertEquals(0, testList.size());
-		// Test one beside a door
-		testList = board.getAdjList(14, 12);
-		assertEquals(0, testList.size());
-		// Test one in a corner of room
-		testList = board.getAdjList(5, 20);
-		assertEquals(0, testList.size());
+				Set<BoardCell> testList = board.getAdjList(25, 23);
+				assertEquals(0, testList.size());
+				// Test one that has walkway underneath
+				testList = board.getAdjList(6, 22);
+				assertEquals(0, testList.size());
+				// Test one that has walkway above
+				testList = board.getAdjList(14, 8);
+				assertEquals(0, testList.size());
+				// Test one that is in the room
+				testList = board.getAdjList(2, 1);
+				assertEquals(0, testList.size());
+				// Test one beside a door
+				testList = board.getAdjList(13, 19);
+				assertEquals(0, testList.size());
+				// Test one in a corner of room
+				testList = board.getAdjList(22, 14);
+				assertEquals(0, testList.size());
 	}
 
 	// Ensure that the adjacency list from a doorway is only the

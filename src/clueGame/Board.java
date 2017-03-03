@@ -196,7 +196,10 @@ public class Board {
 		public BoardCell getCellAt(int x, int y){
 			return grid[y][x];
 		}
-		public Set<BoardCell> getAdjList(int i, int j) {
+		public Set<BoardCell> getAdjList(int x, int y) {
+			for(int i = 0; i < 4; i++){
+				//if(x - 1 > 0)
+			}
 			return null;
 		}
 		public void calcTargets(int i, int j, int k) {
