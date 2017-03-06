@@ -3,6 +3,7 @@ package clueGame;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -76,7 +77,6 @@ public class Board {
 					grid[numCols][numRows] = new BoardCell(numCols, numRows, line.charAt(i));
 					numCols++;
 				} else if (line.charAt(i) != ',') {
-					System.out.println("did it");
 					if (grid[numCols - 1][numRows] != null) {
 						switch (line.charAt(i)) {
 						case 'D':
@@ -205,7 +205,7 @@ public class Board {
 		for (int i = 0; i < 4; i++) {
 			// if(x - 1 > 0)
 		}
-		return null;
+		return new HashSet<BoardCell>();
 	}
 
 	public void calcTargets(int i, int j, int k) {
@@ -215,6 +215,6 @@ public class Board {
 
 	public Set<BoardCell> getTargets() {
 		// TODO Auto-generated method stub
-		return null;
+		return new HashSet<BoardCell>();
 	}
 }
