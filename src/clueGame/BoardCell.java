@@ -2,9 +2,9 @@ package clueGame;
 
 public class BoardCell {
 	private int row, column;
-	private char initial = ' ';
-	boolean isDoorway = false;
-	boolean isWalkway = false;
+	char initial = ' ';
+	private boolean isDoorway = false;
+	private boolean isWalkway = false;
 	boolean isRoom = false;
 	DoorDirection doorDirection = DoorDirection.NONE;
 
@@ -21,8 +21,9 @@ public class BoardCell {
 		this.row = row;
 		this.column = column;
 		this.initial = myChar;
-		if (myChar == 'W')
+		if (myChar == 'W'){
 			isWalkway = true;
+		}
 		else if (myChar != 'X')
 			isRoom = true;
 
@@ -40,11 +41,11 @@ public class BoardCell {
 	}
 
 	public boolean isWalkway() {
-		return false;
+		return isWalkway;
 	}
 
 	public boolean isRoom() {
-		return false;
+		return isRoom;
 	}
 
 	public DoorDirection getDoorDirection() {

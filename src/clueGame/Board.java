@@ -24,6 +24,8 @@ public class Board {
 	private int numRows, numCols;
 	private Map<Character, String> legendMap;
 	private Set<BoardCell> adjList;
+	private Map<BoardCell, Set<BoardCell>> adjMap= new HashMap<BoardCell, Set<BoardCell>>();
+	
 
 	// this method returns the only Board
 	public static Board getInstance() {
@@ -103,7 +105,100 @@ public class Board {
 			numRows++;
 
 		}
+		BoardCell boardKey;
+		BoardCell boardValue;
+		for (int x = 0; x < numRows; x++) {
+			for (int y = 0; y < numCols; y++) {
+				boardKey = grid[y][x];
+				if(boardKey ==grid[22][14]){
+				
+				}
+				
+				if(boardKey!=null){
+				if(boardKey.isDoorway()){
+					switch (boardKey.getDoorDirection()){
+					case RIGHT:
+						if (x + 1 < numCols) {
+							boardValue = grid[y+1][x];
+							addToAdjMap(boardKey, boardValue);
+						}
+						break;
+					case LEFT:
+						if (x - 1 >= 0) {
+							boardValue = grid[y-1][x];
+							addToAdjMap(boardKey, boardValue);
+						}
+						break;
+					case UP:
+						if (y - 1 >= 0) {
+							boardValue = grid[y][x-1];					
+							addToAdjMap(boardKey, boardValue);
+								
+						}
+						break;
+					case DOWN:
+						if (y + 1 < numRows) {
+							boardValue = grid[y][x+1];
+							addToAdjMap(boardKey, boardValue);
+						}
+						break;
+					case NONE:
+						break;
+					}
+				}
+				else{
+					if (x - 1 >= 0) {
+						boardValue = grid[y][x - 1];
+						if(boardValue.isWalkway()||boardValue.getDoorDirection()==DoorDirection.DOWN)
+							addToAdjMap(boardKey, boardValue);
+					}
+					if (y - 1 >= 0) {
+						boardValue = grid[y - 1][x];					
+						if(boardValue.isWalkway()||boardValue.getDoorDirection()==DoorDirection.RIGHT)
+							addToAdjMap(boardKey, boardValue);
+							
+					}
+					if (x + 1 < numRows) {
+						boardValue = grid[y][x + 1];					
+						if(boardValue.isWalkway()||boardValue.getDoorDirection()==DoorDirection.UP)
+							addToAdjMap(boardKey, boardValue);
+							
+					}
+					if (y + 1 < numCols) {
+						boardValue = grid[y + 1][x];
+						if(boardValue.isWalkway()||boardValue.getDoorDirection()==DoorDirection.LEFT)
+							addToAdjMap(boardKey, boardValue);
+					
+					}
+				}
+				
+					if(!adjMap.containsKey(boardKey)){
+						Set<BoardCell> temp = new HashSet<BoardCell>();
+						adjMap.put(boardKey, temp);
+					}
+				}
+			}
+				
+		}
 
+	}
+
+	private void addToAdjMap(BoardCell boardKey, BoardCell boardValue) {
+		// TODO Auto-generated method stub
+		if(boardValue!=null && boardKey!=null){
+			if(boardKey.isWalkway()|| boardKey.isDoorway()){
+				if(boardValue.isWalkway() || boardValue.isDoorway()){
+					if(adjMap.containsKey(boardKey)){
+						adjMap.get(boardKey).add(boardValue);
+					}
+					else{
+						Set<BoardCell> temp = new HashSet<BoardCell>();
+						temp.add(boardValue);
+						adjMap.put(boardKey, temp);
+					}
+				}
+			}
+		}
 	}
 
 	public void loadRoomConfig() throws BadConfigFormatException {
@@ -202,10 +297,7 @@ public class Board {
 	}
 
 	public Set<BoardCell> getAdjList(int x, int y) {
-		for (int i = 0; i < 4; i++) {
-			// if(x - 1 > 0)
-		}
-		return new HashSet<BoardCell>();
+		return adjMap.get(grid[y][x]);
 	}
 
 	public void calcTargets(int i, int j, int k) {
