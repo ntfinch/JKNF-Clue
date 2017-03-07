@@ -25,6 +25,8 @@ public class Board {
 	private Map<Character, String> legendMap;
 	private Set<BoardCell> adjList;
 	private Map<BoardCell, Set<BoardCell>> adjMap= new HashMap<BoardCell, Set<BoardCell>>();
+	private Set<BoardCell> targets= new HashSet<BoardCell>();
+	private Set<BoardCell> visited= new HashSet<BoardCell>();
 	
 
 	// this method returns the only Board
@@ -302,11 +304,42 @@ public class Board {
 
 	public void calcTargets(int i, int j, int k) {
 		// TODO Auto-generated method stub
-
+		targets.clear();
+		visited.clear();
+		BoardCell startCell = grid[j][i];
+		calcTargetsRecursion(startCell, k);
 	}
+	private void calcTargetsRecursion(BoardCell currentCell, int pathLength){
+		for(BoardCell option : adjMap.get(currentCell)) {
+			// Check if the option was a past position
+			boolean didVisit = false;
+			if (!visited.isEmpty()) {
+				for(BoardCell past: visited) {
+					if (past.equals(option))
+						didVisit = true;
+				}
+			}
+			// Do something with object if it was not a past position
+						if (!didVisit) {
+							if (pathLength < 2|| option.isDoorway()) {
+								targets.add(option); // add if it number of steps has been
+														// met.
+							} else {
+								// keep going along path if still have more steps
+								visited.add(currentCell);
+								calcTargetsRecursion(option, pathLength - 1);
+								visited.remove(currentCell);
+							}
+						}
+
+					}
+
+				}
+	
+	
 
 	public Set<BoardCell> getTargets() {
 		// TODO Auto-generated method stub
-		return new HashSet<BoardCell>();
+		return targets;
 	}
 }

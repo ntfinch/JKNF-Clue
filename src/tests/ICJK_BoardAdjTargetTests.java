@@ -27,7 +27,7 @@ public class ICJK_BoardAdjTargetTests {
 			// Board is singleton, get the only instance and initialize it
 			board = Board.getInstance();
 			// set the file names to use my config files
-			board.setConfigFiles("CR_ClueLayout.csv", "CR_ClueLegend.txt");
+			board.setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt");
 			board.initialize();
 		}
 
@@ -128,7 +128,7 @@ public class ICJK_BoardAdjTargetTests {
 
 			// Test on left edge of board, three walkway pieces
 			testList = board.getAdjList(19, 0);
-			assertTrue(testList.contains(board.getCellAt(21, 0)));
+			assertTrue(testList.contains(board.getCellAt(20, 0)));
 			assertTrue(testList.contains(board.getCellAt(19, 1)));
 			assertEquals(2, testList.size());
 
@@ -181,7 +181,7 @@ public class ICJK_BoardAdjTargetTests {
 
 			board.calcTargets(13, 0, 1);
 			targets = board.getTargets();
-			assertEquals(3, targets.size());
+			assertEquals(2, targets.size());
 			assertTrue(targets.contains(board.getCellAt(13, 1)));
 			assertTrue(targets.contains(board.getCellAt(12, 0)));
 		}
@@ -215,13 +215,14 @@ public class ICJK_BoardAdjTargetTests {
 		public void testTargetsSixSteps() {
 			board.calcTargets(25, 15, 6);
 			Set<BoardCell> targets = board.getTargets();
-			assertEquals(6, targets.size());
+			assertEquals(8, targets.size());
 			assertTrue(targets.contains(board.getCellAt(21, 13)));
 			assertTrue(targets.contains(board.getCellAt(20, 14)));
 			assertTrue(targets.contains(board.getCellAt(19, 15)));
 			assertTrue(targets.contains(board.getCellAt(20, 16)));
 			assertTrue(targets.contains(board.getCellAt(21, 17)));
 			assertTrue(targets.contains(board.getCellAt(23, 16)));
+			assertTrue(targets.contains(board.getCellAt(22, 16)));
 		}
 
 		// Test getting into a room
@@ -248,13 +249,14 @@ public class ICJK_BoardAdjTargetTests {
 		public void testTargetsIntoRoomShortcut() {
 			board.calcTargets(25, 15, 6);
 			Set<BoardCell> targets = board.getTargets();
-			assertEquals(6, targets.size());
+			assertEquals(8, targets.size());
 			assertTrue(targets.contains(board.getCellAt(21, 13)));
 			assertTrue(targets.contains(board.getCellAt(20, 14)));
 			assertTrue(targets.contains(board.getCellAt(19, 15)));
 			assertTrue(targets.contains(board.getCellAt(20, 16)));
 			assertTrue(targets.contains(board.getCellAt(21, 17)));
 			assertTrue(targets.contains(board.getCellAt(23, 16)));
+			assertTrue(targets.contains(board.getCellAt(22, 16)));
 
 		}
 
