@@ -23,11 +23,9 @@ public class Board {
 	private BoardCell[][] grid;
 	private int numRows, numCols;
 	private Map<Character, String> legendMap;
-	private Set<BoardCell> adjList;
-	private Map<BoardCell, Set<BoardCell>> adjMap= new HashMap<BoardCell, Set<BoardCell>>();
-	private Set<BoardCell> targets= new HashSet<BoardCell>();
-	private Set<BoardCell> visited= new HashSet<BoardCell>();
-	
+	private Map<BoardCell, Set<BoardCell>> adjMap = new HashMap<BoardCell, Set<BoardCell>>();
+	private Set<BoardCell> targets = new HashSet<BoardCell>();
+	private Set<BoardCell> visited = new HashSet<BoardCell>();
 
 	// this method returns the only Board
 	public static Board getInstance() {
@@ -59,6 +57,7 @@ public class Board {
 				tracker++;
 			legendMap.put(line.charAt(0), line.substring(3, tracker));
 		}
+		in.close();
 
 		// Create Layout
 		try {
@@ -71,7 +70,6 @@ public class Board {
 		in = new Scanner(reader);
 		numRows = 0;
 		String line = "";
-		int tracker = 0;
 		while (in.hasNextLine()) {
 			line = in.nextLine();
 			numCols = 0;
@@ -107,93 +105,93 @@ public class Board {
 			numRows++;
 
 		}
+		in.close();
+
 		BoardCell boardKey;
 		BoardCell boardValue;
 		for (int x = 0; x < numRows; x++) {
 			for (int y = 0; y < numCols; y++) {
 				boardKey = grid[y][x];
-				if(boardKey ==grid[22][14]){
-				
+				if (boardKey == grid[22][14]) {
+
 				}
-				
-				if(boardKey!=null){
-				if(boardKey.isDoorway()){
-					switch (boardKey.getDoorDirection()){
-					case RIGHT:
-						if (x + 1 < numCols) {
-							boardValue = grid[y+1][x];
-							addToAdjMap(boardKey, boardValue);
+
+				if (boardKey != null) {
+					if (boardKey.isDoorway()) {
+						switch (boardKey.getDoorDirection()) {
+						case RIGHT:
+							if (x + 1 < numCols) {
+								boardValue = grid[y + 1][x];
+								addToAdjMap(boardKey, boardValue);
+							}
+							break;
+						case LEFT:
+							if (x - 1 >= 0) {
+								boardValue = grid[y - 1][x];
+								addToAdjMap(boardKey, boardValue);
+							}
+							break;
+						case UP:
+							if (y - 1 >= 0) {
+								boardValue = grid[y][x - 1];
+								addToAdjMap(boardKey, boardValue);
+
+							}
+							break;
+						case DOWN:
+							if (y + 1 < numRows) {
+								boardValue = grid[y][x + 1];
+								addToAdjMap(boardKey, boardValue);
+							}
+							break;
+						case NONE:
+							break;
 						}
-						break;
-					case LEFT:
+					} else {
 						if (x - 1 >= 0) {
-							boardValue = grid[y-1][x];
-							addToAdjMap(boardKey, boardValue);
+							boardValue = grid[y][x - 1];
+							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.DOWN)
+								addToAdjMap(boardKey, boardValue);
 						}
-						break;
-					case UP:
 						if (y - 1 >= 0) {
-							boardValue = grid[y][x-1];					
-							addToAdjMap(boardKey, boardValue);
-								
+							boardValue = grid[y - 1][x];
+							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.RIGHT)
+								addToAdjMap(boardKey, boardValue);
+
 						}
-						break;
-					case DOWN:
-						if (y + 1 < numRows) {
-							boardValue = grid[y][x+1];
-							addToAdjMap(boardKey, boardValue);
+						if (x + 1 < numRows) {
+							boardValue = grid[y][x + 1];
+							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.UP)
+								addToAdjMap(boardKey, boardValue);
+
 						}
-						break;
-					case NONE:
-						break;
+						if (y + 1 < numCols) {
+							boardValue = grid[y + 1][x];
+							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.LEFT)
+								addToAdjMap(boardKey, boardValue);
+
+						}
 					}
-				}
-				else{
-					if (x - 1 >= 0) {
-						boardValue = grid[y][x - 1];
-						if(boardValue.isWalkway()||boardValue.getDoorDirection()==DoorDirection.DOWN)
-							addToAdjMap(boardKey, boardValue);
-					}
-					if (y - 1 >= 0) {
-						boardValue = grid[y - 1][x];					
-						if(boardValue.isWalkway()||boardValue.getDoorDirection()==DoorDirection.RIGHT)
-							addToAdjMap(boardKey, boardValue);
-							
-					}
-					if (x + 1 < numRows) {
-						boardValue = grid[y][x + 1];					
-						if(boardValue.isWalkway()||boardValue.getDoorDirection()==DoorDirection.UP)
-							addToAdjMap(boardKey, boardValue);
-							
-					}
-					if (y + 1 < numCols) {
-						boardValue = grid[y + 1][x];
-						if(boardValue.isWalkway()||boardValue.getDoorDirection()==DoorDirection.LEFT)
-							addToAdjMap(boardKey, boardValue);
-					
-					}
-				}
-				
-					if(!adjMap.containsKey(boardKey)){
+
+					if (!adjMap.containsKey(boardKey)) {
 						Set<BoardCell> temp = new HashSet<BoardCell>();
 						adjMap.put(boardKey, temp);
 					}
 				}
 			}
-				
+
 		}
 
 	}
 
 	private void addToAdjMap(BoardCell boardKey, BoardCell boardValue) {
 		// TODO Auto-generated method stub
-		if(boardValue!=null && boardKey!=null){
-			if(boardKey.isWalkway()|| boardKey.isDoorway()){
-				if(boardValue.isWalkway() || boardValue.isDoorway()){
-					if(adjMap.containsKey(boardKey)){
+		if (boardValue != null && boardKey != null) {
+			if (boardKey.isWalkway() || boardKey.isDoorway()) {
+				if (boardValue.isWalkway() || boardValue.isDoorway()) {
+					if (adjMap.containsKey(boardKey)) {
 						adjMap.get(boardKey).add(boardValue);
-					}
-					else{
+					} else {
 						Set<BoardCell> temp = new HashSet<BoardCell>();
 						temp.add(boardValue);
 						adjMap.put(boardKey, temp);
@@ -221,9 +219,12 @@ public class Board {
 				tracker++;
 			legendMap.put(line.charAt(0), line.substring(3, tracker));
 			System.out.println(line.substring(tracker + 2));
-			if (!line.substring(tracker + 2).equals("Card") && !line.substring(tracker + 2).equals("Other"))
+			if (!line.substring(tracker + 2).equals("Card") && !line.substring(tracker + 2).equals("Other")) {
+				in.close();
 				throw new BadConfigFormatException();
+			}
 		}
+		in.close();
 	}
 
 	public void loadBoardConfig() throws BadConfigFormatException {
@@ -245,8 +246,10 @@ public class Board {
 			char last = ',';
 			for (int i = 0; i < line.length(); i++) {
 				if (last == ',') {
-					if (!legendMap.containsKey(line.charAt(i)))
+					if (!legendMap.containsKey(line.charAt(i))) {
+						in.close();
 						throw new BadConfigFormatException();
+					}
 					grid[numCols][numRows] = new BoardCell(numCols, numRows, line.charAt(i));
 					numCols++;
 				} else if (line.charAt(i) != ',') {
@@ -274,12 +277,15 @@ public class Board {
 				}
 				last = line.charAt(i);
 			}
-			if (numColsPast != -1 && numColsPast != numCols)
+			if (numColsPast != -1 && numColsPast != numCols) {
+				in.close();
 				throw new BadConfigFormatException();
+			}
 			numColsPast = numCols;
 			numRows++;
 
 		}
+		in.close();
 	}
 
 	public Map<Character, String> getLegend() {
@@ -309,34 +315,33 @@ public class Board {
 		BoardCell startCell = grid[j][i];
 		calcTargetsRecursion(startCell, k);
 	}
-	private void calcTargetsRecursion(BoardCell currentCell, int pathLength){
-		for(BoardCell option : adjMap.get(currentCell)) {
+
+	private void calcTargetsRecursion(BoardCell currentCell, int pathLength) {
+		for (BoardCell option : adjMap.get(currentCell)) {
 			// Check if the option was a past position
 			boolean didVisit = false;
 			if (!visited.isEmpty()) {
-				for(BoardCell past: visited) {
+				for (BoardCell past : visited) {
 					if (past.equals(option))
 						didVisit = true;
 				}
 			}
 			// Do something with object if it was not a past position
-						if (!didVisit) {
-							if (pathLength < 2|| option.isDoorway()) {
-								targets.add(option); // add if it number of steps has been
-														// met.
-							} else {
-								// keep going along path if still have more steps
-								visited.add(currentCell);
-								calcTargetsRecursion(option, pathLength - 1);
-								visited.remove(currentCell);
-							}
-						}
-
-					}
-
+			if (!didVisit) {
+				if (pathLength < 2 || option.isDoorway()) {
+					targets.add(option); // add if it number of steps has been
+											// met.
+				} else {
+					// keep going along path if still have more steps
+					visited.add(currentCell);
+					calcTargetsRecursion(option, pathLength - 1);
+					visited.remove(currentCell);
 				}
-	
-	
+			}
+
+		}
+
+	}
 
 	public Set<BoardCell> getTargets() {
 		// TODO Auto-generated method stub

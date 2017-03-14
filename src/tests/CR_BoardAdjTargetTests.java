@@ -16,7 +16,6 @@ import org.junit.Test;
 
 import clueGame.Board;
 import clueGame.BoardCell;
-import clueGame.DoorDirection;
 
 public class CR_BoardAdjTargetTests {
 	// We make the Board static because we can load it one time and
