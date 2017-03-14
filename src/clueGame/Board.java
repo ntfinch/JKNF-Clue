@@ -39,9 +39,22 @@ public class Board {
 	}
 
 	public void initialize() {
+		try {
+			loadRoomConfig();
+		} catch (BadConfigFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			loadBoardConfig();
+		} catch (BadConfigFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Create Legend
-		FileReader reader = null;
+		/*FileReader reader = null;
 		try {
 			reader = new FileReader(legend);
 		} catch (FileNotFoundException e) {
@@ -57,10 +70,10 @@ public class Board {
 				tracker++;
 			legendMap.put(line.charAt(0), line.substring(3, tracker));
 		}
-		in.close();
+		in.close();*/
 
 		// Create Layout
-		try {
+		/*try {
 			reader = new FileReader(layout);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -105,7 +118,7 @@ public class Board {
 			numRows++;
 
 		}
-		in.close();
+		in.close();*/
 
 		BoardCell boardKey;
 		BoardCell boardValue;
