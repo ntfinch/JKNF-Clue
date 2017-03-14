@@ -1,8 +1,9 @@
 package clueGame;
 
+import java.awt.Color;
+import java.lang.reflect.Field;
 import java.util.List;
 
-import com.sun.prism.paint.Color;
 
 public class Player {
 	private String playerName;
@@ -14,6 +15,17 @@ public class Player {
 
 	public Card disproveSuggestion(Solution suggestion) {
 		return null;
+	}
+	
+	public Color convertColor(String strColor) {
+		Color color;
+		try {
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim());
+			color = (Color)field.get(null);
+		} catch (Exception e) {
+			color = null;
+		}
+		return color;
 	}
 
 //	public String getPlayerName() {

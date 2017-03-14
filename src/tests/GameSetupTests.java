@@ -2,17 +2,20 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.Board;
 
 public class GameSetupTests {
+	private static Board board;
 	
-	
-	@Before
-	public void init() {
-		private static Board board;
+	@BeforeClass
+	public void initTheBoard() {
 		
 		//initialize board
 		// Board is singleton, get the only instance and initialize it
@@ -20,8 +23,6 @@ public class GameSetupTests {
 		// set the file names to use my config files
 		board.setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt");
 		board.initialize();
-		
-		//populate board
 		
 		//populate players
 		
@@ -31,8 +32,28 @@ public class GameSetupTests {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void loadThePeople() throws FileNotFoundException {
+		FileReader reader = new FileReader("TDNFTP_players.txt");
+		Scanner in = new Scanner(reader);
+		String firstLine = "";
+		String lastLine = "";
+		while (in.hasNextLine()) {
+			if (firstLine.isEmpty()) {
+				firstLine = in.nextLine();
+			} else {
+				lastLine = in.nextLine();
+			}
+		}
+		in.close();
+
+		assertEquals("John Doe,Green,0,1", firstLine);
+		assertEquals("Brad Pitt,Blue,5,20", lastLine);
 	}
+	
+	@Test
+	public void loadTheDeck() {}
+	
+	@Test
+	public void dealTheCards() {}
 
 }
