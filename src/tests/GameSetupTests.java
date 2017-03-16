@@ -1,23 +1,26 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sun.prism.paint.Color;
-
 import clueGame.Board;
+import clueGame.ComputerPlayer;
+import clueGame.HumanPlayer;
 import clueGame.Player;
 
 public class GameSetupTests {
     private static Board board;
     
     @BeforeClass
-    public void initTheBoard() {
+    public static void initTheBoard() {
         
         // initialize board
         // Board is singleton, get the only instance and initialize it
@@ -37,28 +40,38 @@ public class GameSetupTests {
     public void loadThePeople() throws FileNotFoundException {
         List<Player> players = board.loadPlayerConfig("TDNFTP_players.txt");
         
+        //Test to make sure first and last players are fully loaded correctly
+        //Test that the other players are loaded in general
+        
         //Test some names
-        assertEquals(players.get(0).getPlayerName(), "John Doe");
-        assertEquals(players.get(2).getPlayerName(), "Brad Pitt");
+        assertEquals("John Doe", players.get(0).getName());
+        assertEquals("Jane Doe", players.get(1).getName());
+        assertEquals("Brad Pitt", players.get(2).getName());
         
         //Test some colors
-        assertEquals(players.get(0).getColor(), Color.GREEN);
-        assertEquals(players.get(2).getColor(), Color.BLUE);
+        assertEquals(Color.GREEN, players.get(0).getColor());
+        assertEquals(Color.BLUE, players.get(2).getColor());
         
         //Test some positions
-        assertEquals(players.get(0).getRow(), 0);
-        assertEquals(players.get(0).getColumn(), 1);
+        assertEquals(0, players.get(0).getRow());
+        assertEquals(1, players.get(0).getColumn());
         
-        assertEquals(players.get(2).getRow(), 5);
-        assertEquals(players.get(2).getColumn(), 20);
+        assertEquals(5, players.get(2).getRow());
+        assertEquals(20, players.get(2).getColumn());
+        
+        //Test people are computers or people
+        assertTrue(players.get(0) instanceof HumanPlayer);
+        assertTrue(players.get(2) instanceof ComputerPlayer);
     }
     
     @Test
     public void loadTheDeck() {
+        fail("Not Yet Implemented");
     }
     
     @Test
     public void dealTheCards() {
+        fail("Not Yet Implemented");
     }
     
 }

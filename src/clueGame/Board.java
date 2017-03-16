@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -285,7 +286,24 @@ public class Board {
         Scanner in = new Scanner(reader);
         while (in.hasNextLine()) {
             String[] split = in.nextLine().split(",");
-            players.add(new Player());
+            Color color = null;
+            switch (split[2]) {
+            case "Green":
+                color = Color.GREEN;
+                break;
+            case "Red":
+                color = Color.RED;
+                break;
+            case "Blue":
+                color = Color.BLUE;
+                break;
+            }
+            if (split[0].equals("Human")) {
+                players.add(new HumanPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4])));
+            } else {
+                players.add(
+                        new ComputerPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4])));
+            }
         }
         in.close();
         

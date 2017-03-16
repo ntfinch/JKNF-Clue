@@ -5,13 +5,20 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 
-public class Player {
-	private String playerName;
+public abstract class Player {
+	private String name;
 	private int row;
-	private int column;
+	private int col;
 	private Color color;
 	private List<Card> myCards;
 	private List<Card> seenCards;
+	
+	public Player(String name, Color color, int row, int col){
+	    this.name = name;
+	    this.color = color;
+	    this.row = row;
+	    this.col = col;
+	}
 
 	public Card disproveSuggestion(Solution suggestion) {
 		return null;
@@ -28,11 +35,11 @@ public class Player {
 		return color;
 	}
 
-	public String getPlayerName() {
-		return playerName;
+	public String getName() {
+		return name;
 	}
 
-//	public void setPlayerName(String playerName) {
+//	public void setName(String playerName) {
 //		this.playerName = playerName;
 //	}
 //
@@ -45,7 +52,7 @@ public class Player {
 //	}
 //
 	public int getColumn() {
-		return column;
+		return col;
 	}
 //
 //	public void setColumn(int column) {
