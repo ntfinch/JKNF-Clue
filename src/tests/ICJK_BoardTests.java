@@ -94,9 +94,7 @@ public class ICJK_BoardTests {
 
 	@Test
 	public void testRoomInitials() {
-
 		assertEquals('M', board.getCellAt(0, 0).getInitial());
-		System.out.println(board.getCellAt(4, 12).getInitial());
 		assertEquals('O', board.getCellAt(4, 12).getInitial());
 		assertEquals('M', board.getCellAt(9, 0).getInitial());
 		assertEquals('K', board.getCellAt(21, 22).getInitial());
