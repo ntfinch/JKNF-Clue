@@ -16,8 +16,9 @@ public class Board {
     // variable used for singleton pattern
     private static Board theInstance;
     // ctor is private to ensure only one can be created
-    private String layout;
-    private String legend;
+    private String layoutLocation;
+    private String legendLocation;
+    private String playerLocation;
     
     private Board() {
         visited = new HashSet<BoardCell>();
@@ -32,7 +33,7 @@ public class Board {
     private Map<BoardCell, Set<BoardCell>> adjMap;
     private Set<BoardCell> targets;
     private Set<BoardCell> visited;
-    private Set<Player> players;
+    private List<Player> players;
     
     // this method returns the only Board
     public static Board getInstance() {
@@ -42,9 +43,10 @@ public class Board {
         return theInstance;
     }
     
-    public void setConfigFiles(String x, String y) {
-        layout = x;
-        legend = y;
+    public void setConfigFiles(String layoutLoc, String legendLoc, String playerLoc) {
+        this.layoutLocation = layoutLoc;
+        this.legendLocation = legendLoc;
+        this.playerLocation = playerLoc;
     }
     
     public void initialize() {
@@ -57,6 +59,13 @@ public class Board {
         try {
             loadBoardConfig();
         } catch (BadConfigFormatException e) {
+            e.printStackTrace();
+        }
+        
+        try {
+            loadPlayerConfig();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
@@ -139,7 +148,7 @@ public class Board {
         // Create Legend
         FileReader reader = null;
         try {
-            reader = new FileReader(legend);
+            reader = new FileReader(legendLocation);
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -164,7 +173,7 @@ public class Board {
         int numColsPast = -1;
         FileReader reader = null;
         try {
-            reader = new FileReader(layout);
+            reader = new FileReader(layoutLocation);
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -279,10 +288,10 @@ public class Board {
         return targets;
     }
     
-    public List<Player> loadPlayerConfig(String filename) throws FileNotFoundException {
+    public List<Player> loadPlayerConfig() throws FileNotFoundException {
         List<Player> players = new ArrayList<Player>();
         
-        FileReader reader = new FileReader(filename);
+        FileReader reader = new FileReader(playerLocation);
         Scanner in = new Scanner(reader);
         while (in.hasNextLine()) {
             String[] split = in.nextLine().split(",");
@@ -307,6 +316,10 @@ public class Board {
         }
         in.close();
         
+        return players;
+    }
+    
+    public List<Player> getPlayers() {
         return players;
     }
 }

@@ -26,7 +26,7 @@ public class GameSetupTests {
         // Board is singleton, get the only instance and initialize it
         board = Board.getInstance();
         // set the file names to use my config files
-        board.setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt");
+        board.setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt", "TDNFTP_players.txt");
         board.initialize();
         
         // populate players
@@ -38,7 +38,7 @@ public class GameSetupTests {
     
     @Test
     public void loadThePeople() throws FileNotFoundException {
-        List<Player> players = board.loadPlayerConfig("TDNFTP_players.txt");
+        List<Player> players = board.getPlayers();
         
         //Test to make sure first and last players are fully loaded correctly
         //Test that the other players are loaded in general
