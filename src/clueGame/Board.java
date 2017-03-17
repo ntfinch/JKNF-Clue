@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class Board {
         visited = new HashSet<BoardCell>();
         targets = new HashSet<BoardCell>();
         adjMap = new HashMap<BoardCell, Set<BoardCell>>();
-        deck = new HashSet<Card>();
+        deck = new ArrayList<Card>();
         players = new ArrayList<Player>();
     }
     
@@ -38,7 +39,7 @@ public class Board {
     private Set<BoardCell> targets;
     private Set<BoardCell> visited;
     private List<Player> players;
-    private Set<Card> deck;
+    private List<Card> deck;
     
     // this method returns the only Board
     public static Board getInstance() {
@@ -75,6 +76,22 @@ public class Board {
         
         _calcAdjacencies();
         
+    }
+    
+    public void dealDeck() {
+    	final int cardsPerPlayer = deck.size() / players.size();
+    	
+    	for (Player player : players) {
+    		for (int i = 0; i < cardsPerPlayer; i++) {
+    			Card randomCard;
+    			do {
+        			Random r = new Random();
+        			randomCard = deck.get(r.nextInt(deck.size()));
+        			if (randomCard.hasBeenDealt())
+        			randomCard.dealToPlayer(player);
+    			} while (randomCard.hasBeenDealt());
+    		}
+    	}
     }
     
     public void loadDeck() {
@@ -347,7 +364,7 @@ public class Board {
         return players;
     }
     
-    public Set<Card> getDeck() {
+    public List<Card> getDeck() {
     	return deck;
     }
 }

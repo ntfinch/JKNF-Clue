@@ -1,12 +1,11 @@
 package tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.BeforeClass;
@@ -64,7 +63,7 @@ public class GameSetupTests {
     
     @Test
     public void loadTheDeck() {
-    	final Set<Card> deck = board.getDeck();
+    	final List<Card> deck = board.getDeck();
     	
     	//Test that the deck has the right number of cards
         assertEquals(6+6+9, deck.size());
@@ -106,6 +105,31 @@ public class GameSetupTests {
     
     @Test
     public void dealTheCards() {
-    }
-    
+    	final List<Player> players = board.getPlayers();
+    	final List<Card> deck = board.getDeck();
+    	
+    	//Test that all cards have been dealt
+    	for (Card card : deck) {
+    		assertTrue(card.hasBeenDealt());
+    	}
+    	
+    	//Test that all players have roughly the same amount of cards
+    	int cardsPerPlayer = deck.size() / players.size();
+    	for (Player player : players) {
+    		assertTrue(player.getCards().size() >= cardsPerPlayer);
+    	}
+    	
+    	// Test that all players have different cards
+    	for (int i = 0; i < players.size(); i++) {
+    		List<Card> p1Cards = players.get(i).getCards();
+    		
+    		for (int j = i + 1; j < players.size(); j++) {
+    			List<Card> p2Cards = players.get(j).getCards();
+
+        		for (Card card : p1Cards) {
+        			assertFalse(p2Cards.contains(card));
+        		}
+        	}
+    	}
+     }
 }

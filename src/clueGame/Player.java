@@ -24,6 +24,10 @@ public abstract class Player {
 		return null;
 	}
 	
+	public void addCard(Card card) {
+		myCards.add(card);
+	}
+	
 	public Color convertColor(String strColor) {
 		Color color;
 		try {
@@ -39,31 +43,19 @@ public abstract class Player {
 		return name;
 	}
 
-//	public void setName(String playerName) {
-//		this.playerName = playerName;
-//	}
-//
 	public int getRow() {
 		return row;
 	}
-//
-//	public void setRow(int row) {
-//		this.row = row;
-//	}
-//
+
 	public int getColumn() {
 		return col;
 	}
-//
-//	public void setColumn(int column) {
-//		this.column = column;
-//	}
-//
+
 	public Color getColor() {
 		return color;
 	}
-//
-//	public void setColor(Color color) {
-//		this.color = color;
-//	}
+	
+	public List<Card> getCards() {
+		return myCards;
+	}
 }
