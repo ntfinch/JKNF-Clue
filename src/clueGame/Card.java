@@ -2,8 +2,18 @@ package clueGame;
 
 public class Card {
 	private String cardName;
+	private CardType type;
 	
-	 public boolean equals() {
+	Card(CardType type, String cardName) {
+		this.type = type;
+		this.cardName = cardName;
+	}
+	
+	public boolean equals() {
 		return false;
+	}
+	
+	public CardType getType() {
+		return type;
 	}
 }

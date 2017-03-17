@@ -7,11 +7,14 @@ import static org.junit.Assert.fail;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.Board;
+import clueGame.Card;
+import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
@@ -28,12 +31,6 @@ public class GameSetupTests {
         // set the file names to use my config files
         board.setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt", "TDNFTP_players.txt");
         board.initialize();
-        
-        // populate players
-        
-        // create deck
-        
-        // deal deck
     }
     
     @Test
@@ -66,7 +63,27 @@ public class GameSetupTests {
     
     @Test
     public void loadTheDeck() {
-        fail("Not Yet Implemented");
+    	final Set<Card> deck = board.getDeck();
+    	
+    	//Test that the deck has the right number of cards
+        assertEquals(6+6+9, deck.size());
+        
+        //Test that the deck has the right number of each card type
+        int weaponCount = 0;
+        int roomCount = 0;
+        int peopleCount = 0;
+        for (Card card : deck) {
+        	if (card.getType() == CardType.WEAPON) {
+        		peopleCount++;
+        	} else if (card.getType() == CardType.ROOM) {
+        		roomCount++;
+        	} else if (card.getType() == CardType.PERSON) {
+        		weaponCount++;
+        	}
+        }
+        assertEquals(6, peopleCount);
+        assertEquals(9, roomCount);
+        assertEquals(6, weaponCount);
     }
     
     @Test

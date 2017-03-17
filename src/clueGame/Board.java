@@ -6,8 +6,10 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -34,6 +36,7 @@ public class Board {
     private Set<BoardCell> targets;
     private Set<BoardCell> visited;
     private List<Player> players;
+    private Set<Card> deck;
     
     // this method returns the only Board
     public static Board getInstance() {
@@ -69,11 +72,38 @@ public class Board {
             e.printStackTrace();
         }
         
-        calcAdjacencies();
+        _loadDeck();
+        _calcAdjacencies();
         
     }
     
-    private void calcAdjacencies() {
+    private void _loadDeck() {
+//    	// Create weapon cards
+//		deck.add(new Card(CardType.WEAPON, "Bat"));
+//		deck.add(new Card(CardType.WEAPON, "Gun"));
+//		deck.add(new Card(CardType.WEAPON, "Knife"));
+//		deck.add(new Card(CardType.WEAPON, "Screwdriver"));
+//		deck.add(new Card(CardType.WEAPON, "Hammer"));
+//		deck.add(new Card(CardType.WEAPON, "Katana"));
+//		
+//		// Create room cards
+//		for (String room : legendMap.values()) {
+//			// TODO: this could be done better considering that the legend file has a way of knowing if a room is a card or not.
+//			if (room != "Walkway" || room != "Closet") {
+//				deck.add(new Card(CardType.ROOM, room));
+//			}
+//		}
+//		
+//		// Create people cards
+//		deck.add(new Card(CardType.PERSON, "Mr. Bob"));
+//		deck.add(new Card(CardType.PERSON, "Mrs. Kellie"));
+//		deck.add(new Card(CardType.PERSON, "Mr. Ryan"));
+//		deck.add(new Card(CardType.PERSON, "Mrs. Coolio"));
+//		deck.add(new Card(CardType.PERSON, "Mr. Platoon"));
+//		deck.add(new Card(CardType.PERSON, "Mrs. Kitten"));
+    }
+    
+    private void _calcAdjacencies() {
         for (int x = 0; x < numRows; x++) {
             for (int y = 0; y < numCols; y++) {
                 BoardCell boardKey;
@@ -321,5 +351,9 @@ public class Board {
     
     public List<Player> getPlayers() {
         return players;
+    }
+    
+    public Set<Card> getDeck() {
+    	return deck;
     }
 }
