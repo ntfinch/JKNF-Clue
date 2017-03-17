@@ -24,18 +24,19 @@ public class GameSetupTests {
     
     @BeforeClass
     public static void initTheBoard() {
-        
         // initialize board
         // Board is singleton, get the only instance and initialize it
         board = Board.getInstance();
         // set the file names to use my config files
         board.setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt", "TDNFTP_players.txt");
         board.initialize();
+        board.loadDeck();
     }
     
     @Test
     public void loadThePeople() throws FileNotFoundException {
         List<Player> players = board.getPlayers();
+        System.out.println("players " + players.size());
         
         //Test to make sure first and last players are fully loaded correctly
         //Test that the other players are loaded in general
@@ -84,11 +85,27 @@ public class GameSetupTests {
         assertEquals(6, peopleCount);
         assertEquals(9, roomCount);
         assertEquals(6, weaponCount);
+        
+        //Test that the names were loaded right
+        boolean foundGun = false;
+        boolean foundPlatoon = false;
+        boolean foundMasterBedroom = false;
+        for (Card card : deck) {
+        	if (card.getType() == CardType.WEAPON && !foundGun && card.getName().equals("Gun")) {
+        		foundGun = true;
+        	} else if (card.getType() == CardType.ROOM && !foundMasterBedroom && card.getName().equals("Master bedroom")) {
+        		foundMasterBedroom = true;
+        	} else if (card.getType() == CardType.PERSON && !foundPlatoon && card.getName().equals("Mr. Platoon")) {
+        		foundPlatoon = true;
+        	}
+        }
+        assertTrue(foundGun);
+        assertTrue(foundPlatoon);
+        assertTrue(foundMasterBedroom);
     }
     
     @Test
     public void dealTheCards() {
-        fail("Not Yet Implemented");
     }
     
 }

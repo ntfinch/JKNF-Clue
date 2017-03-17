@@ -26,6 +26,8 @@ public class Board {
         visited = new HashSet<BoardCell>();
         targets = new HashSet<BoardCell>();
         adjMap = new HashMap<BoardCell, Set<BoardCell>>();
+        deck = new HashSet<Card>();
+        players = new ArrayList<Player>();
     }
     
     private final int MAX_BOAR_SIZE = 50;
@@ -68,39 +70,37 @@ public class Board {
         try {
             loadPlayerConfig();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
-        _loadDeck();
         _calcAdjacencies();
         
     }
     
-    private void _loadDeck() {
-//    	// Create weapon cards
-//		deck.add(new Card(CardType.WEAPON, "Bat"));
-//		deck.add(new Card(CardType.WEAPON, "Gun"));
-//		deck.add(new Card(CardType.WEAPON, "Knife"));
-//		deck.add(new Card(CardType.WEAPON, "Screwdriver"));
-//		deck.add(new Card(CardType.WEAPON, "Hammer"));
-//		deck.add(new Card(CardType.WEAPON, "Katana"));
-//		
-//		// Create room cards
-//		for (String room : legendMap.values()) {
-//			// TODO: this could be done better considering that the legend file has a way of knowing if a room is a card or not.
-//			if (room != "Walkway" || room != "Closet") {
-//				deck.add(new Card(CardType.ROOM, room));
-//			}
-//		}
-//		
-//		// Create people cards
-//		deck.add(new Card(CardType.PERSON, "Mr. Bob"));
-//		deck.add(new Card(CardType.PERSON, "Mrs. Kellie"));
-//		deck.add(new Card(CardType.PERSON, "Mr. Ryan"));
-//		deck.add(new Card(CardType.PERSON, "Mrs. Coolio"));
-//		deck.add(new Card(CardType.PERSON, "Mr. Platoon"));
-//		deck.add(new Card(CardType.PERSON, "Mrs. Kitten"));
+    public void loadDeck() {
+    	// Create weapon cards
+		deck.add(new Card(CardType.WEAPON, "Bat"));
+		deck.add(new Card(CardType.WEAPON, "Gun"));
+		deck.add(new Card(CardType.WEAPON, "Knife"));
+		deck.add(new Card(CardType.WEAPON, "Screwdriver"));
+		deck.add(new Card(CardType.WEAPON, "Hammer"));
+		deck.add(new Card(CardType.WEAPON, "Katana"));
+		
+		// Create room cards
+		for (String room : legendMap.values()) {
+			// TODO: this could be done better considering that the legend file has a way of knowing if a room is a card or not.
+			if (!room.equals("Walkway") && !room.equals("Closet")) {
+				deck.add(new Card(CardType.ROOM, room));
+			}
+		}
+		
+		// Create people cards
+		deck.add(new Card(CardType.PERSON, "Mr. Bob"));
+		deck.add(new Card(CardType.PERSON, "Mrs. Kellie"));
+		deck.add(new Card(CardType.PERSON, "Mr. Ryan"));
+		deck.add(new Card(CardType.PERSON, "Mrs. Coolio"));
+		deck.add(new Card(CardType.PERSON, "Mr. Platoon"));
+		deck.add(new Card(CardType.PERSON, "Mrs. Kitten"));
     }
     
     private void _calcAdjacencies() {
@@ -280,7 +280,6 @@ public class Board {
     }
     
     public void calcTargets(int i, int j, int k) {
-        // TODO Auto-generated method stub
         targets.clear();
         visited.clear();
         BoardCell startCell = grid[j][i];
@@ -318,9 +317,7 @@ public class Board {
         return targets;
     }
     
-    public List<Player> loadPlayerConfig() throws FileNotFoundException {
-        List<Player> players = new ArrayList<Player>();
-        
+    public void loadPlayerConfig() throws FileNotFoundException {
         FileReader reader = new FileReader(playerLocation);
         Scanner in = new Scanner(reader);
         while (in.hasNextLine()) {
@@ -340,13 +337,10 @@ public class Board {
             if (split[0].equals("Human")) {
                 players.add(new HumanPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4])));
             } else {
-                players.add(
-                        new ComputerPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4])));
+                players.add(new ComputerPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4])));
             }
         }
         in.close();
-        
-        return players;
     }
     
     public List<Player> getPlayers() {
