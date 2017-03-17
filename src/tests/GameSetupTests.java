@@ -30,12 +30,12 @@ public class GameSetupTests {
         board.setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt", "TDNFTP_players.txt");
         board.initialize();
         board.loadDeck();
+        board.dealDeck();
     }
     
     @Test
     public void loadThePeople() throws FileNotFoundException {
         List<Player> players = board.getPlayers();
-        System.out.println("players " + players.size());
         
         //Test to make sure first and last players are fully loaded correctly
         //Test that the other players are loaded in general
@@ -119,7 +119,7 @@ public class GameSetupTests {
     		assertTrue(player.getCards().size() >= cardsPerPlayer);
     	}
     	
-    	// Test that all players have different cards
+    	//Test that all players have different cards
     	for (int i = 0; i < players.size(); i++) {
     		List<Card> p1Cards = players.get(i).getCards();
     		

@@ -22,15 +22,6 @@ public class Board {
     private String layoutLocation;
     private String legendLocation;
     private String playerLocation;
-    
-    private Board() {
-        visited = new HashSet<BoardCell>();
-        targets = new HashSet<BoardCell>();
-        adjMap = new HashMap<BoardCell, Set<BoardCell>>();
-        deck = new ArrayList<Card>();
-        players = new ArrayList<Player>();
-    }
-    
     private final int MAX_BOAR_SIZE = 50;
     private BoardCell[][] grid;
     private int numRows, numCols;
@@ -56,6 +47,12 @@ public class Board {
     }
     
     public void initialize() {
+        visited = new HashSet<BoardCell>();
+        targets = new HashSet<BoardCell>();
+        adjMap = new HashMap<BoardCell, Set<BoardCell>>();
+        deck = new ArrayList<Card>();
+        players = new ArrayList<Player>();
+        
         try {
             loadRoomConfig();
         } catch (BadConfigFormatException e) {
@@ -75,7 +72,6 @@ public class Board {
         }
         
         _calcAdjacencies();
-        
     }
     
     public void dealDeck() {
@@ -87,9 +83,8 @@ public class Board {
     			do {
         			Random r = new Random();
         			randomCard = deck.get(r.nextInt(deck.size()));
-        			if (randomCard.hasBeenDealt())
-        			randomCard.dealToPlayer(player);
     			} while (randomCard.hasBeenDealt());
+    			randomCard.dealToPlayer(player);
     		}
     	}
     }
