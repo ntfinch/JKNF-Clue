@@ -161,6 +161,91 @@ public class GameSetupTests {
 		}
 	}
 	
+	
+	@Test
+	public void selectRandomTarget() {
+
+		// Calculates the available spaces for the player to move
+		board.calcTargets(16, 9, 2);
+
+		// Initializes a new computerPlayer
+		ComputerPlayer player = new ComputerPlayer("Blocky", Color.RED, 16, 9);
+
+		// These will become true if that board cell gets selected
+		boolean loc_14_9 = false;
+		boolean loc_17_10 = false;
+		boolean loc_18_9 = false;
+
+		// Tests multiple times if the board cell get's selected
+		for (int i = 0; i < 100; i++) {
+
+			// Computer player randomly picks a location
+			BoardCell selected = player.pickLocation(board.getTargets());
+			if (selected == board.getCellAt(14, 9)) {
+				loc_14_9 = true;
+			} else if (selected == board.getCellAt(17, 10)) {
+				loc_17_10 = true;
+			} else if (selected == board.getCellAt(18, 9)) {
+				loc_18_9 = true;
+			} else {
+				//fail("Invalid Target Selection");
+			}
+		}
+		
+		assertTrue(loc_14_9);
+		assertTrue(loc_17_10);
+		assertTrue(loc_18_9);
+	}
+
+	@Test
+	public void selectRoomTarget() {
+		// Calculates the available spaces for the palyer to move
+		board.calcTargets(13, 16, 2);
+
+		// Initializes a new computerPlayer
+		ComputerPlayer player = new ComputerPlayer("Blocky", Color.RED, 13, 16);
+		BoardCell selected = player.pickLocation(board.getTargets());
+		assertTrue(selected.isDoorway());
+	}
+
+	@Test
+	public void selectNewRandom() {
+		// Calculates the available spaces for the palyer to move
+				board.calcTargets(7, 11, 2);
+
+				// Initializes a new computerPlayer
+				ComputerPlayer player = new ComputerPlayer("Blocky", Color.RED, 7, 11);
+				
+				// These will become true if that board cell gets selected
+				boolean loc_7_9 = false;
+				boolean loc_7_13 = false;
+				boolean loc_8_10 = false;
+
+				// Tests multiple times if the board cell get's selected
+				for (int i = 0; i < 100; i++) {
+
+					// Computer player randomly picks a location
+					BoardCell selected = player.pickLocation(board.getTargets());
+					if (selected == board.getCellAt(7, 9)) {
+						loc_7_9= true;
+					} else if (selected == board.getCellAt(7, 13)) {
+						loc_7_13 = true;
+					} else if (selected == board.getCellAt(8, 10)) {
+						loc_8_10 = true;
+					} else {
+						//fail("Invalid Target Selection");
+					}
+				}
+				assertTrue(loc_7_9);
+				assertTrue(loc_7_13);
+				assertTrue(loc_8_10);
+	}
+
+	
+	
+	
+	
+	
 	@Test
     public void testCheckAccusation() {
 		Solution savedAnswer = board.getAnswer();

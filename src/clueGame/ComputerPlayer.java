@@ -11,9 +11,25 @@ public class ComputerPlayer extends Player {
 	public ComputerPlayer(String name, Color color, int row, int col) {
 		super(name, color, row, col);
 	}
-
+public BoardCell lastRoom;
 	public BoardCell pickLocation(Set<BoardCell> targets) {
-		return null;
+		// Converts the targets set into an array list
+				ArrayList<BoardCell> targetList = new ArrayList<BoardCell>(targets);
+
+				// finds a random number between 0 and the target list size - 1
+				Random rand = new Random();
+				int value = rand.nextInt(targetList.size());
+
+				// Loops through each spot in the list returning if it is a valid room
+				for (int i = 0; i < targetList.size(); i++) {
+					if (targetList.get(i).isRoom() && targetList.get(i) != lastRoom) {
+						return targetList.get(i);
+					}
+				}
+
+				// if a valid room was not found, a random target is selected
+				lastRoom = targetList.get(value);
+				return lastRoom;
 	}
 
 	public void makeAccusation() {
