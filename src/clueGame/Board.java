@@ -91,6 +91,7 @@ public class Board {
     
     public void loadDeck() {
     	// Create weapon cards
+    	// TODO: Change to read from file
 		deck.add(new Card(CardType.WEAPON, "Bat"));
 		deck.add(new Card(CardType.WEAPON, "Gun"));
 		deck.add(new Card(CardType.WEAPON, "Knife"));
@@ -107,6 +108,7 @@ public class Board {
 		}
 		
 		// Create people cards
+    	// TODO: Change to read from file
 		deck.add(new Card(CardType.PERSON, "Mr. Bob"));
 		deck.add(new Card(CardType.PERSON, "Mrs. Kellie"));
 		deck.add(new Card(CardType.PERSON, "Mr. Ryan"));
