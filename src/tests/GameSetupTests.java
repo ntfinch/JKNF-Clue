@@ -136,7 +136,7 @@ public class GameSetupTests {
     
     @Test
     public void testCheckAccusation() {
-    	Solution trueSoln = new Solution("Mr. Bob", "Library", "Bat");
+    	Solution trueSoln = new Solution("Mr. Bob", "Pantry", "Bat");
     	Solution falseSoln = new Solution("Mr. Ryan", "Master Bedroom", "Gun");
 
     	assertTrue(board.checkAccusation(trueSoln));
