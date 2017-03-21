@@ -64,4 +64,9 @@ public abstract class Player {
 	public List<Card> getSeenCards() {
 		return seenCards;
 	}
+	
+	@Override
+	public String toString(){
+		return this.getClass() + ": " + name;
+	}
 }
