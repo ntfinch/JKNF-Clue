@@ -159,6 +159,7 @@ public class GameSetupTests {
 	}
 	
     @Test
+
     public void testCheckAccusation() {
     	Solution trueSoln = new Solution("Mr. Bob", "Library", "Bat");
     	Solution falseSoln = new Solution("Mr. Ryan", "Master Bedroom", "Gun");
@@ -166,6 +167,7 @@ public class GameSetupTests {
     	assertTrue(board.checkAccusation(trueSoln));
     	assertFalse(board.checkAccusation(falseSoln));
     }
+
 	
     //Independent test, does not require the use of board
 	@Test
