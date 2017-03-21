@@ -5,19 +5,32 @@ import java.util.Random;
 @SuppressWarnings("serial")
 public class FakeRandom extends Random {
 	
-	private int value;
+	private int[] values;
+	int pos;
 
-	public FakeRandom(int value) {
-		this.value = value;
+	public FakeRandom(int[] values) {
+		this.values = values;
+		pos = 0;
+	}
+	
+	public FakeRandom(int value){
+		this.values = new int[1];
+		values[0] = value;
+		pos = 0;
 	}
 	
 	@Override
 	public int nextInt(){
-		return value;
+		pos++;
+		if(pos >= values.length){
+			pos = 0;
+		}
+		return values[pos];
 	}
 	
 	@Override
 	public int nextInt(int bound){
-		return value;
+		//Can return things greater than bound, but if it does it should have a different list of values
+		return nextInt();
 	}
 }
