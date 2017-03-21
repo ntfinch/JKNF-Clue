@@ -364,4 +364,8 @@ public class Board {
     public List<Card> getDeck() {
     	return deck;
     }
+    
+    public boolean checkAccusation(Solution accusation) {
+    	return false;
+    }
 }

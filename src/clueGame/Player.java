@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public abstract class Player {
@@ -24,7 +25,7 @@ public abstract class Player {
 //	    seenCards = new ArrayList<Card>();
 	}
 
-	public Card disproveSuggestion(Solution suggestion) {
+	public Card disproveSuggestion(Solution suggestion, Random random) {
 		return null;
 	}
 	

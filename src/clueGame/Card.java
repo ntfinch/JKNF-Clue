@@ -5,7 +5,7 @@ public class Card {
 	private CardType type;
 	private boolean dealt;
 	
-	Card(CardType type, String cardName) {
+	public Card(CardType type, String cardName) {
 		this.type = type;
 		this.cardName = cardName;
 		dealt = false;
