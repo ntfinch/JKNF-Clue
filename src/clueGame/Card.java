@@ -1,13 +1,13 @@
 package clueGame;
 
 public class Card {
-	private String cardName;
+	private String name;
 	private CardType type;
 	private boolean dealt;
 	
-	public Card(CardType type, String cardName) {
+	public Card(CardType type, String name) {
 		this.type = type;
-		this.cardName = cardName;
+		this.name = name;
 		dealt = false;
 	}
 	
@@ -15,7 +15,7 @@ public class Card {
 	public boolean equals(Object object) {
 		return
 				object instanceof Card &&
-				((Card) object).getName() == cardName &&
+				((Card) object).getName() == name &&
 				((Card) object).getType() == type &&
 				((Card) object).hasBeenDealt() == dealt;
 	}
@@ -25,7 +25,7 @@ public class Card {
 	}
 	
 	public String getName() {
-		return cardName;
+		return name;
 	}
 	
 	public boolean hasBeenDealt() {
@@ -34,6 +34,15 @@ public class Card {
 	
 	public void dealToPlayer(Player player) {
 		player.addCard(this);
+		dealt = true;
+	}
+	
+	@Override
+	public String toString(){
+		return type.toString() + " " + name;
+	}
+	
+	public void isSolution(){
 		dealt = true;
 	}
 }

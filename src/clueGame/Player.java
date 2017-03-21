@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class Player {
 	private String name;
 	protected int row;
-	private int col;
+	protected int col;
 	private Color color;
 	protected List<Card> myCards;
 	protected List<Card> seenCards;
@@ -24,9 +24,7 @@ public abstract class Player {
 	    seenCards = new ArrayList<Card>();
 	}
 
-	public Card disproveSuggestion(Solution suggestion) {
-		return null;
-	}
+	public abstract Card disproveSuggestion(Solution suggestion);
 	
 	public void addCard(Card card) {
 		myCards.add(card);
@@ -54,6 +52,11 @@ public abstract class Player {
 	public int getColumn() {
 		return col;
 	}
+	
+	public void setRoom(int r, int c) {
+		row = r;
+		col = c;
+	}
 
 	public Color getColor() {
 		return color;
@@ -66,9 +69,13 @@ public abstract class Player {
 	public void setCards(List<Card> cards) {
 		myCards = cards;
 	}
+
+	public List<Card> getSeenCards() {
+		return seenCards;
+	}
 	
-	public void setRoom(int row, int col) {
-		this.row = row;
-		this.col = col;
+	@Override
+	public String toString(){
+		return this.getClass() + ": " + name + ". Hand: " + myCards.toString();
 	}
 }
