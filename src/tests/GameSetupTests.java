@@ -12,6 +12,7 @@ import java.util.Random;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
@@ -30,9 +31,30 @@ public class GameSetupTests {
 		board = Board.getInstance();
 		// set the file names to use my config files
 		board.setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt", "TDNFTP_players.txt");
-		board.initialize();
+		
+		//Loads the board with a fake random deck
+    	board.reset();
+        try {
+            board.loadRoomConfig();
+        } catch (BadConfigFormatException e) {
+            e.printStackTrace();
+        }
+        
+        try {
+            board.loadBoardConfig();
+        } catch (BadConfigFormatException e) {
+            e.printStackTrace();
+        }
+        
+        try {
+            board.loadPlayerConfig();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 		board.loadDeck();
-		board.dealDeck();
+		//Distributes 1 weapon, room, person, repeatedly until it runs out and then just distributes rooms
+		int[] veryRandom = {0, 6, 15, 1, 7, 16, 2, 8, 17, 3, 9, 18, 4, 10, 19, 5, 11, 20, 12, 13, 14};
+		board.dealDeck(new FakeRandom(veryRandom));
 	}
 
 	@Test
@@ -145,8 +167,9 @@ public class GameSetupTests {
     	assertFalse(board.checkAccusation(falseSoln));
     }
 	
+    //Independent test, does not require the use of board
 	@Test
-	public void disproveSuggestions(){
+	public void testDisproveSuggestion(){
 		//Set up cards for the test
 		Card person = new Card(CardType.PERSON, "Bob");
 		Card badperson = new Card(CardType.PERSON, "Bill");
@@ -173,5 +196,10 @@ public class GameSetupTests {
 		
 		//Test with no cards correct
 		assertEquals(null, tester.disproveSuggestion(new Solution(badperson.getName(), badroom.getName(), badweapon.getName()), new Random()));
+	}
+	
+	@Test
+	public void testHandleSuggestion(){
+		assertTrue(false);
 	}
 }

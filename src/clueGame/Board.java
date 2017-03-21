@@ -45,11 +45,7 @@ public class Board {
     }
     
     public void initialize() {
-        visited = new HashSet<BoardCell>();
-        targets = new HashSet<BoardCell>();
-        adjMap = new HashMap<BoardCell, Set<BoardCell>>();
-        deck = new ArrayList<Card>();
-        players = new ArrayList<Player>();
+    	reset();
         
         try {
             loadRoomConfig();
@@ -69,18 +65,29 @@ public class Board {
             e.printStackTrace();
         }
         
+        loadDeck();
+        
+        dealDeck(new Random());
+        
         _calcAdjacencies();
     }
     
-    public void dealDeck() {
+    public void reset(){
+        visited = new HashSet<BoardCell>();
+        targets = new HashSet<BoardCell>();
+        adjMap = new HashMap<BoardCell, Set<BoardCell>>();
+        deck = new ArrayList<Card>();
+        players = new ArrayList<Player>();
+    }
+    
+    public void dealDeck(Random rand) {
     	final int cardsPerPlayer = deck.size() / players.size();
     	
     	for (Player player : players) {
     		for (int i = 0; i < cardsPerPlayer; i++) {
     			Card randomCard;
     			do {
-        			Random r = new Random();
-        			randomCard = deck.get(r.nextInt(deck.size()));
+        			randomCard = deck.get(rand.nextInt(deck.size()));
     			} while (randomCard.hasBeenDealt());
     			randomCard.dealToPlayer(player);
     		}
@@ -325,7 +332,6 @@ public class Board {
     }
     
     public Set<BoardCell> getTargets() {
-        // TODO Auto-generated method stub
         return targets;
     }
     
@@ -365,5 +371,10 @@ public class Board {
     
     public boolean checkAccusation(Solution accusation) {
     	return false;
+    }
+    
+    public Card handleSuggestion(Solution suggestion, Player accuser){
+    	//TODO
+    	return null;
     }
 }
