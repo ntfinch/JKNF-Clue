@@ -1,6 +1,6 @@
 package clueGame;
 
-public class BoardCell {
+public class BoardCell implements Comparable<BoardCell>{
 	private int row, column;
 	private char initial = ' ';
 	private boolean isDoorway = false;
@@ -54,6 +54,10 @@ public class BoardCell {
 
 	public char getInitial() {
 		return initial;
+	}
+
+	public int compareTo(BoardCell other) {
+		return (row * 100 + column) - (other.row * 100 + other.column);
 	}
 
 }

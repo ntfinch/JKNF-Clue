@@ -70,7 +70,7 @@ public class Board {
 
 		dealDeck(new Random());
 
-		_calcAdjacencies();
+		calcAdjacencies();
 	}
 
 	public void reset() {
@@ -144,7 +144,7 @@ public class Board {
 		deck.add(new Card(CardType.PERSON, "Mrs. Kitten"));
 	}
 
-	private void _calcAdjacencies() {
+	public void calcAdjacencies() {
 		for (int x = 0; x < numRows; x++) {
 			for (int y = 0; y < numCols; y++) {
 				BoardCell boardKey;
@@ -312,19 +312,19 @@ public class Board {
 		return numCols;
 	}
 
-	public BoardCell getCellAt(int x, int y) {
-		return grid[y][x];
+	public BoardCell getCellAt(int row, int col) {
+		return grid[col][row];
 	}
 
-	public Set<BoardCell> getAdjList(int x, int y) {
-		return adjMap.get(grid[y][x]);
+	public Set<BoardCell> getAdjList(int row, int col) {
+		return adjMap.get(grid[col][row]);
 	}
 
-	public void calcTargets(int i, int j, int k) {
+	public void calcTargets(int row, int col, int pathLen) {
 		targets.clear();
 		visited.clear();
-		BoardCell startCell = grid[j][i];
-		calcTargetsRecursion(startCell, k);
+		BoardCell startCell = grid[col][row];
+		calcTargetsRecursion(startCell, pathLen);
 	}
 
 	private void calcTargetsRecursion(BoardCell currentCell, int pathLength) {

@@ -34,4 +34,15 @@ public class Solution {
 	public String getWeapon() {
 		return weapon;
 	}
+	
+	@Override
+	public boolean equals(Object other){
+		if(other instanceof Solution){
+			Solution s = (Solution) other;
+			if(s.getPerson().equals(person) && s.getRoom().equals(room) && s.getWeapon().equals(weapon)){
+				return true;
+			}
+		}
+		return false;
+	}
 }

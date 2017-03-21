@@ -10,13 +10,13 @@ public class FakeRandom extends Random {
 
 	public FakeRandom(int[] values) {
 		this.values = values;
-		pos = 0;
+		pos = -1;
 	}
 	
 	public FakeRandom(int value){
 		this.values = new int[1];
 		values[0] = value;
-		pos = 0;
+		pos = -1;
 	}
 	
 	@Override

@@ -2,34 +2,41 @@ package clueGame;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ComputerPlayer extends Player {
+	private BoardCell lastRoom;
+	
 	public ComputerPlayer(String name, Color color, int row, int col) {
 		super(name, color, row, col);
 	}
-public BoardCell lastRoom;
+
 	public BoardCell pickLocation(Set<BoardCell> targets) {
+		return pickLocation(targets, new Random());
+	}
+	
+	public BoardCell pickLocation(Set<BoardCell> targets, Random rand) {
 		// Converts the targets set into an array list
-				ArrayList<BoardCell> targetList = new ArrayList<BoardCell>(targets);
+		ArrayList<BoardCell> targetList = new ArrayList<BoardCell>(targets);
+		Collections.sort(targetList);
 
-				// finds a random number between 0 and the target list size - 1
-				Random rand = new Random();
-				int value = rand.nextInt(targetList.size());
+		// Loops through each spot in the list returning if it is a valid room
+		for (int i = 0; i < targetList.size(); i++) {
+			if (targetList.get(i).isRoom() && (lastRoom == null || targetList.get(i).getInitial() != lastRoom.getInitial())) {
+				lastRoom = targetList.get(i);
+				return targetList.get(i);
+			}
+		}
+		
+		// finds a random number between 0 and the target list size - 1
+		int value = rand.nextInt(targetList.size());
 
-				// Loops through each spot in the list returning if it is a valid room
-				for (int i = 0; i < targetList.size(); i++) {
-					if (targetList.get(i).isRoom() && targetList.get(i) != lastRoom) {
-						return targetList.get(i);
-					}
-				}
-
-				// if a valid room was not found, a random target is selected
-				lastRoom = targetList.get(value);
-				return lastRoom;
+		// if a valid room was not found, a random target is selected
+		return targetList.get(value);
 	}
 
 	public void makeAccusation() {
@@ -40,7 +47,7 @@ public BoardCell lastRoom;
 		Board board = Board.getInstance();
 		BoardCell cell = board.getCellAt(row, getColumn());
 		String room = (board.getLegend()).get(cell.getInitial());
-		
+
 		// Sort cards
 		List<Card> unseenCards = new ArrayList<Card>(myCards);
 		unseenCards.removeAll(seenCards);
@@ -54,7 +61,7 @@ public BoardCell lastRoom;
 				persons.add(card);
 			}
 		}
-		
+
 		// Get person
 		String person = "";
 		int personsSize = persons.size();
@@ -63,7 +70,7 @@ public BoardCell lastRoom;
 		} else {
 			person = persons.get(ThreadLocalRandom.current().nextInt(0, personsSize)).getName();
 		}
-		
+
 		// Get weapon
 		String weapon = "";
 		int weaponsSize = weapons.size();
@@ -72,7 +79,7 @@ public BoardCell lastRoom;
 		} else {
 			weapon = weapons.get(ThreadLocalRandom.current().nextInt(0, weaponsSize)).getName();
 		}
-		
+
 		return new Solution(person, room, weapon);
 	}
 
@@ -98,5 +105,9 @@ public BoardCell lastRoom;
 	@Override
 	public Card disproveSuggestion(Solution suggestion) {
 		return disproveSuggestion(suggestion, new Random());
+	}
+	
+	public void setLastRoom(BoardCell room) {
+		lastRoom = room;
 	}
 }
