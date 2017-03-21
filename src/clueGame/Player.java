@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class Player {
 	private String name;
-	private int row;
+	protected int row;
 	private int col;
 	private Color color;
 	protected List<Card> myCards;
@@ -21,7 +21,7 @@ public abstract class Player {
 	    this.col = col;
 	    
 	    myCards = new ArrayList<Card>();
-//	    seenCards = new ArrayList<Card>();
+	    seenCards = new ArrayList<Card>();
 	}
 
 	public Card disproveSuggestion(Solution suggestion) {
@@ -61,5 +61,14 @@ public abstract class Player {
 	
 	public List<Card> getCards() {
 		return myCards;
+	}
+	
+	public void setCards(List<Card> cards) {
+		myCards = cards;
+	}
+	
+	public void setRoom(int row, int col) {
+		this.row = row;
+		this.col = col;
 	}
 }

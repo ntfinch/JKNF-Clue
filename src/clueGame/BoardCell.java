@@ -2,11 +2,11 @@ package clueGame;
 
 public class BoardCell {
 	private int row, column;
-	char initial = ' ';
+	private char initial = ' ';
 	private boolean isDoorway = false;
 	private boolean isWalkway = false;
-	boolean isRoom = false;
-	DoorDirection doorDirection = DoorDirection.NONE;
+	private boolean isRoom = false;
+	private DoorDirection doorDirection = DoorDirection.NONE;
 
 	public int getRow() {
 		return row;

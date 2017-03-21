@@ -17,16 +17,44 @@ public class ComputerPlayer extends Player {
 	
 	public void makeAccusation() {}
 	
-	public void createSuggestion() {
-//		BoardCell room = 
+	public Solution createSuggestion() {
+		// Get room
+		Board board = Board.getInstance();
+		BoardCell cell = board.getCellAt(row, getColumn());
+		String room = (board.getLegend()).get(cell.getInitial());
 		
+		// Sort cards
+		List<Card> unseenCards = new ArrayList<Card>(myCards);
+		unseenCards.removeAll(seenCards);
+		List<Card> weapons = new ArrayList<Card>();
+		List<Card> persons = new ArrayList<Card>();
+		for (Card card : unseenCards) {
+			CardType type = card.getType();
+			if (type.equals(CardType.WEAPON)) {
+				weapons.add(card);
+			} else if (type.equals(CardType.PERSON)) {
+				persons.add(card);
+			}
+		}
 		
-//		List<Card> unseenCards = new ArrayList<Card>(myCards);
-//		unseenCards.removeAll(unseenCards);
-//		
-//		int rand = ThreadLocalRandom.current().nextInt(0, unseenCards.size() + 1);
-//		
-//		Solution solution = new Solution();
-//		
+		// Get person
+		String person = "";
+		int personsSize = persons.size();
+		if (personsSize == 1) {
+			person = persons.get(0).getName();
+		} else {
+			person = persons.get(ThreadLocalRandom.current().nextInt(0, personsSize)).getName();
+		}
+		
+		// Get weapon
+		String weapon = "";
+		int weaponsSize = weapons.size();
+		if (weaponsSize == 1) {
+			weapon = weapons.get(0).getName();
+		} else {
+			weapon = weapons.get(ThreadLocalRandom.current().nextInt(0, weaponsSize)).getName();
+		}
+		
+		return new Solution(person, room, weapon);	
 	}
 }
