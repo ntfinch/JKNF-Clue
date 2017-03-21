@@ -67,6 +67,6 @@ public abstract class Player {
 	
 	@Override
 	public String toString(){
-		return this.getClass() + ": " + name;
+		return this.getClass() + ": " + name + ". Hand: " + myCards.toString();
 	}
 }

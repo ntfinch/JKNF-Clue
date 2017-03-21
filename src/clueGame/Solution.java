@@ -11,6 +11,10 @@ public class Solution {
 		this.weapon = weapon;
 	}
 
+	public Solution(Card person, Card room, Card weapon) {
+		this(person.getName(), room.getName(), weapon.getName());
+	}
+
 	public String getPerson() {
 		return person;
 	}

@@ -41,4 +41,8 @@ public class Card {
 	public String toString(){
 		return type.toString() + " " + name;
 	}
+	
+	public void isSolution(){
+		dealt = true;
+	}
 }
