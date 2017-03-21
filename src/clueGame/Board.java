@@ -398,7 +398,21 @@ public class Board {
 	}
 
 	public Card handleSuggestion(Solution suggestion, Player accuser) {
-		// TODO
+		int pos = players.indexOf(accuser) + 1;
+		if(pos >= players.size()){
+			pos = 0;
+		}
+		while(pos != players.indexOf(accuser)){
+			Card c = players.get(pos).disproveSuggestion(suggestion);
+			if(c != null){
+				return c;
+			}
+			
+			pos++;
+			if(pos >= players.size()){
+				pos = 0;
+			}
+		}
 		return null;
 	}
 

@@ -14,6 +14,14 @@ public class Solution {
 	public Solution(Card person, Card room, Card weapon) {
 		this(person.getName(), room.getName(), weapon.getName());
 	}
+	
+	public boolean contains(Card c){
+		return contains(c.getName());
+	}
+	
+	public boolean contains(String s){
+		return s.equals(person) || s.equals(room) || s.equals(weapon);
+	}
 
 	public String getPerson() {
 		return person;
