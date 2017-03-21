@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -135,6 +136,15 @@ public class GameSetupTests {
 		}
 	}
 	
+    @Test
+    public void testCheckAccusation() {
+    	Solution trueSoln = new Solution("Mr. Bob", "Library", "Bat");
+    	Solution falseSoln = new Solution("Mr. Ryan", "Master Bedroom", "Gun");
+
+    	assertTrue(board.checkAccusation(trueSoln));
+    	assertFalse(board.checkAccusation(falseSoln));
+    }
+	
 	@Test
 	public void disproveSuggestions(){
 		//Set up cards for the test
@@ -151,6 +161,17 @@ public class GameSetupTests {
 		tester.addCard(room);
 		tester.addCard(weapon);
 		
-		AssertEquals(weapon, tester.disproveSuggestion(new Solution(person, room, weapon))))
+		//Test with only one card correct
+		assertEquals(weapon, tester.disproveSuggestion(new Solution(badperson.getName(), badroom.getName(), weapon.getName()), new Random()));
+		assertEquals(person, tester.disproveSuggestion(new Solution(person.getName(), badroom.getName(), badweapon.getName()), new Random()));
+		assertEquals(room, tester.disproveSuggestion(new Solution(badperson.getName(), room.getName(), badweapon.getName()), new Random()));
+		
+		//Tests with all three cards correct
+		assertEquals(weapon, tester.disproveSuggestion(new Solution(person.getName(), room.getName(), weapon.getName()), new FakeRandom(0)));
+		assertEquals(weapon, tester.disproveSuggestion(new Solution(person.getName(), room.getName(), weapon.getName()), new FakeRandom(1)));
+		assertEquals(weapon, tester.disproveSuggestion(new Solution(person.getName(), room.getName(), weapon.getName()), new FakeRandom(2)));
+		
+		//Test with no cards correct
+		assertEquals(null, tester.disproveSuggestion(new Solution(badperson.getName(), badroom.getName(), badweapon.getName()), new Random()));
 	}
 }
