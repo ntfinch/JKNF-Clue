@@ -17,6 +17,7 @@ import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
+import clueGame.Solution;
 
 public class GameSetupTests {
     private static Board board;
@@ -132,4 +133,13 @@ public class GameSetupTests {
         	}
     	}
      }
+    
+    @Test
+    public void testCheckAccusation() {
+    	Solution trueSoln = new Solution("Mr. Bob", "Library", "Bat");
+    	Solution falseSoln = new Solution("Mr. Ryan", "Master Bedroom", "Gun");
+
+    	assertTrue(board.checkAccusation(trueSoln));
+    	assertFalse(board.checkAccusation(falseSoln));
+    }
 }
