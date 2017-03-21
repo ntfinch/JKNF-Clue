@@ -11,8 +11,8 @@ public abstract class Player {
 	private int row;
 	private int col;
 	private Color color;
-	private List<Card> myCards;
-	private List<Card> seenCards;
+	protected List<Card> myCards;
+	protected List<Card> seenCards;
 	
 	public Player(String name, Color color, int row, int col){
 	    this.name = name;

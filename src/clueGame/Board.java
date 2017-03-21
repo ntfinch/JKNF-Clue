@@ -31,6 +31,7 @@ public class Board {
     private Set<BoardCell> visited;
     private List<Player> players;
     private List<Card> deck;
+    private Solution theAnswer;
     
     // this method returns the only Board
     public static Board getInstance() {
@@ -52,6 +53,7 @@ public class Board {
         adjMap = new HashMap<BoardCell, Set<BoardCell>>();
         deck = new ArrayList<Card>();
         players = new ArrayList<Player>();
+        theAnswer = new Solution("Mr. Bob", "Pantry", "Bat");
         
         try {
             loadRoomConfig();
@@ -364,6 +366,6 @@ public class Board {
     }
     
     public boolean checkAccusation(Solution accusation) {
-    	return false;
+    	return accusation.equals(theAnswer);
     }
 }
