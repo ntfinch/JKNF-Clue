@@ -8,7 +8,7 @@ public class FakeRandom extends Random {
 	private int value;
 
 	public FakeRandom(int value) {
-		super();
+		this.value = value;
 	}
 	
 	@Override

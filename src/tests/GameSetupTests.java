@@ -167,8 +167,8 @@ public class GameSetupTests {
 		assertEquals(room, tester.disproveSuggestion(new Solution(badperson.getName(), room.getName(), badweapon.getName()), new Random()));
 		
 		//Tests with all three cards correct
-		assertEquals(weapon, tester.disproveSuggestion(new Solution(person.getName(), room.getName(), weapon.getName()), new FakeRandom(0)));
-		assertEquals(weapon, tester.disproveSuggestion(new Solution(person.getName(), room.getName(), weapon.getName()), new FakeRandom(1)));
+		assertEquals(person, tester.disproveSuggestion(new Solution(person.getName(), room.getName(), weapon.getName()), new FakeRandom(0)));
+		assertEquals(room, tester.disproveSuggestion(new Solution(person.getName(), room.getName(), weapon.getName()), new FakeRandom(1)));
 		assertEquals(weapon, tester.disproveSuggestion(new Solution(person.getName(), room.getName(), weapon.getName()), new FakeRandom(2)));
 		
 		//Test with no cards correct

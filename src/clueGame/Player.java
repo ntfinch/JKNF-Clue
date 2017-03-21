@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 public abstract class Player {
@@ -22,12 +21,10 @@ public abstract class Player {
 	    this.col = col;
 	    
 	    myCards = new ArrayList<Card>();
-//	    seenCards = new ArrayList<Card>();
+	    seenCards = new ArrayList<Card>();
 	}
 
-	public Card disproveSuggestion(Solution suggestion, Random random) {
-		return null;
-	}
+	public abstract Card disproveSuggestion(Solution suggestion);
 	
 	public void addCard(Card card) {
 		myCards.add(card);
@@ -62,5 +59,9 @@ public abstract class Player {
 	
 	public List<Card> getCards() {
 		return myCards;
+	}
+
+	public List<Card> getSeenCards() {
+		return seenCards;
 	}
 }
