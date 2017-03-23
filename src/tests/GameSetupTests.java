@@ -6,22 +6,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.BadConfigFormatException;
 import clueGame.Board;
-import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
-import clueGame.Solution;
 
 public class GameSetupTests {
 	private static Board board;

@@ -19,7 +19,6 @@ import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
-import clueGame.HumanPlayer;
 import clueGame.Player;
 import clueGame.Solution;
 
