@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -23,7 +24,7 @@ public class ICJK_BoardTests {
 	private static Board board;
 
 	@BeforeClass
-	public static void setUp() {
+	public static void setUp() throws FileNotFoundException {
 
 		board = Board.getInstance();
 		// set the file names to use my config files

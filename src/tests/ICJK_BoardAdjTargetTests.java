@@ -5,6 +5,8 @@ package tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
+
 /*
  * This program tests that adjacencies and targets are calculated correctly.
  */
@@ -23,7 +25,7 @@ public class ICJK_BoardAdjTargetTests {
 		private static Board board;
 
 		@BeforeClass
-		public static void setUp() {
+		public static void setUp() throws FileNotFoundException {
 			// Board is singleton, get the only instance and initialize it
 			board = Board.getInstance();
 			// set the file names to use my config files

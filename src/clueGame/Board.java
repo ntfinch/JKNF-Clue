@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ public class Board {
 
 	// variable used for singleton pattern
 	private static Board theInstance;
-	// ctor is private to ensure only one can be created
 	private String layoutLocation;
 	private String legendLocation;
 	private String playerLocation;
@@ -31,7 +31,7 @@ public class Board {
 	private List<Card> deck;
 	private Solution answer;
 
-	// this method returns the only Board
+	// this method returns the only Board and serves as a constructor for the Board class
 	public static Board getInstance() {
 		if (theInstance == null) {
 			theInstance = new Board();
@@ -45,7 +45,7 @@ public class Board {
 		this.playerLocation = playerLoc;
 	}
 
-	public void initialize() {
+	public void initialize() throws FileNotFoundException {
 		reset();
 
 		try {
@@ -115,16 +115,15 @@ public class Board {
 		}
 	}
 
-	public void loadDeck() {
+	public void loadDeck() throws FileNotFoundException {
 		// Create weapon cards
-		// TODO: Change to read from file
-		deck.add(new Card(CardType.WEAPON, "Bat"));
-		deck.add(new Card(CardType.WEAPON, "Gun"));
-		deck.add(new Card(CardType.WEAPON, "Knife"));
-		deck.add(new Card(CardType.WEAPON, "Screwdriver"));
-		deck.add(new Card(CardType.WEAPON, "Hammer"));
-		deck.add(new Card(CardType.WEAPON, "Katana"));
-
+		File weapon = new File("weapon.txt");
+		Scanner weaponReader = new Scanner(weapon);
+		while(weaponReader.hasNextLine()){
+			deck.add(new Card(CardType.WEAPON, weaponReader.nextLine()));
+		}
+		weaponReader.close();
+		
 		// Create room cards
 		for (String room : legendMap.values()) {
 			// TODO: this could be done better considering that the legend file

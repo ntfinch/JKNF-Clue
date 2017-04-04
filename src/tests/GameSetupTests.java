@@ -23,7 +23,7 @@ public class GameSetupTests {
 	private static Board board;
 
 	@BeforeClass
-	public static void initTheBoard() {
+	public static void initTheBoard() throws FileNotFoundException {
 		// initialize board
 		// Board is singleton, get the only instance and initialize it
 		board = Board.getInstance();
@@ -85,7 +85,7 @@ public class GameSetupTests {
 	}
 
 	@Test
-	public void loadTheDeck() {
+	public void loadTheDeck() throws FileNotFoundException{
 		final List<Card> deck = board.getDeck();
 
 		// Test that the deck has the right number of cards

@@ -1,5 +1,7 @@
 package tests;
 
+import java.io.FileNotFoundException;
+
 /*
  * This program tests that adjacencies and targets are calculated correctly.
  */
@@ -20,7 +22,7 @@ public class CR_BoardAdjTargetTests {
 	// then do all the tests. 
 	private static Board board;
 	@BeforeClass
-	public static void setUp() {
+	public static void setUp() throws FileNotFoundException {
 		// Board is singleton, get the only instance and initialize it		
 		board = Board.getInstance();
 		// set the file names to use my config files
