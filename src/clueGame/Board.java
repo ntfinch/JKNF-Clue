@@ -20,7 +20,7 @@ public class Board {
 	private String layoutLocation;
 	private String legendLocation;
 	private String playerLocation;
-	private final int MAX_BOAR_SIZE = 50;
+	private final int MAX_BOARD_SIZE = 50;
 	private BoardCell[][] grid;
 	private int numRows, numCols;
 	private Map<Character, String> legendMap;
@@ -126,19 +126,15 @@ public class Board {
 		
 		// Create room cards
 		for (String room : legendMap.values()) {
-			// TODO: this could be done better considering that the legend file
-			// has a way of knowing if a room is a card or not.
 			if (!room.equals("Walkway") && !room.equals("Closet")) {
 				deck.add(new Card(CardType.ROOM, room));
 			}
 		}
 
 		// Create people cards
-		// TODO: Change to read from file
 		File person = new File("Person.txt");
 		Scanner personReader = new Scanner(person);
 		while(personReader.hasNextLine()){
-			System.out.println("OK");
 			deck.add(new Card(CardType.PERSON, personReader.nextLine()));
 		}
 		personReader.close();
@@ -221,7 +217,6 @@ public class Board {
 		try {
 			reader = new FileReader(legendLocation);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Scanner in = new Scanner(reader);
@@ -246,10 +241,9 @@ public class Board {
 		try {
 			reader = new FileReader(layoutLocation);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		grid = new BoardCell[MAX_BOAR_SIZE][MAX_BOAR_SIZE];
+		grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		Scanner in = new Scanner(reader);
 		numRows = 0;
 		String line = "";
