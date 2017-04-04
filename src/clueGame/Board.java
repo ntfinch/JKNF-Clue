@@ -135,12 +135,13 @@ public class Board {
 
 		// Create people cards
 		// TODO: Change to read from file
-		deck.add(new Card(CardType.PERSON, "Mr. Bob"));
-		deck.add(new Card(CardType.PERSON, "Mrs. Kellie"));
-		deck.add(new Card(CardType.PERSON, "Mr. Ryan"));
-		deck.add(new Card(CardType.PERSON, "Mrs. Coolio"));
-		deck.add(new Card(CardType.PERSON, "Mr. Platoon"));
-		deck.add(new Card(CardType.PERSON, "Mrs. Kitten"));
+		File person = new File("Person.txt");
+		Scanner personReader = new Scanner(person);
+		while(personReader.hasNextLine()){
+			System.out.println("OK");
+			deck.add(new Card(CardType.PERSON, personReader.nextLine()));
+		}
+		personReader.close();
 	}
 
 	public void calcAdjacencies() {
