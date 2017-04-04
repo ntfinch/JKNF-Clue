@@ -31,12 +31,12 @@ public abstract class Player {
 	}
 	
 	public Color convertColor(String strColor) {
-		Color color;
+		Color convColor;
 		try {
 			Field field = Class.forName("java.awt.Color").getField(strColor.trim());
-			color = (Color)field.get(null);
+			convColor = (Color)field.get(null);
 		} catch (Exception e) {
-			color = null;
+			convColor = null;
 		}
 		return color;
 	}
