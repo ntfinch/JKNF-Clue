@@ -9,12 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
 
-@SuppressWarnings("serial")
 public class ControlGUI extends JPanel {
-
 	public ControlGUI() {
 		setLayout(new GridLayout(2, 0));
 		add(createTurnIndicator());
@@ -90,10 +86,10 @@ public class ControlGUI extends JPanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Clue");
 		frame.setSize(600, 200);
-		
+
 		ControlGUI gui = new ControlGUI();
 		frame.add(gui, BorderLayout.CENTER);
-		
+
 		frame.setVisible(true);
 	}
 
