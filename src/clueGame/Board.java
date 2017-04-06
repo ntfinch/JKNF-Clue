@@ -39,13 +39,17 @@ public class Board extends JPanel {
 	private final int MAX_BOARD_SIZE = 50;
 	private BoardCell[][] grid;
 	private int numRows, numCols;
-	private Map<Character, String> legendMap;
+	public static Map<Character, String> legendMap;
 	private Map<BoardCell, Set<BoardCell>> adjMap;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 	private List<Player> players;
 	private List<Card> deck;
 	private Solution answer;
+
+	public static Map<Character, String> getLegendMap() {
+		return legendMap;
+	}
 
 	// this method returns the only Board and serves as a constructor for the
 	// Board class
