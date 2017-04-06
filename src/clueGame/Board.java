@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics; 
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseAdapter;
@@ -28,7 +29,7 @@ import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JPanel;
 
-public class Board extends JPanel{
+public class Board extends JPanel {
 
 	// variable used for singleton pattern
 	private static Board theInstance;
@@ -46,7 +47,8 @@ public class Board extends JPanel{
 	private List<Card> deck;
 	private Solution answer;
 
-	// this method returns the only Board and serves as a constructor for the Board class
+	// this method returns the only Board and serves as a constructor for the
+	// Board class
 	public static Board getInstance() {
 		if (theInstance == null) {
 			theInstance = new Board();
@@ -105,19 +107,19 @@ public class Board extends JPanel{
 		} while (randomCard.hasBeenDealt() || randomCard.getType() != CardType.WEAPON);
 		Card weapon = randomCard;
 		randomCard.isSolution();
-		
+
 		do {
 			randomCard = deck.get(rand.nextInt(deck.size()));
 		} while (randomCard.hasBeenDealt() || randomCard.getType() != CardType.ROOM);
 		Card room = randomCard;
 		randomCard.isSolution();
-		
+
 		do {
 			randomCard = deck.get(rand.nextInt(deck.size()));
 		} while (randomCard.hasBeenDealt() || randomCard.getType() != CardType.PERSON);
 		Card person = randomCard;
 		randomCard.isSolution();
-		
+
 		answer = new Solution(person, room, weapon);
 
 		for (Player player : players) {
@@ -134,11 +136,11 @@ public class Board extends JPanel{
 		// Create weapon cards
 		File weapon = new File("weapon.txt");
 		Scanner weaponReader = new Scanner(weapon);
-		while(weaponReader.hasNextLine()){
+		while (weaponReader.hasNextLine()) {
 			deck.add(new Card(CardType.WEAPON, weaponReader.nextLine()));
 		}
 		weaponReader.close();
-		
+
 		// Create room cards
 		for (String room : legendMap.values()) {
 			if (!room.equals("Walkway") && !room.equals("Closet")) {
@@ -149,7 +151,7 @@ public class Board extends JPanel{
 		// Create people cards
 		File person = new File("Person.txt");
 		Scanner personReader = new Scanner(person);
-		while(personReader.hasNextLine()){
+		while (personReader.hasNextLine()) {
 			deck.add(new Card(CardType.PERSON, personReader.nextLine()));
 		}
 		personReader.close();
@@ -408,17 +410,17 @@ public class Board extends JPanel{
 
 	public Card handleSuggestion(Solution suggestion, Player accuser) {
 		int pos = players.indexOf(accuser) + 1;
-		if(pos >= players.size()){
+		if (pos >= players.size()) {
 			pos = 0;
 		}
-		while(pos != players.indexOf(accuser)){
+		while (pos != players.indexOf(accuser)) {
 			Card c = players.get(pos).disproveSuggestion(suggestion);
-			if(c != null){
+			if (c != null) {
 				return c;
 			}
-			
+
 			pos++;
-			if(pos >= players.size()){
+			if (pos >= players.size()) {
 				pos = 0;
 			}
 		}
@@ -428,17 +430,33 @@ public class Board extends JPanel{
 	public Solution getAnswer() {
 		return answer;
 	}
-	
+
 	/**
 	 * For testing purposes.
+	 * 
 	 * @param soln
 	 */
 	public void setAnswer(Solution soln) {
 		answer = soln;
 	}
-	
+
 	@Override
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+	}
+
+	public void drawCells(Graphics2D g) {
+		for (int r = 0; r < this.numRows; r++) {
+			for (int c = 0; c < this.numCols; c++) {
+				this.grid[r][c].drawBoardCells(g);
+			}
+		}
+
+	}
+
+	public void drawPlayers(Graphics2D g) {
+		for (Player p : this.players) {
+			// p.drawPlayer(g, this);
+		}
 	}
 }
