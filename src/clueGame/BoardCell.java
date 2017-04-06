@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.Graphics2D;
+
 public class BoardCell implements Comparable<BoardCell>{
 	private int row, column;
 	private char initial = ' ';
@@ -40,6 +42,10 @@ public class BoardCell implements Comparable<BoardCell>{
 		}
 	}
 
+	public void drawBoardCells(Graphics2D g){
+		
+	}
+	
 	public boolean isWalkway() {
 		return isWalkway;
 	}
