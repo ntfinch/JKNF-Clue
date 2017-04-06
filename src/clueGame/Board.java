@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,8 +13,22 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import javax.swing.SwingUtilities;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics; 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseMotionAdapter;
 
-public class Board {
+import javax.swing.JPanel;
+
+public class Board extends JPanel{
 
 	// variable used for singleton pattern
 	private static Board theInstance;
@@ -420,5 +435,10 @@ public class Board {
 	 */
 	public void setAnswer(Solution soln) {
 		answer = soln;
+	}
+	
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
 	}
 }
