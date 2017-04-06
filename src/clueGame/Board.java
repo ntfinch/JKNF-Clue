@@ -424,7 +424,7 @@ public class Board extends JPanel{
 		}
 		return null;
 	}
-
+ 
 	public Solution getAnswer() {
 		return answer;
 	}
