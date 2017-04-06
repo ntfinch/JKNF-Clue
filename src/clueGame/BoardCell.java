@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 public class BoardCell implements Comparable<BoardCell>{
@@ -9,14 +11,9 @@ public class BoardCell implements Comparable<BoardCell>{
 	private boolean isWalkway = false;
 	private boolean isRoom = false;
 	private DoorDirection doorDirection = DoorDirection.NONE;
-
-	public int getRow() {
-		return row;
-	}
-
-	public int getColumn() {
-		return column;
-	}
+	Color blu = new Color(155, 194, 230);
+	public static int CELL_SIZE = 34;
+	protected int xPos, yPos;
 
 	public BoardCell(int row, int column, char myChar) {
 		super();
@@ -28,7 +25,7 @@ public class BoardCell implements Comparable<BoardCell>{
 		}
 		else if (myChar != 'X')
 			isRoom = true;
-
+		
 	}
 
 	public boolean isDoorway() {
@@ -42,9 +39,25 @@ public class BoardCell implements Comparable<BoardCell>{
 		}
 	}
 
-	public void drawBoardCells(Graphics2D g){
-		
+	public void drawBoardCells(Graphics g){
+		if(this.isWalkway)
+			g.setColor(Color.GRAY);
+		else
+			g.setColor(blu);
+		if(this.isDoorway)
+			drawDoorway(g);
+		 g.fillRect(this.row, this.column, PIECE_SIZE, PIECE_SIZE);
+		    if ((isWalkway()) || (this.highlighted))
+		    {
+		      g.setColor(Color.black);
+		      g.drawRect(this.x, this.y, PIECE_SIZE, PIECE_SIZE);
+		    }
 	}
+	
+	public void drawDoorway(Graphics g)
+	  {
+		
+	  }
 	
 	public boolean isWalkway() {
 		return isWalkway;
@@ -66,4 +79,11 @@ public class BoardCell implements Comparable<BoardCell>{
 		return (row * 100 + column) - (other.row * 100 + other.column);
 	}
 
+	public int getRow() {
+		return row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
 }

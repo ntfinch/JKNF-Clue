@@ -443,18 +443,18 @@ public class Board extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		drawCells(g);
 	}
 
-	public void drawCells(Graphics2D g) {
+	public void drawCells(Graphics g) {
 		for (int r = 0; r < this.numRows; r++) {
 			for (int c = 0; c < this.numCols; c++) {
 				this.grid[r][c].drawBoardCells(g);
 			}
 		}
-
 	}
 
-	public void drawPlayers(Graphics2D g) {
+	public void drawPlayers(Graphics g) {
 		for (Player p : this.players) {
 			// p.drawPlayer(g, this);
 		}
