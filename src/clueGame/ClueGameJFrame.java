@@ -12,7 +12,7 @@ public class ClueGameJFrame {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Clue");
-		frame.setSize(600, 200);
+		frame.setSize(800, 1200);
 
 		ControlGUI gui = new ControlGUI();
 		frame.add(gui, BorderLayout.CENTER);
