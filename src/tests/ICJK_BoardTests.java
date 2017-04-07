@@ -103,4 +103,9 @@ public class ICJK_BoardTests {
 		assertEquals('G', board.getCellAt(0, 22).getInitial());
 		assertEquals('X', board.getCellAt(12, 13).getInitial());
 	}
+
+	public static void main(String[] args) {
+
+		Board.getInstance();
+	}
 }

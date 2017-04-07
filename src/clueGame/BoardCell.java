@@ -7,9 +7,7 @@ import java.awt.Graphics2D;
 public class BoardCell implements Comparable<BoardCell> {
 	private int row, column;
 	private char initial = ' ';
-	private boolean isDoorway = false;
-	private boolean isWalkway = false;
-	private boolean isRoom = false;
+	private boolean isDoorway = false, isWalkway = false, isRoom = false, showName = false;
 	private DoorDirection doorDirection = DoorDirection.NONE;
 	Color blu = new Color(155, 194, 230);
 	public static int CELL_SIZE = 34;
@@ -29,33 +27,26 @@ public class BoardCell implements Comparable<BoardCell> {
 
 	}
 
-	public boolean isDoorway() {
-		return isDoorway;
-	}
-
-	public void setToDoorway(DoorDirection doorDirection) {
-		if (!(doorDirection == DoorDirection.NONE)) {
-			isDoorway = true;
-			this.doorDirection = doorDirection;
-		}
-	}
-
 	public void drawBoardCells(Graphics g) {
 		if (this.isWalkway)
 			g.setColor(Color.GRAY);
 		else
 			g.setColor(blu);
-		
+
 		if (this.isDoorway)
 			drawDoorway(g);
-		
-		//Draw individual cells
+
+		// Draw individual cells
 		g.fillRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
-		
-		//Draw borders
-		if ((isWalkway())) {
+
+		// Draw borders
+		if (isWalkway()) {
 			g.setColor(Color.BLACK);
 			g.drawRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
+		}
+		if (this.showName) {
+			g.setColor(Color.YELLOW);
+			g.drawString(Board.getInstance().getRoomName(this.initial).toUpperCase(), this.xPos, this.yPos);
 		}
 	}
 
@@ -80,6 +71,18 @@ public class BoardCell implements Comparable<BoardCell> {
 			}
 		}
 
+	}
+
+	// Getters, setters, boolean testers
+	public boolean isDoorway() {
+		return isDoorway;
+	}
+
+	public void setToDoorway(DoorDirection doorDirection) {
+		if (!(doorDirection == DoorDirection.NONE)) {
+			isDoorway = true;
+			this.doorDirection = doorDirection;
+		}
 	}
 
 	public boolean isWalkway() {

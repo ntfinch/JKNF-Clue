@@ -17,6 +17,8 @@ public class NotesGUI extends JPanel{
 
 	
 	private static final long serialVersionUID = 1L;
+	
+	public static Map<Character, String> localLegendMap = Board.getInstance().getLegendMap();
 
 	public NotesGUI() throws FileNotFoundException {
 		setLayout(new GridLayout(3, 2));
@@ -59,7 +61,7 @@ public class NotesGUI extends JPanel{
 	
 	
 	private Component roomIndicator() throws FileNotFoundException {
-		Map<Character, String> legendMap = clueGame.Board.getLegendMap();
+		Map<Character, String> legendMap = localLegendMap;
 		JPanel rooms = new JPanel();
 		rooms.setLayout(new GridLayout(3,1));
 		rooms.add(createLabel("People"), BorderLayout.CENTER);
@@ -97,6 +99,8 @@ public class NotesGUI extends JPanel{
 		frame.add(notes, BorderLayout.CENTER);
 
 		frame.setVisible(true);
+		
+		
 
 	}
 

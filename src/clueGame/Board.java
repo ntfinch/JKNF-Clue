@@ -32,14 +32,14 @@ import javax.swing.JPanel;
 public class Board extends JPanel {
 
 	// variable used for singleton pattern
-	private static Board theInstance;
+	private static Board theInstance = new Board();
 	private String layoutLocation;
 	private String legendLocation;
 	private String playerLocation;
 	private final int MAX_BOARD_SIZE = 50;
 	private BoardCell[][] grid;
 	private int numRows, numCols;
-	public static Map<Character, String> legendMap;
+	private Map<Character, String> legendMap;
 	private Map<BoardCell, Set<BoardCell>> adjMap;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
@@ -47,16 +47,16 @@ public class Board extends JPanel {
 	private List<Card> deck;
 	private Solution answer;
 
-	public static Map<Character, String> getLegendMap() {
+	public Map<Character, String> getLegendMap() {
 		return legendMap;
 	}
 
 	// this method returns the only Board and serves as a constructor for the
 	// Board class
 	public static Board getInstance() {
-		if (theInstance == null) {
-			theInstance = new Board();
-		}
+		// if (theInstance == null) {
+		// theInstance = new Board();
+		// }
 		return theInstance;
 	}
 
@@ -369,6 +369,12 @@ public class Board extends JPanel {
 
 	}
 
+	public String getRoomName(char initial) {
+		if (legendMap.containsKey(initial))
+			return legendMap.get(initial);
+		return "Room initials not stored";
+	}
+
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
@@ -430,7 +436,7 @@ public class Board extends JPanel {
 		}
 		return null;
 	}
- 
+
 	public Solution getAnswer() {
 		return answer;
 	}
@@ -443,6 +449,12 @@ public class Board extends JPanel {
 	public void setAnswer(Solution soln) {
 		answer = soln;
 	}
+
+	public String getRoomName() {
+		return "";
+	}
+
+	// ***********GUI*****************
 
 	@Override
 	public void paintComponent(Graphics g) {
