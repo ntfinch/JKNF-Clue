@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,4 +79,18 @@ public abstract class Player {
 	public String toString(){
 		return this.getClass() + ": " + name + ". Hand: " + myCards.toString();
 	}
+	
+	//GuI
+	
+	  public void drawPlayer(Graphics g, Board board)
+	  {
+	    int playerSize = BoardCell.CELL_SIZE;
+	    int x = this.col * playerSize;
+	    int y = this.row * playerSize;
+	 
+	    g.setColor(this.color);
+	    g.fillOval(x, y, playerSize, playerSize);
+	    g.setColor(Color.BLACK);
+	    g.drawOval(x, y, playerSize, playerSize);
+	  }
 }

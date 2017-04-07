@@ -450,9 +450,8 @@ public class Board extends JPanel {
 		answer = soln;
 	}
 
-	public String getRoomName() {
-		return "";
-	}
+
+
 
 	// ***********GUI*****************
 
