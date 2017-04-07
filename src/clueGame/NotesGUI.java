@@ -13,12 +13,25 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import tests.FakeRandom;
+
 public class NotesGUI extends JPanel{
 
+	private static Board board;
+
+	public static void initTheBoard() throws FileNotFoundException, BadConfigFormatException {
+		// initialize board
+		// Board is singleton, get the only instance and initialize it
+		board = Board.getInstance();
+		// set the file names to use my config files
+		board.setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt", "TDNFTP_players.txt");
+
+		board.initialize();
+		board.loadRoomConfig();
+	}
 	
 	private static final long serialVersionUID = 1L;
 	
-	public static Map<Character, String> localLegendMap = Board.getInstance().getLegendMap();
 
 	public NotesGUI() throws FileNotFoundException {
 		setLayout(new GridLayout(3, 2));
@@ -61,7 +74,7 @@ public class NotesGUI extends JPanel{
 	
 	
 	private Component roomIndicator() throws FileNotFoundException {
-		Map<Character, String> legendMap = localLegendMap;
+		Map<Character, String> legendMap = board.getLegendMap();
 		JPanel rooms = new JPanel();
 		rooms.setLayout(new GridLayout(3,1));
 		rooms.add(createLabel("People"), BorderLayout.CENTER);
@@ -75,21 +88,15 @@ public class NotesGUI extends JPanel{
 
 		return rooms;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	/**
 	 * @param args
 	 * @throws FileNotFoundException 
+	 * @throws BadConfigFormatException 
 	 */
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws FileNotFoundException, BadConfigFormatException {
+		initTheBoard();
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Clue");

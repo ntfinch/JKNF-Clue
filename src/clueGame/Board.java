@@ -450,15 +450,13 @@ public class Board extends JPanel {
 		answer = soln;
 	}
 
-
-
-
 	// ***********GUI*****************
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		drawCells(g);
+		drawPlayers(g);
 	}
 
 	public void drawCells(Graphics g) {
@@ -471,7 +469,7 @@ public class Board extends JPanel {
 
 	public void drawPlayers(Graphics g) {
 		for (Player p : this.players) {
-			// p.drawPlayer(g, this);
+			p.drawPlayer(g, this);
 		}
 	}
 }
