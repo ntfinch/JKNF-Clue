@@ -68,7 +68,7 @@ public class Board extends JPanel {
 
 	public void initialize() throws FileNotFoundException {
 		reset();
-
+		setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt", "TDNFTP_players.txt");
 		try {
 			loadRoomConfig();
 		} catch (BadConfigFormatException e) {
