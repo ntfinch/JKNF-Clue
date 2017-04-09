@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import tests.FakeRandom;
 
@@ -26,11 +27,11 @@ public class NotesGUI extends JPanel{
 		this.board = Board.getInstance();
 		setLayout(new GridLayout(3, 2));
 		add(peopleIndicator());
+		add(bestPerson());
 		add(roomIndicator());
+		add(bestRoom());
 		add(weaponIndicator());
-		//add(bestPerson());
-		//add(bestRoom());
-		//add(bestWeapon());
+		add(bestWeapon());
 	}
 
 	
@@ -40,6 +41,7 @@ public class NotesGUI extends JPanel{
 		label.setText(text);
 		return label;
 	}
+	
 	
 	//Creates a checkbox with given name
 	private Component createCheckBox (String checkBoxName){
@@ -51,7 +53,7 @@ public class NotesGUI extends JPanel{
 	private Component peopleIndicator() throws FileNotFoundException {
 		JPanel people = new JPanel();
 		people.setLayout(new GridLayout(3,2));
-		people.add(createLabel("People"), BorderLayout.NORTH);
+		people.setBorder(new TitledBorder("People"));
 		
 		File person = new File("Person.txt");
 		Scanner personReader = new Scanner(person);
@@ -66,9 +68,9 @@ public class NotesGUI extends JPanel{
 	private Component bestPerson() throws FileNotFoundException {
 		JPanel menu = new JPanel();
 		//menu.setLayout(new GridLayout(3,1));
-		menu.add(createLabel("Person Guess"), BorderLayout.NORTH);
 		JComboBox personList = new JComboBox();
 		menu.add(personList);
+		menu.setBorder(new TitledBorder("Person Guess"));
 		
 		File person = new File("Person.txt");
 		Scanner personReader = new Scanner(person);
@@ -84,8 +86,8 @@ public class NotesGUI extends JPanel{
 	private Component roomIndicator() throws FileNotFoundException {
 		Map<Character, String> legendMap = Board.getInstance().getLegendMap();
 		JPanel rooms = new JPanel();
-		rooms.setLayout(new GridLayout(3,2));
-		rooms.add(createLabel("Rooms"), BorderLayout.CENTER);
+		rooms.setLayout(new GridLayout(5,2));
+		rooms.setBorder(new TitledBorder("Rooms"));
 		
 		for (String room : legendMap.values()) {
 			if (!room.equals("Walkway") && !room.equals("Closet")) {
@@ -98,7 +100,7 @@ public class NotesGUI extends JPanel{
 		Map<Character, String> legendMap = Board.getInstance().getLegendMap();
 		JPanel menu = new JPanel();
 		//menu.setLayout(new GridLayout(3,1));
-		menu.add(createLabel("Room Guess"), BorderLayout.CENTER);
+		menu.setBorder(new TitledBorder("Rooms Guess"));
 		JComboBox roomList = new JComboBox();
 		menu.add(roomList);
 		
@@ -114,7 +116,7 @@ public class NotesGUI extends JPanel{
 	private Component weaponIndicator() throws FileNotFoundException {
 		JPanel weapon = new JPanel();
 		weapon.setLayout(new GridLayout(3,2));
-		weapon.add(createLabel("Weapons"), BorderLayout.SOUTH);
+		weapon.setBorder(new TitledBorder("Weapons"));
 		
 		File weapons = new File("weapon.txt");
 		Scanner weaponReader = new Scanner(weapons);
@@ -129,7 +131,7 @@ public class NotesGUI extends JPanel{
 	private Component bestWeapon() throws FileNotFoundException {
 		JPanel menu = new JPanel();
 		//menu.setLayout(new GridLayout(3,1));
-		menu.add(createLabel("Weapon Guess"), BorderLayout.SOUTH);
+		menu.setBorder(new TitledBorder("Weapon Guess"));
 		JComboBox weaponList = new JComboBox();
 		menu.add(weaponList);
 		
@@ -154,7 +156,7 @@ public class NotesGUI extends JPanel{
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Clue");
-		frame.setSize(400, 600);
+		frame.setSize(550, 500);
 
 		NotesGUI notes = new NotesGUI();
 		frame.add(notes, BorderLayout.CENTER);
