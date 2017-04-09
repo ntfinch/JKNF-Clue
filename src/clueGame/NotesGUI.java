@@ -23,7 +23,7 @@ public class NotesGUI extends JPanel{
 	public Board board;
 
 
-	public NotesGUI() throws FileNotFoundException {
+	public NotesGUI() throws FileNotFoundException, BadConfigFormatException {
 		this.board = Board.getInstance();
 		setLayout(new GridLayout(3, 2));
 		add(peopleIndicator());
@@ -151,7 +151,7 @@ public class NotesGUI extends JPanel{
 	 * @throws FileNotFoundException 
 	 * @throws BadConfigFormatException 
 	 */
-	public static void main(String[] args) throws FileNotFoundException, BadConfigFormatException {
+	public static void notesInit() throws FileNotFoundException, BadConfigFormatException {
 		Board.getInstance().initialize();
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
