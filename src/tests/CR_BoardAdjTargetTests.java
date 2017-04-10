@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.BoardCell;
 
@@ -22,7 +23,7 @@ public class CR_BoardAdjTargetTests {
 	// then do all the tests. 
 	private static Board board;
 	@BeforeClass
-	public static void setUp() throws FileNotFoundException {
+	public static void setUp() throws FileNotFoundException, BadConfigFormatException {
 		// Board is singleton, get the only instance and initialize it		
 		board = Board.getInstance();
 		// set the file names to use my config files

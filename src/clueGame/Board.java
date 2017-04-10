@@ -66,7 +66,7 @@ public class Board extends JPanel {
 		this.playerLocation = playerLoc;
 	}
 
-	public void initialize() throws FileNotFoundException {
+	public void initialize() throws FileNotFoundException, BadConfigFormatException {
 		reset();
 		setConfigFiles("ICJK_ClueLayout.csv", "ICJK_Legend.txt", "TDNFTP_players.txt");
 		try {
@@ -74,13 +74,13 @@ public class Board extends JPanel {
 		} catch (BadConfigFormatException e) {
 			e.printStackTrace();
 		}
-
-		try {
+		loadBoardConfig();
+		/*try {
 			loadBoardConfig();
 		} catch (BadConfigFormatException e) {
 			e.printStackTrace();
 		}
-
+*/
 		try {
 			loadPlayerConfig();
 		} catch (FileNotFoundException e) {
@@ -92,6 +92,7 @@ public class Board extends JPanel {
 		dealDeck(new Random());
 
 		calcAdjacencies();
+		
 	}
 
 	public void reset() {
@@ -451,8 +452,7 @@ public class Board extends JPanel {
 	}
 
 	// ***********GUI*****************
-
-	@Override
+@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		drawCells(g);
@@ -460,9 +460,10 @@ public class Board extends JPanel {
 	}
 
 	public void drawCells(Graphics g) {
-		for (int r = 0; r < this.numRows; r++) {
-			for (int c = 0; c < this.numCols; c++) {
-				this.grid[r][c].drawBoardCells(g);
+		for (int c = 0; c < this.numCols; c++) {
+			for (int r = 0; r < this.numRows; r++) {
+			
+				grid[c][r].drawBoardCells(g);
 			}
 		}
 	}
@@ -472,4 +473,6 @@ public class Board extends JPanel {
 			p.drawPlayer(g, this);
 		}
 	}
+	
+	
 }

@@ -16,6 +16,7 @@ import java.util.Set;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.BoardCell;
 
@@ -25,7 +26,7 @@ public class ICJK_BoardAdjTargetTests {
 		private static Board board;
 
 		@BeforeClass
-		public static void setUp() throws FileNotFoundException {
+		public static void setUp() throws FileNotFoundException, BadConfigFormatException {
 			// Board is singleton, get the only instance and initialize it
 			board = Board.getInstance();
 			// set the file names to use my config files
