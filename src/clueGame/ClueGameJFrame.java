@@ -17,10 +17,7 @@ public class ClueGameJFrame extends JFrame{
 	void init() throws FileNotFoundException, BadConfigFormatException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue");
-		setSize(1000, 1000);
-
-		
-
+		setSize(902, 936);
 		
 		board = Board.getInstance();
 		board.initialize();

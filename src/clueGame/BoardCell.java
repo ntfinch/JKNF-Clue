@@ -28,7 +28,6 @@ public class BoardCell implements Comparable<BoardCell> {
 	}
 
 	public void drawBoardCells(Graphics g) {
-		System.out.println(this);
 		if (this.isWalkway)
 			g.setColor(Color.GRAY);
 		else

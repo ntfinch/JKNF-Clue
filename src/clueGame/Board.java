@@ -470,6 +470,7 @@ public class Board extends JPanel {
 
 	public void drawPlayers(Graphics g) {
 		for (Player p : this.players) {
+			System.out.println(p);
 			p.drawPlayer(g, this);
 		}
 	}

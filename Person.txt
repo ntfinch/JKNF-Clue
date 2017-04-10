@@ -1,6 +1,3 @@
-Mr. Bob
-Mrs. Kellie
-Mr. Ryan
-Mrs. Coolio
-Mr. Platoon
-Mrs. Kitten
+John Doe
+Jane Doe
+Bradd Pitt
