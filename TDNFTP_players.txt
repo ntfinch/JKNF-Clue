@@ -1,3 +1,3 @@
-Human,John Doe,Green,8,0
-Human,Jane Doe,Red,0,19
-Computer,Brad Pitt,Blue,23,14
+Human,John Doe,Green,12,0
+Human,Jane Doe,Red,0,18
+Computer,Brad Pitt,Blue,25,15

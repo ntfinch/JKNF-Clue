@@ -33,13 +33,16 @@ public class BoardCell implements Comparable<BoardCell> {
 		else
 			g.setColor(blu);
 
-		if (this.isDoorway){
-			drawDoorway(g);
-		}
+		
 
 		// Draw individual cells
 		g.fillRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
+		
+		
+		if (this.isDoorway){
+			drawDoorway(g);
 
+		}
 		// Draw borders
 		if (isWalkway()) {
 			g.setColor(Color.BLACK);
@@ -52,11 +55,11 @@ public class BoardCell implements Comparable<BoardCell> {
 	}
 
 	public void drawDoorway(Graphics g) {
-		g.setColor(Color.YELLOW);
+		g.setColor(Color.BLUE);
 		int sideSize = CELL_SIZE;
 		if (this.doorDirection == DoorDirection.LEFT) {
 			for (int i = 0; i < 4; i++) {
-				g.drawLine(this.xPos + i, this.yPos, this.xPos + i, this.yPos + sideSize+sideSize);
+				g.drawLine(this.xPos + i, this.yPos, this.xPos + i, this.yPos + sideSize);
 			}
 		} else if (this.doorDirection == DoorDirection.RIGHT) {
 			for (int i = 0; i < 4; i++) {
@@ -71,7 +74,6 @@ public class BoardCell implements Comparable<BoardCell> {
 				g.drawLine(this.xPos, this.yPos + sideSize - i, this.xPos + sideSize, this.yPos + sideSize - i);
 			}
 		}
-
 	}
 
 	// Getters, setters, boolean testers

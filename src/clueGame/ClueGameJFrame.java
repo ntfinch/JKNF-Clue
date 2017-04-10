@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 
 public class ClueGameJFrame extends JFrame{
 	
@@ -15,9 +17,17 @@ public class ClueGameJFrame extends JFrame{
 	}
 	
 	void init() throws FileNotFoundException, BadConfigFormatException {
+		
+//		JMenuBar menuBar = new JMenuBar();
+//		setJMenuBar(menuBar);
+//		JMenu file = new JMenu("File");
+//		menuBar.add(file);
+//		//menuBar.setl
+//		add(menuBar);
+//		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue");
-		setSize(902, 936);
+		setSize(840, 1005);
 		
 		board = Board.getInstance();
 		board.initialize();
@@ -33,7 +43,7 @@ public class ClueGameJFrame extends JFrame{
 		//Notes Initialize
 		Board.getInstance().initialize();
 		JFrame notesFrame = new JFrame();
-		notesFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		notesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		notesFrame.setTitle("Clue");
 		notesFrame.setSize(550, 500);
 
