@@ -462,7 +462,6 @@ public class Board extends JPanel {
 	public void drawCells(Graphics g) {
 		for (int c = 0; c < this.numCols; c++) {
 			for (int r = 0; r < this.numRows; r++) {
-			
 				grid[c][r].drawBoardCells(g);
 			}
 		}
@@ -470,7 +469,6 @@ public class Board extends JPanel {
 
 	public void drawPlayers(Graphics g) {
 		for (Player p : this.players) {
-			System.out.println(p);
 			p.drawPlayer(g, this);
 		}
 	}

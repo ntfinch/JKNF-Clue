@@ -22,8 +22,8 @@ public class BoardCell implements Comparable<BoardCell> {
 			isWalkway = true;
 		} else if (myChar != 'X')
 			isRoom = true;
-		xPos = column * CELL_SIZE;
-		yPos = row * CELL_SIZE;
+		xPos = row * CELL_SIZE;
+		yPos = column * CELL_SIZE;
 
 	}
 
@@ -33,8 +33,9 @@ public class BoardCell implements Comparable<BoardCell> {
 		else
 			g.setColor(blu);
 
-		if (this.isDoorway)
+		if (this.isDoorway){
 			drawDoorway(g);
+		}
 
 		// Draw individual cells
 		g.fillRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
@@ -45,7 +46,7 @@ public class BoardCell implements Comparable<BoardCell> {
 			g.drawRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
 		}
 		if (this.showName) {
-			g.setColor(Color.YELLOW);
+			g.setColor(Color.GREEN);
 			g.drawString(Board.getInstance().getRoomName(this.initial).toUpperCase(), this.xPos, this.yPos);
 		}
 	}
@@ -55,7 +56,7 @@ public class BoardCell implements Comparable<BoardCell> {
 		int sideSize = CELL_SIZE;
 		if (this.doorDirection == DoorDirection.LEFT) {
 			for (int i = 0; i < 4; i++) {
-				g.drawLine(this.xPos + i, this.yPos, this.xPos + i, this.yPos + sideSize);
+				g.drawLine(this.xPos + i, this.yPos, this.xPos + i, this.yPos + sideSize+sideSize);
 			}
 		} else if (this.doorDirection == DoorDirection.RIGHT) {
 			for (int i = 0; i < 4; i++) {
