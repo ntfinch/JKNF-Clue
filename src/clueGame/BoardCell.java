@@ -33,33 +33,38 @@ public class BoardCell implements Comparable<BoardCell> {
 		else
 			g.setColor(blu);
 
-		
+		if (this.isDoorway){
+			drawDoorway(g);
+		}
 
 		// Draw individual cells
 		g.fillRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
-		
-		
-		if (this.isDoorway){
-			drawDoorway(g);
 
-		}
 		// Draw borders
 		if (isWalkway()) {
 			g.setColor(Color.BLACK);
 			g.drawRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
 		}
-		if (this.showName) {
-			g.setColor(Color.GREEN);
-			g.drawString(Board.getInstance().getRoomName(this.initial).toUpperCase(), this.xPos, this.yPos);
-		}
+		g.setColor(Color.BLUE);
+		g.drawString("Master Bedroom", 3*CELL_SIZE, 4*CELL_SIZE);
+		g.drawString("Office", 11*CELL_SIZE, 2*CELL_SIZE);
+		g.drawString("Library", 16*CELL_SIZE, 2*CELL_SIZE);
+		g.drawString("Game Room", 20*CELL_SIZE, 2*CELL_SIZE);
+		g.drawString("Music Room", 3*CELL_SIZE, 17*CELL_SIZE);
+		g.drawString("Dining Room", 20*CELL_SIZE, 11*CELL_SIZE);
+		g.drawString("Kitchen", 20*CELL_SIZE, 20*CELL_SIZE);
+		g.drawString("Guest Bedroom", 1*CELL_SIZE, 23*CELL_SIZE);
+		g.drawString("Pantry", 11*CELL_SIZE, 24*CELL_SIZE);
+
+					
 	}
 
 	public void drawDoorway(Graphics g) {
-		g.setColor(Color.BLUE);
+		g.setColor(Color.YELLOW);
 		int sideSize = CELL_SIZE;
 		if (this.doorDirection == DoorDirection.LEFT) {
 			for (int i = 0; i < 4; i++) {
-				g.drawLine(this.xPos + i, this.yPos, this.xPos + i, this.yPos + sideSize);
+				g.drawLine(this.xPos + i, this.yPos, this.xPos + i, this.yPos + sideSize+sideSize);
 			}
 		} else if (this.doorDirection == DoorDirection.RIGHT) {
 			for (int i = 0; i < 4; i++) {
@@ -74,6 +79,7 @@ public class BoardCell implements Comparable<BoardCell> {
 				g.drawLine(this.xPos, this.yPos + sideSize - i, this.xPos + sideSize, this.yPos + sideSize - i);
 			}
 		}
+
 	}
 
 	// Getters, setters, boolean testers
