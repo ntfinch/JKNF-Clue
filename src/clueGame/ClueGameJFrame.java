@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class ClueGameJFrame extends JFrame {
 
@@ -64,6 +65,8 @@ public class ClueGameJFrame extends JFrame {
 	public static void main(String[] args) throws FileNotFoundException, BadConfigFormatException {
 		ClueGameJFrame frame = new ClueGameJFrame();
 		frame.setVisible(true);
+	    JOptionPane.showMessageDialog(frame, "You are John Doe, press Next Player to begin playing Clue", 
+	    	      "Clue Game", 1);
 
 	}
 	
