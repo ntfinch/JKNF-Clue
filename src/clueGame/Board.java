@@ -473,5 +473,9 @@ public class Board extends JPanel {
 		}
 	}
 	
+	public List<Card> getPlayersCards(){
+		return players.get(0).getCards();
+	}
 	
 }
+ 

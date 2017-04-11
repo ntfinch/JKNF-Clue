@@ -28,7 +28,7 @@ public class ClueGameJFrame extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue");
-		setSize(840, 1005);
+		setSize(940, 1005);
 		
 		board = Board.getInstance();
 		board.initialize();
@@ -60,6 +60,8 @@ public class ClueGameJFrame extends JFrame {
 		ControlGUI control = new ControlGUI();
 		control.setSize(500, 500);
 		add(control, BorderLayout.SOUTH);
+		PlayerCards pd = new PlayerCards(this.board.getPlayersCards());
+	    add(pd, "East");
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, BadConfigFormatException {
