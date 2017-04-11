@@ -2,19 +2,24 @@ package clueGame;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-public class playerCards extends JPanel {
-	ArrayList<Card> cards;
+public class PlayerCards extends JPanel {
+	List<Card> cards;
 
-	public playerCards(ArrayList<Card> crds) {
+	public PlayerCards(List<Card> crds) {
 		cards = crds;
 		setLayout(new GridLayout(6, 1));
 		setBorder(getBorder("My Cards"));
+		createSubBoxes("People", CardType.PERSON);
+		createSubBoxes("Rooms", CardType.ROOM);
+		createSubBoxes("Weapons", CardType.WEAPON);
+
 	}
 
 	public TitledBorder getBorder(String t) {
