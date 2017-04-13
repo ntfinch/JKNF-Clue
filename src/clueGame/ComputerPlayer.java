@@ -110,4 +110,6 @@ public class ComputerPlayer extends Player {
 	public void setLastRoom(BoardCell room) {
 		lastRoom = room;
 	}
+
+	
 }
