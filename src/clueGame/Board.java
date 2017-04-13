@@ -16,6 +16,7 @@ import java.util.Scanner;
 import java.util.Set;
 import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import java.awt.Color;
@@ -406,11 +407,21 @@ public class Board extends JPanel {
 		in.close();
 	}
 	
-	public void mouseClicked(ActionEvent e){
-		//BoardCell clicked = new BoardCell()
+	public void mouseClicked(MouseEvent e){
+		BoardCell clicked = findCell(e.getX(), e.getY());
+		if(targets.contains(clicked))
+			JOptionPane.showMessageDialog(null, "Position clicked is not a target from which you can move to");
+		
 	}
 	public List<Player> getPlayers() {
 		return players;
+	}
+	
+	public BoardCell findCell(int x, int y){
+		int row, col;
+		col = x/BoardCell.CELL_SIZE;
+		row = y/BoardCell.CELL_SIZE;
+		return new BoardCell(row, col, 'C');
 	}
 
 	public List<Card> getDeck() {
