@@ -36,7 +36,11 @@ public class BoardCell implements Comparable<BoardCell> {
 		if (this.isDoorway){
 			drawDoorway(g);
 		}
-
+		
+		//Highlights if valid move
+				if (Board.getInstance().getTargets().contains(this)&& Board.getInstance().isHumanPlayer()) {
+					g.setColor(Color.RED);
+				}
 		// Draw individual cells
 		g.fillRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
 
