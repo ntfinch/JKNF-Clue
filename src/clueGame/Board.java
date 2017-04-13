@@ -46,6 +46,8 @@ public class Board extends JPanel {
 	private List<Player> players;
 	private List<Card> deck;
 	private Solution answer;
+	private Player currentPlayer;
+	private HumanPlayer humanPlayer;
 
 	public Map<Character, String> getLegendMap() {
 		return legendMap;
@@ -75,12 +77,7 @@ public class Board extends JPanel {
 			e.printStackTrace();
 		}
 		loadBoardConfig();
-		/*try {
-			loadBoardConfig();
-		} catch (BadConfigFormatException e) {
-			e.printStackTrace();
-		}
-*/
+		
 		try {
 			loadPlayerConfig();
 		} catch (FileNotFoundException e) {
@@ -441,7 +438,14 @@ public class Board extends JPanel {
 	public Solution getAnswer() {
 		return answer;
 	}
-
+	
+	//************** NextPlayer clicked **********
+	public void nextPlayer(){
+		//if(humanPlayer)
+	}
+	
+	
+	
 	/**
 	 * For testing purposes.
 	 * 
