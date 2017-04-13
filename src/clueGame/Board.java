@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseMotionAdapter;
@@ -395,7 +396,8 @@ public class Board extends JPanel {
 				break;
 			}
 			if (split[0].equals("Human")) {
-				players.add(new HumanPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4])));
+				humanPlayer = new HumanPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4]));
+				players.add(humanPlayer);
 			} else {
 				players.add(
 						new ComputerPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4])));
@@ -403,7 +405,10 @@ public class Board extends JPanel {
 		}
 		in.close();
 	}
-
+	
+	public void mouseClicked(ActionEvent e){
+		//BoardCell clicked = new BoardCell()
+	}
 	public List<Player> getPlayers() {
 		return players;
 	}
