@@ -80,6 +80,8 @@ public abstract class Player {
 		return this.getClass() + ": " + name + ". Hand: " + myCards.toString();
 	}
 	
+
+	
 	public void playerMove(BoardCell nextMove) {
 		this.row = nextMove.getRow();
 		this.col = nextMove.getColumn();

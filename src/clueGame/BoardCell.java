@@ -12,6 +12,7 @@ public class BoardCell implements Comparable<BoardCell> {
 	Color blu = new Color(155, 194, 230);
 	public static int CELL_SIZE = 34;
 	protected int xPos, yPos;
+	private boolean validMove;
 
 	public BoardCell(int row, int column, char myChar) {
 		super();
@@ -35,6 +36,11 @@ public class BoardCell implements Comparable<BoardCell> {
 
 		if (this.isDoorway){
 			drawDoorway(g);
+		}
+		
+		//Highlights if valid move
+		if (Board.getInstance().getTargets().contains(this)&& Board.getInstance().isHumanPlayer()) {
+			g.setColor(Color.RED);
 		}
 
 		// Draw individual cells
@@ -121,4 +127,5 @@ public class BoardCell implements Comparable<BoardCell> {
 	public int getColumn() {
 		return column;
 	}
+
 }

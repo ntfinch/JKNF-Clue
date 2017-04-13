@@ -47,6 +47,7 @@ public class Board extends JPanel {
 	private List<Player> players;
 	private List<Card> deck;
 	private Solution answer;
+
 	private Player currentPlayer;
 	private HumanPlayer humanPlayer;
 
@@ -398,6 +399,7 @@ public class Board extends JPanel {
 			if (split[0].equals("Human")) {
 				humanPlayer = new HumanPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4]));
 				players.add(humanPlayer);
+				currentPlayer = humanPlayer;
 			} else {
 				players.add(
 						new ComputerPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4])));
@@ -449,7 +451,12 @@ public class Board extends JPanel {
 		//if(humanPlayer)
 	}
 	
-	
+
+	public boolean isHumanPlayer() {
+		if (currentPlayer == humanPlayer)
+			return true;
+		return false;
+	}
 	
 	/**
 	 * For testing purposes.
