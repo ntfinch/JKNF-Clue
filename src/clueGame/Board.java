@@ -48,6 +48,7 @@ public class Board extends JPanel {
 	private List<Player> players;
 	private List<Card> deck;
 	private Solution answer;
+
 	private Player currentPlayer;
 	private HumanPlayer humanPlayer;
 
@@ -460,12 +461,20 @@ public class Board extends JPanel {
 	public void nextPlayer(){
 		//if(humanPlayer)
 	}
+<<<<<<< HEAD
+=======
+	
+
+>>>>>>> origin/master
 	public boolean isHumanPlayer() {
 		if (currentPlayer == humanPlayer)
 			return true;
 		return false;
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> origin/master
 	
 	/**
 	 * For testing purposes.
