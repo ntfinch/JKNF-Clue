@@ -39,16 +39,11 @@ public class BoardCell implements Comparable<BoardCell> {
 		}
 		
 		//Highlights if valid move
-<<<<<<< HEAD
-				if (Board.getInstance().getTargets().contains(this)&& Board.getInstance().isHumanPlayer()) {
-					g.setColor(Color.RED);
-				}
-=======
+
 		if (Board.getInstance().getTargets().contains(this)&& Board.getInstance().isHumanPlayer()) {
 			g.setColor(Color.RED);
 		}
 
->>>>>>> origin/master
 		// Draw individual cells
 		g.fillRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
 

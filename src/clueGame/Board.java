@@ -461,20 +461,17 @@ public class Board extends JPanel {
 	public void nextPlayer(){
 		//if(humanPlayer)
 	}
-<<<<<<< HEAD
-=======
+
 	
 
->>>>>>> origin/master
+
 	public boolean isHumanPlayer() {
 		if (currentPlayer == humanPlayer)
 			return true;
 		return false;
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> origin/master
+
+
 	
 	/**
 	 * For testing purposes.
