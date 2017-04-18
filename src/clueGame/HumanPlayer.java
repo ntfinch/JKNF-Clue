@@ -42,8 +42,8 @@ public class HumanPlayer extends Player {
 	public void moveMade(BoardCell clickedCell) {
 		this.turnUnfinished = false;
 
-		setRow(clickedCell.getRow());
-		setCol(clickedCell.getColumn());
+		setRow(clickedCell.getColumn());
+		setCol(clickedCell.getRow());
 		
 	}
 	public boolean isTurnUnfinished(){

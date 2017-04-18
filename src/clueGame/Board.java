@@ -423,6 +423,8 @@ public class Board extends JPanel implements MouseListener{
 		if (cellClicked == null)
 			JOptionPane.showMessageDialog(null, "Position clicked is not a target from which you can move to");
 		else{
+			System.out.println("Row:: " + cellClicked.getRow());
+			System.out.println("Column:: " + cellClicked.getColumn());
 			this.humanPlayer.moveMade(cellClicked);
 			highlightCells(false);
 			repaint();
@@ -438,13 +440,14 @@ public class Board extends JPanel implements MouseListener{
 
 		x = x / BoardCell.CELL_SIZE;
 		y = y / BoardCell.CELL_SIZE;
-		System.out.println("X : " + x);
-		System.out.println("Y : " + y);
+		//System.out.println("X : " + x);
+		//System.out.println("Y : " + y);
 		BoardCell posClicked = new BoardCell(x, y, 'W');
 		for(BoardCell t : targets)
-		System.out.println("ROW: " + t.getRow() + "COL: " + t.getColumn());
+		//System.out.println("ROW: " + t.getRow() + "COL: " + t.getColumn());
 		for(BoardCell b : targets)
-	      if(b.getRow() == x && b.getColumn() == y) 
+	      if(b.getRow() == x && b.getColumn() == y
+	      ) 
 	        return posClicked;
 	      
 	    return null;
