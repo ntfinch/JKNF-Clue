@@ -31,7 +31,7 @@ import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JPanel;
 
-public class Board extends JPanel implements MouseListener{
+public class Board extends JPanel implements MouseListener {
 
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -52,7 +52,8 @@ public class Board extends JPanel implements MouseListener{
 	private Player currentPlayer;
 	private HumanPlayer humanPlayer;
 	private ControlGUI cGUI;
-	private int whoseTurn,roll;
+	private int whoseTurn, roll;
+	private boolean accusationResult;
 
 	public Map<Character, String> getLegendMap() {
 		return legendMap;
@@ -107,7 +108,6 @@ public class Board extends JPanel implements MouseListener{
 		players = new ArrayList<Player>();
 	}
 
-	//TODO: dealDeck does not work - does not actually deal cards correctly
 	public void dealDeck(Random rand) {
 		final int cardsPerPlayer = (deck.size() - 3) / players.size();
 
@@ -415,18 +415,29 @@ public class Board extends JPanel implements MouseListener{
 	}
 
 	public void mouseClicked(MouseEvent e) {
-	    calcTargets(this.currentPlayer.getRow(), this.currentPlayer.getColumn(), roll);
-		if(!this.humanPlayer.isTurnUnfinished() == true){
+		calcTargets(this.currentPlayer.getRow(), this.currentPlayer.getColumn(), roll);
+		if (!this.humanPlayer.isTurnUnfinished() == true) {
 			return;
 		}
-		
+
 		BoardCell cellClicked = findCell(e.getX(), e.getY());
 		if (cellClicked == null)
 			JOptionPane.showMessageDialog(null, "Position clicked is not a target from which you can move to");
-		else{
+		else {
 			this.humanPlayer.moveMade(cellClicked);
 			highlightCells(false);
 			repaint();
+
+			if (cellClicked.isRoom()) {
+				String roomName = getRoomName(cellClicked.getInitial());
+				/*
+				 * TODO GuessDialog dialog = new
+				 * GuessDialog(getRoomName(cellClicked.getInitial());
+				 * dialog.setVisible(true); if (dialog.isSubmitted()) {
+				 * handleSuggestion(dialog.getSolution(), this.humanPlayer,
+				 * cellClicked);
+				 */
+			}
 		}
 
 	}
@@ -439,17 +450,12 @@ public class Board extends JPanel implements MouseListener{
 
 		x = x / BoardCell.CELL_SIZE;
 		y = y / BoardCell.CELL_SIZE;
-		//System.out.println("X : " + x);
-		//System.out.println("Y : " + y);
 		BoardCell posClicked = new BoardCell(x, y, 'W');
-		for(BoardCell t : targets)
-		//System.out.println("ROW: " + t.getRow() + "COL: " + t.getColumn());
-		for(BoardCell b : targets)
-	      if(b.getRow() == x && b.getColumn() == y
-	      ) 
-	        return posClicked;
-	      
-	    return null;
+		for (BoardCell t : targets)
+			for (BoardCell b : targets)
+				if (b.getRow() == x && b.getColumn() == y)
+					return posClicked;
+		return null;
 	}
 
 	public void highlightCells(boolean highlighted) {
@@ -492,20 +498,20 @@ public class Board extends JPanel implements MouseListener{
 
 	// ************** NextPlayer clicked **********
 	public void nextPlayer() {
-		if(this.humanPlayer.isTurnUnfinished()){
+		if (this.humanPlayer.isTurnUnfinished()) {
 			JOptionPane.showMessageDialog(null, "You need to finish your turn");
-				return;
+			return;
 		}
-	    roll = this.random.nextInt(5) + 1;
-	    this.whoseTurn = ((this.whoseTurn + 1) % this.players.size());
-	    this.currentPlayer = ((Player)this.players.get(this.whoseTurn));
-	    
-	    this.cGUI.turnDisplay(this.currentPlayer.getName(), roll);
-	    calcTargets(this.currentPlayer.getRow(), this.currentPlayer.getColumn(), roll);
-	    
-	    this.currentPlayer.moveNeedsToBeMade(this);
-	    
-	    repaint();
+		roll = this.random.nextInt(5) + 1;
+		this.whoseTurn = ((this.whoseTurn + 1) % this.players.size());
+		this.currentPlayer = ((Player) this.players.get(this.whoseTurn));
+
+		this.cGUI.turnDisplay(this.currentPlayer.getName(), roll);
+		calcTargets(this.currentPlayer.getRow(), this.currentPlayer.getColumn(), roll);
+
+		this.currentPlayer.moveNeedsToBeMade(this);
+
+		repaint();
 	}
 
 	public boolean isHumanPlayer() {
@@ -544,41 +550,55 @@ public class Board extends JPanel implements MouseListener{
 			p.drawPlayer(g, this);
 		}
 	}
-	
-	public String getCurrentPersonsName(){
+
+	public String getCurrentPersonsName() {
 		return currentPlayer.getName();
 	}
-	
 
 	public List<Card> getPlayersCards() {
 		return players.get(0).getCards();
 	}
-	  public void setControlGUI(ControlGUI cGui)
-	  {
-	    this.cGUI = cGui;
-	  }
+
+	public void setControlGUI(ControlGUI cGui) {
+		this.cGUI = cGui;
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	public void makeAccusation() {
+		if (humanPlayer.isTurnUnfinished() == false) {
+			JOptionPane.showMessageDialog(null, "You cannot make an accusation while it is not your turn!");
+			return;
+		}
+		accusationResult = false;
+		//TODO add guessdialog
+	}
+
+	public boolean wasAccusationCorrect() {
+		if (accusationResult)
+			return true;
+		return false;
 	}
 }

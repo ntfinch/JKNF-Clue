@@ -94,7 +94,7 @@ public class ControlGUI extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == ControlGUI.this.accusation)
-				ControlGUI.this.makeAccusationHit();
+				Board.getInstance().makeAccusation();
 			if(e.getSource() == ControlGUI.this.nextPlayer)
 				ControlGUI.this.nextPlayerHit();
 		}
@@ -115,9 +115,7 @@ public class ControlGUI extends JPanel {
 		    Board.getInstance().nextPlayer();
 		}
 		
-		public void makeAccusationHit(){
-			
-		}
+
 
 		
 		

@@ -32,9 +32,6 @@ public class ClueGameJFrame extends JFrame {
 		
 		board = Board.getInstance();
 		board.initialize();
-		//setContentPane(board);
-		
-	    //add(board, BorderLayout.NORTH);
 		
 		setVisible(true);
 		getGui();
@@ -55,7 +52,6 @@ public class ClueGameJFrame extends JFrame {
 	}
 
 	public void getGui() {
-		// this.setSize(1200, 1200);
 		add(this.board, BorderLayout.CENTER);
 		ControlGUI control = new ControlGUI();
 	    this.board.setControlGUI(control);
