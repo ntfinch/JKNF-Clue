@@ -25,7 +25,7 @@ public SuggestionGUI() throws FileNotFoundException {
 	this.board = Board.getInstance();
 	setLayout (new GridLayout(4,2));
 	add(createLabel("Your Room"));
-	//add(roomGuess(room));
+	add(roomGuess(board.getCellAt(board.getCurrentPlayer().getRow(), board.getCurrentPlayer().getColumn())));
 	add(createLabel("Person"));
 	add(personGuess());
 	add(createLabel("Weapon"));

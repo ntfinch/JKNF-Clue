@@ -38,6 +38,13 @@ public class Board extends JPanel implements MouseListener {
 	private Random random = new Random();
 	private Player currentPlayer;
 	private HumanPlayer humanPlayer;
+	
+	
+	//Move this
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+
 	private ControlGUI cGUI;
 	private int whoseTurn, roll;
 	private boolean accusationResult;
