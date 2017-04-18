@@ -22,10 +22,6 @@ public class PlayerCards extends JPanel {
 
 	}
 
-	public TitledBorder getBorder(String t) {
-		return BorderFactory.createTitledBorder(t);
-	}
-
 	public void createSubBoxes(String t, CardType cardType){
 		JPanel panel = new JPanel();
 	    panel.setLayout(new GridLayout(0, 1));
@@ -36,5 +32,9 @@ public class PlayerCards extends JPanel {
 	    	}
 	    }
 	    add(panel);
+	}
+
+	public TitledBorder getBorder(String t) {
+		return BorderFactory.createTitledBorder(t);
 	}
 }

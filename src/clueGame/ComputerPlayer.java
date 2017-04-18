@@ -24,6 +24,22 @@ public class ComputerPlayer extends Player {
 		super(name, color, row, col);
 	}
 
+	@Override
+	public void moveNeedsToBeMade(Board b) {
+		if (this.acc)
+			makeAccusation();
+		else {
+			Set<BoardCell> targets = b.getTargets();
+			BoardCell loc = pickLocation(targets);
+			setRow(loc.getColumn());
+			setCol(loc.getRow());
+			if (loc.isRoom()) {
+				this.lRoomChar = loc.getInitial();
+				createSuggestion(b, loc);
+			}
+		}
+	}
+
 	public BoardCell pickLocation(Set<BoardCell> targets) {
 		return pickLocation(targets, new Random());
 	}
@@ -109,6 +125,11 @@ public class ComputerPlayer extends Player {
 		this.suggestion.weapon = weapon;
 	}
 
+	@Override
+	public Card disproveSuggestion(Solution suggestion) {
+		return disproveSuggestion(suggestion, new Random());
+	}
+
 	// Used for testing with a fake random
 	public Card disproveSuggestion(Solution suggestion, Random random) {
 		List<Integer> matchingIndices = new ArrayList<Integer>();
@@ -128,28 +149,7 @@ public class ComputerPlayer extends Player {
 		}
 	}
 
-	@Override
-	public Card disproveSuggestion(Solution suggestion) {
-		return disproveSuggestion(suggestion, new Random());
-	}
-
 	public void setLastRoom(BoardCell room) {
 		lastRoom = room;
-	}
-
-	@Override
-	public void moveNeedsToBeMade(Board b) {
-		if (this.acc)
-			makeAccusation();
-		else {
-			Set<BoardCell> targets = b.getTargets();
-			BoardCell loc = pickLocation(targets);
-			setRow(loc.getColumn());
-			setCol(loc.getRow());
-			if (loc.isRoom()) {
-				this.lRoomChar = loc.getInitial();
-				createSuggestion(b, loc);
-			}
-		}
 	}
 }

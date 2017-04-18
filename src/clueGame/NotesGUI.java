@@ -35,21 +35,6 @@ public class NotesGUI extends JPanel{
 	}
 
 	
-	//Creates a label with given name
-	private Component createLabel(String text) {
-		JLabel label = new JLabel();
-		label.setText(text);
-		return label;
-	}
-	
-	
-	//Creates a checkbox with given name
-	private Component createCheckBox (String checkBoxName){
-		JCheckBox checkbox = new JCheckBox();
-		checkbox.setText(checkBoxName);
-		return checkbox;
-	}
-	
 	private Component peopleIndicator() throws FileNotFoundException {
 		JPanel people = new JPanel();
 		people.setLayout(new GridLayout(3,2));
@@ -65,6 +50,44 @@ public class NotesGUI extends JPanel{
 
 		return people;
 	}
+	
+	
+	private Component roomIndicator() throws FileNotFoundException {
+		Map<Character, String> legendMap = Board.getInstance().getLegendMap();
+		JPanel rooms = new JPanel();
+		rooms.setLayout(new GridLayout(5,2));
+		rooms.setBorder(new TitledBorder("Rooms"));
+		
+		for (String room : legendMap.values()) {
+			if (!room.equals("Walkway") && !room.equals("Closet")) {
+				rooms.add(createCheckBox(room));
+			}
+		}
+		return rooms;
+	}
+	
+	private Component weaponIndicator() throws FileNotFoundException {
+		JPanel weapon = new JPanel();
+		weapon.setLayout(new GridLayout(3,2));
+		weapon.setBorder(new TitledBorder("Weapons"));
+		
+		File weapons = new File("weapon.txt");
+		Scanner weaponReader = new Scanner(weapons);
+		while (weaponReader.hasNextLine()) {
+			weapon.add(createCheckBox(weaponReader.nextLine()));
+		}
+		weaponReader.close();
+		
+
+		return weapon;
+	}
+	//Creates a checkbox with given name
+	private Component createCheckBox (String checkBoxName){
+		JCheckBox checkbox = new JCheckBox();
+		checkbox.setText(checkBoxName);
+		return checkbox;
+	}
+	
 	private Component bestPerson() throws FileNotFoundException {
 		JPanel menu = new JPanel();
 		//menu.setLayout(new GridLayout(3,1));
@@ -81,20 +104,6 @@ public class NotesGUI extends JPanel{
 		personReader.close();
 		
 		return menu;
-	}
-	
-	private Component roomIndicator() throws FileNotFoundException {
-		Map<Character, String> legendMap = Board.getInstance().getLegendMap();
-		JPanel rooms = new JPanel();
-		rooms.setLayout(new GridLayout(5,2));
-		rooms.setBorder(new TitledBorder("Rooms"));
-		
-		for (String room : legendMap.values()) {
-			if (!room.equals("Walkway") && !room.equals("Closet")) {
-				rooms.add(createCheckBox(room));
-			}
-		}
-		return rooms;
 	}
 	private Component bestRoom() throws FileNotFoundException {
 		Map<Character, String> legendMap = Board.getInstance().getLegendMap();
@@ -113,21 +122,6 @@ public class NotesGUI extends JPanel{
 		return menu;
 	}
 	
-	private Component weaponIndicator() throws FileNotFoundException {
-		JPanel weapon = new JPanel();
-		weapon.setLayout(new GridLayout(3,2));
-		weapon.setBorder(new TitledBorder("Weapons"));
-		
-		File weapons = new File("weapon.txt");
-		Scanner weaponReader = new Scanner(weapons);
-		while (weaponReader.hasNextLine()) {
-			weapon.add(createCheckBox(weaponReader.nextLine()));
-		}
-		weaponReader.close();
-		
-
-		return weapon;
-	}
 	private Component bestWeapon() throws FileNotFoundException {
 		JPanel menu = new JPanel();
 		//menu.setLayout(new GridLayout(3,1));
@@ -143,6 +137,12 @@ public class NotesGUI extends JPanel{
 		weaponReader.close();
 		weaponList.addItem("Unsure");
 		return menu;
+	}
+	//Creates a label with given name
+	private Component createLabel(String text) {
+		JLabel label = new JLabel();
+		label.setText(text);
+		return label;
 	}
 
 	

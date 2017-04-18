@@ -71,18 +71,6 @@ public class BoardCell implements Comparable<BoardCell> {
 
 	}
 
-	public void setRow(int row) {
-		this.row = row;
-	}
-
-	public void setColumn(int column) {
-		this.column = column;
-	}
-
-	public void setValidMove(boolean validMove) {
-		this.validMove = validMove;
-	}
-
 	public void drawDoorway(Graphics g) {
 		g.setColor(Color.YELLOW);
 		int sideSize = CELL_SIZE;
@@ -106,6 +94,30 @@ public class BoardCell implements Comparable<BoardCell> {
 
 	}
 
+	public boolean isWalkway() {
+		return isWalkway;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public void setValidMove(boolean validMove) {
+		this.validMove = validMove;
+	}
+
 	// Getters, setters, boolean testers
 	public boolean isDoorway() {
 		return isDoorway;
@@ -116,10 +128,6 @@ public class BoardCell implements Comparable<BoardCell> {
 			isDoorway = true;
 			this.doorDirection = doorDirection;
 		}
-	}
-
-	public boolean isWalkway() {
-		return isWalkway;
 	}
 
 	public boolean isRoom() {
@@ -136,14 +144,6 @@ public class BoardCell implements Comparable<BoardCell> {
 
 	public int compareTo(BoardCell other) {
 		return (row * 100 + column) - (other.row * 100 + other.column);
-	}
-
-	public int getRow() {
-		return row;
-	}
-
-	public int getColumn() {
-		return column;
 	}
 
 }

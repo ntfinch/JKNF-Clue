@@ -51,6 +51,11 @@ public class ClueGameJFrame extends JFrame {
 		notesFrame.setVisible(true);
 	}
 
+	public JMenuItem fileExit(){
+		JMenuItem exit = new JMenuItem("Exit");
+		return exit;
+	}
+
 	public void getGui() {
 		add(this.board, BorderLayout.CENTER);
 		ControlGUI control = new ControlGUI();
@@ -60,16 +65,11 @@ public class ClueGameJFrame extends JFrame {
 		PlayerCards pd = new PlayerCards(this.board.getPlayersCards());
 	    add(pd, "East");
 	}
-
+	
 	public static void main(String[] args) throws FileNotFoundException, BadConfigFormatException {
 		ClueGameJFrame frame = new ClueGameJFrame();
 		frame.setVisible(true);
 	    JOptionPane.showMessageDialog(frame, "You are John Doe, press Next Player to begin playing Clue", "Clue Game", 1);
 
-	}
-	
-	public JMenuItem fileExit(){
-		JMenuItem exit = new JMenuItem("Exit");
-		return exit;
 	}
 }

@@ -18,6 +18,20 @@ public class ControlGUI extends JPanel {
 	JButton nextPlayer, accusation;
 	private JTextField roll, guessResult, guess, whosTurnIsIt;
 
+	ButtonActions listener = new ButtonActions();
+
+	private class ButtonActions implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == ControlGUI.this.accusation)
+				Board.getInstance().makeAccusation();
+			if(e.getSource() == ControlGUI.this.nextPlayer)
+				ControlGUI.this.nextPlayerHit();
+		}
+		
+	}
+
 	public ControlGUI() {
 		setLayout(new GridLayout(2, 0));
 		add(createTurnIndicator());
@@ -38,21 +52,15 @@ public class ControlGUI extends JPanel {
 		return turn;
 	}
 
-	private Component createLabel(String text) {
-		JLabel label = new JLabel();
-		label.setText(text);
-		return label;
-	}
-
-	private Component createGuessResult() {
-		JPanel result = new JPanel();
-		result.setLayout(new BorderLayout());
-		result.add(createLabel("Guess Result"), BorderLayout.NORTH);
-		result.add(createLabel("Response: "), BorderLayout.WEST);
-		guessResult = new JTextField();
-		guessResult.setEditable(false);
-		result.add(guessResult, BorderLayout.CENTER);
-		return result;
+	private Component createDiceRoll() {
+		JPanel diceDisplay = new JPanel();
+		diceDisplay.setLayout(new BorderLayout());
+		diceDisplay.add(createLabel("Die"), BorderLayout.NORTH);
+		diceDisplay.add(createLabel("Roll: "), BorderLayout.WEST);
+		roll = new JTextField();
+		roll.setEditable(false);
+		diceDisplay.add(roll, BorderLayout.CENTER);
+		return diceDisplay;
 	}
 
 	private Component createCurrentGuess() {
@@ -65,22 +73,20 @@ public class ControlGUI extends JPanel {
 		return guessPanel;
 	}
 
-	private Component createDiceRoll() {
-		JPanel diceDisplay = new JPanel();
-		diceDisplay.setLayout(new BorderLayout());
-		diceDisplay.add(createLabel("Die"), BorderLayout.NORTH);
-		diceDisplay.add(createLabel("Roll: "), BorderLayout.WEST);
-		roll = new JTextField();
-		roll.setEditable(false);
-		diceDisplay.add(roll, BorderLayout.CENTER);
-		return diceDisplay;
+	private Component createGuessResult() {
+		JPanel result = new JPanel();
+		result.setLayout(new BorderLayout());
+		result.add(createLabel("Guess Result"), BorderLayout.NORTH);
+		result.add(createLabel("Response: "), BorderLayout.WEST);
+		guessResult = new JTextField();
+		guessResult.setEditable(false);
+		result.add(guessResult, BorderLayout.CENTER);
+		return result;
 	}
-
-	ButtonActions listener = new ButtonActions();
-	private JButton createMakeAccusation() {
-		accusation = new JButton("Make an accusation");
-		this.accusation.addActionListener(listener);
-		return accusation;
+	private Component createLabel(String text) {
+		JLabel label = new JLabel();
+		label.setText(text);
+		return label;
 	}
 
 	private JButton createNextPlayer() {
@@ -89,16 +95,10 @@ public class ControlGUI extends JPanel {
 		return nextPlayer;
 	}
 
-	private class ButtonActions implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == ControlGUI.this.accusation)
-				Board.getInstance().makeAccusation();
-			if(e.getSource() == ControlGUI.this.nextPlayer)
-				ControlGUI.this.nextPlayerHit();
-		}
-		
+	private JButton createMakeAccusation() {
+		accusation = new JButton("Make an accusation");
+		this.accusation.addActionListener(listener);
+		return accusation;
 	}
 	
 	public void turnDisplay(String n, int r){

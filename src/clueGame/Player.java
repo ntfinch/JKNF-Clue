@@ -14,6 +14,19 @@ public abstract class Player {
 	protected List<Card> myCards;
 	protected List<Card> seenCards;
 
+	public Player() {
+	}
+
+	public Player(String name, Color color, int row, int col) {
+		this.name = name;
+		this.color = color;
+		this.row = row;
+		this.col = col;
+
+		myCards = new ArrayList<Card>();
+		seenCards = new ArrayList<Card>();
+	}
+
 	public int getCol() {
 		return col;
 	}
@@ -26,17 +39,8 @@ public abstract class Player {
 		this.row = row;
 	}
 
-	public Player() {
-	}
-
-	public Player(String name, Color color, int row, int col) {
-		this.name = name;
-		this.color = color;
-		this.row = row;
-		this.col = col;
-
-		myCards = new ArrayList<Card>();
-		seenCards = new ArrayList<Card>();
+	public int getRow() {
+		return row;
 	}
 
 	public abstract Card disproveSuggestion(Solution suggestion);
@@ -58,10 +62,6 @@ public abstract class Player {
 
 	public String getName() {
 		return name;
-	}
-
-	public int getRow() {
-		return row;
 	}
 
 	public int getColumn() {

@@ -36,10 +36,14 @@ public class Solution {
 		return room;
 	}
 
+	public void setRoom(String room2) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public String getWeapon() {
 		return weapon;
 	}
-	
 	@Override
 	public boolean equals(Object other){
 		if(other instanceof Solution){
@@ -49,9 +53,5 @@ public class Solution {
 			}
 		}
 		return false;
-	}
-	public void setRoom(String room2) {
-		// TODO Auto-generated method stub
-		
 	}
 }

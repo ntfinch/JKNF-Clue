@@ -2,7 +2,6 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,22 +13,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
-import javax.swing.SwingUtilities;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.BorderFactory;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseMotionAdapter;
-
-import javax.swing.JPanel;
 
 public class Board extends JPanel implements MouseListener {
 
@@ -54,25 +41,6 @@ public class Board extends JPanel implements MouseListener {
 	private ControlGUI cGUI;
 	private int whoseTurn, roll;
 	private boolean accusationResult;
-
-	public Map<Character, String> getLegendMap() {
-		return legendMap;
-	}
-
-	// this method returns the only Board and serves as a constructor for the
-	// Board class
-	public static Board getInstance() {
-		// if (theInstance == null) {
-		// theInstance = new Board();
-		// }
-		return theInstance;
-	}
-
-	public void setConfigFiles(String layoutLoc, String legendLoc, String playerLoc) {
-		this.layoutLocation = layoutLoc;
-		this.legendLocation = legendLoc;
-		this.playerLocation = playerLoc;
-	}
 
 	public void initialize() throws FileNotFoundException, BadConfigFormatException {
 		reset();
@@ -108,134 +76,10 @@ public class Board extends JPanel implements MouseListener {
 		players = new ArrayList<Player>();
 	}
 
-	public void dealDeck(Random rand) {
-		final int cardsPerPlayer = (deck.size() - 3) / players.size();
-
-		Card randomCard;
-		do {
-			randomCard = deck.get(rand.nextInt(deck.size()));
-		} while (randomCard.hasBeenDealt() || randomCard.getType() != CardType.WEAPON);
-		Card weapon = randomCard;
-		randomCard.isSolution();
-
-		do {
-			randomCard = deck.get(rand.nextInt(deck.size()));
-		} while (randomCard.hasBeenDealt() || randomCard.getType() != CardType.ROOM);
-		Card room = randomCard;
-		randomCard.isSolution();
-
-		do {
-			randomCard = deck.get(rand.nextInt(deck.size()));
-		} while (randomCard.hasBeenDealt() || randomCard.getType() != CardType.PERSON);
-		Card person = randomCard;
-		randomCard.isSolution();
-
-		answer = new Solution(person, room, weapon);
-
-		for (Player player : players) {
-			for (int i = 0; i < cardsPerPlayer; i++) {
-				do {
-					randomCard = deck.get(rand.nextInt(deck.size()));
-				} while (randomCard.hasBeenDealt());
-				randomCard.dealToPlayer(player);
-			}
-		}
-	}
-
-	public void loadDeck() throws FileNotFoundException {
-		// Create weapon cards
-		File weapon = new File("weapon.txt");
-		Scanner weaponReader = new Scanner(weapon);
-		while (weaponReader.hasNextLine()) {
-			deck.add(new Card(CardType.WEAPON, weaponReader.nextLine()));
-		}
-		weaponReader.close();
-
-		// Create room cards
-		for (String room : legendMap.values()) {
-			if (!room.equals("Walkway") && !room.equals("Closet")) {
-				deck.add(new Card(CardType.ROOM, room));
-			}
-		}
-
-		// Create people cards
-		File person = new File("Person.txt");
-		Scanner personReader = new Scanner(person);
-		while (personReader.hasNextLine()) {
-			deck.add(new Card(CardType.PERSON, personReader.nextLine()));
-		}
-		personReader.close();
-	}
-
-	public void calcAdjacencies() {
-		for (int x = 0; x < numRows; x++) {
-			for (int y = 0; y < numCols; y++) {
-				BoardCell boardKey;
-				BoardCell boardValue;
-				Set<BoardCell> adjacent = new HashSet<BoardCell>();
-				boardKey = grid[y][x];
-				if (boardKey != null) {
-					if (boardKey.isDoorway()) {
-						switch (boardKey.getDoorDirection()) {
-						case RIGHT:
-							boardValue = grid[y + 1][x];
-							if (boardValue.isWalkway()) {
-								adjacent.add(boardValue);
-							}
-							break;
-						case LEFT:
-							boardValue = grid[y - 1][x];
-							if (boardValue.isWalkway()) {
-								adjacent.add(boardValue);
-							}
-							break;
-						case UP:
-							boardValue = grid[y][x - 1];
-							if (boardValue.isWalkway()) {
-								adjacent.add(boardValue);
-							}
-							break;
-						case DOWN:
-							boardValue = grid[y][x + 1];
-							if (boardValue.isWalkway()) {
-								adjacent.add(boardValue);
-							}
-							break;
-						case NONE:
-							break;
-						}
-					} else if (!boardKey.isRoom()) {
-						if (x - 1 >= 0) {
-							boardValue = grid[y][x - 1];
-							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.DOWN) {
-								adjacent.add(boardValue);
-							}
-						}
-						if (y - 1 >= 0) {
-							boardValue = grid[y - 1][x];
-							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.RIGHT) {
-								adjacent.add(boardValue);
-							}
-
-						}
-						if (x + 1 < numRows) {
-							boardValue = grid[y][x + 1];
-							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.UP) {
-								adjacent.add(boardValue);
-							}
-
-						}
-						if (y + 1 < numCols) {
-							boardValue = grid[y + 1][x];
-							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.LEFT) {
-								adjacent.add(boardValue);
-							}
-						}
-					}
-				}
-				adjMap.put(boardKey, adjacent);
-			}
-		}
+	public void setConfigFiles(String layoutLoc, String legendLoc, String playerLoc) {
+		this.layoutLocation = layoutLoc;
+		this.legendLocation = legendLoc;
+		this.playerLocation = playerLoc;
 	}
 
 	public void loadRoomConfig() throws BadConfigFormatException {
@@ -321,24 +165,210 @@ public class Board extends JPanel implements MouseListener {
 		in.close();
 	}
 
-	public Map<Character, String> getLegend() {
-		return legendMap;
+	public void loadPlayerConfig() throws FileNotFoundException {
+		FileReader reader = new FileReader(playerLocation);
+		Scanner in = new Scanner(reader);
+		while (in.hasNextLine()) {
+			String[] split = in.nextLine().split(",");
+			Color color = null;
+			switch (split[2]) {
+			case "Green":
+				color = Color.GREEN;
+				break;
+			case "Red":
+				color = Color.RED;
+				break;
+			case "Blue":
+				color = Color.BLUE;
+				break;
+			}
+			if (split[0].equals("Human")) {
+				humanPlayer = new HumanPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4]));
+				players.add(humanPlayer);
+				currentPlayer = humanPlayer;
+			} else {
+				players.add(
+						new ComputerPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4])));
+			}
+		}
+		in.close();
 	}
 
-	public int getNumRows() {
-		return numRows;
+	public void loadDeck() throws FileNotFoundException {
+		// Create weapon cards
+		File weapon = new File("weapon.txt");
+		Scanner weaponReader = new Scanner(weapon);
+		while (weaponReader.hasNextLine()) {
+			deck.add(new Card(CardType.WEAPON, weaponReader.nextLine()));
+		}
+		weaponReader.close();
+
+		// Create room cards
+		for (String room : legendMap.values()) {
+			if (!room.equals("Walkway") && !room.equals("Closet")) {
+				deck.add(new Card(CardType.ROOM, room));
+			}
+		}
+
+		// Create people cards
+		File person = new File("Person.txt");
+		Scanner personReader = new Scanner(person);
+		while (personReader.hasNextLine()) {
+			deck.add(new Card(CardType.PERSON, personReader.nextLine()));
+		}
+		personReader.close();
 	}
 
-	public int getNumColumns() {
-		return numCols;
+	public void dealDeck(Random rand) {
+		final int cardsPerPlayer = (deck.size() - 3) / players.size();
+
+		Card randomCard;
+		do {
+			randomCard = deck.get(rand.nextInt(deck.size()));
+		} while (randomCard.hasBeenDealt() || randomCard.getType() != CardType.WEAPON);
+		Card weapon = randomCard;
+		randomCard.isSolution();
+
+		do {
+			randomCard = deck.get(rand.nextInt(deck.size()));
+		} while (randomCard.hasBeenDealt() || randomCard.getType() != CardType.ROOM);
+		Card room = randomCard;
+		randomCard.isSolution();
+
+		do {
+			randomCard = deck.get(rand.nextInt(deck.size()));
+		} while (randomCard.hasBeenDealt() || randomCard.getType() != CardType.PERSON);
+		Card person = randomCard;
+		randomCard.isSolution();
+
+		answer = new Solution(person, room, weapon);
+
+		for (Player player : players) {
+			for (int i = 0; i < cardsPerPlayer; i++) {
+				do {
+					randomCard = deck.get(rand.nextInt(deck.size()));
+				} while (randomCard.hasBeenDealt());
+				randomCard.dealToPlayer(player);
+			}
+		}
 	}
 
-	public BoardCell getCellAt(int row, int col) {
-		return grid[col][row];
+	public void calcAdjacencies() {
+		for (int x = 0; x < numRows; x++) {
+			for (int y = 0; y < numCols; y++) {
+				BoardCell boardKey;
+				BoardCell boardValue;
+				Set<BoardCell> adjacent = new HashSet<BoardCell>();
+				boardKey = grid[y][x];
+				if (boardKey != null) {
+					if (boardKey.isDoorway()) {
+						switch (boardKey.getDoorDirection()) {
+						case RIGHT:
+							boardValue = grid[y + 1][x];
+							if (boardValue.isWalkway()) {
+								adjacent.add(boardValue);
+							}
+							break;
+						case LEFT:
+							boardValue = grid[y - 1][x];
+							if (boardValue.isWalkway()) {
+								adjacent.add(boardValue);
+							}
+							break;
+						case UP:
+							boardValue = grid[y][x - 1];
+							if (boardValue.isWalkway()) {
+								adjacent.add(boardValue);
+							}
+							break;
+						case DOWN:
+							boardValue = grid[y][x + 1];
+							if (boardValue.isWalkway()) {
+								adjacent.add(boardValue);
+							}
+							break;
+						case NONE:
+							break;
+						}
+					} else if (!boardKey.isRoom()) {
+						if (x - 1 >= 0) {
+							boardValue = grid[y][x - 1];
+							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.DOWN) {
+								adjacent.add(boardValue);
+							}
+						}
+						if (y - 1 >= 0) {
+							boardValue = grid[y - 1][x];
+							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.RIGHT) {
+								adjacent.add(boardValue);
+							}
+
+						}
+						if (x + 1 < numRows) {
+							boardValue = grid[y][x + 1];
+							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.UP) {
+								adjacent.add(boardValue);
+							}
+
+						}
+						if (y + 1 < numCols) {
+							boardValue = grid[y + 1][x];
+							if (boardValue.isWalkway() || boardValue.getDoorDirection() == DoorDirection.LEFT) {
+								adjacent.add(boardValue);
+							}
+						}
+					}
+				}
+				adjMap.put(boardKey, adjacent);
+			}
+		}
 	}
 
-	public Set<BoardCell> getAdjList(int row, int col) {
-		return adjMap.get(grid[col][row]);
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		calcTargets(this.currentPlayer.getRow(), this.currentPlayer.getColumn(), roll);
+		if (!this.humanPlayer.isTurnUnfinished() == true) {
+			return;
+		}
+
+		BoardCell cellClicked = findCell(e.getX(), e.getY());
+		if (cellClicked == null)
+			JOptionPane.showMessageDialog(null, "Position clicked is not a target from which you can move to");
+		else {
+			this.humanPlayer.moveMade(cellClicked);
+			highlightCells(false);
+			repaint();
+
+			if (cellClicked.isRoom()) {
+				String roomName = getRoomName(cellClicked.getInitial());
+				/*
+				 * TODO GuessDialog dialog = new
+				 * GuessDialog(getRoomName(cellClicked.getInitial());
+				 * dialog.setVisible(true); if (dialog.isSubmitted()) {
+				 * handleSuggestion(dialog.getSolution(), this.humanPlayer,
+				 * cellClicked);
+				 */
+			}
+		}
+
+	}
+
+	// ************** NextPlayer clicked **********
+	public void nextPlayer() {
+		if (this.humanPlayer.isTurnUnfinished()) {
+			JOptionPane.showMessageDialog(null, "You need to finish your turn");
+			return;
+		}
+		roll = this.random.nextInt(5) + 1;
+		this.whoseTurn = ((this.whoseTurn + 1) % this.players.size());
+		this.currentPlayer = (this.players.get(this.whoseTurn));
+
+		this.cGUI.turnDisplay(this.currentPlayer.getName(), roll);
+		calcTargets(this.currentPlayer.getRow(), this.currentPlayer.getColumn(), roll);
+
+		this.currentPlayer.moveNeedsToBeMade(this);
+
+		repaint();
 	}
 
 	public void calcTargets(int row, int col, int pathLen) {
@@ -375,77 +405,6 @@ public class Board extends JPanel implements MouseListener {
 
 	}
 
-	public String getRoomName(char initial) {
-		if (legendMap.containsKey(initial))
-			return legendMap.get(initial);
-		return "Room initials not stored";
-	}
-
-	public Set<BoardCell> getTargets() {
-		return targets;
-	}
-
-	public void loadPlayerConfig() throws FileNotFoundException {
-		FileReader reader = new FileReader(playerLocation);
-		Scanner in = new Scanner(reader);
-		while (in.hasNextLine()) {
-			String[] split = in.nextLine().split(",");
-			Color color = null;
-			switch (split[2]) {
-			case "Green":
-				color = Color.GREEN;
-				break;
-			case "Red":
-				color = Color.RED;
-				break;
-			case "Blue":
-				color = Color.BLUE;
-				break;
-			}
-			if (split[0].equals("Human")) {
-				humanPlayer = new HumanPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4]));
-				players.add(humanPlayer);
-				currentPlayer = humanPlayer;
-			} else {
-				players.add(
-						new ComputerPlayer(split[1], color, Integer.parseInt(split[3]), Integer.parseInt(split[4])));
-			}
-		}
-		in.close();
-	}
-
-	public void mouseClicked(MouseEvent e) {
-		calcTargets(this.currentPlayer.getRow(), this.currentPlayer.getColumn(), roll);
-		if (!this.humanPlayer.isTurnUnfinished() == true) {
-			return;
-		}
-
-		BoardCell cellClicked = findCell(e.getX(), e.getY());
-		if (cellClicked == null)
-			JOptionPane.showMessageDialog(null, "Position clicked is not a target from which you can move to");
-		else {
-			this.humanPlayer.moveMade(cellClicked);
-			highlightCells(false);
-			repaint();
-
-			if (cellClicked.isRoom()) {
-				String roomName = getRoomName(cellClicked.getInitial());
-				/*
-				 * TODO GuessDialog dialog = new
-				 * GuessDialog(getRoomName(cellClicked.getInitial());
-				 * dialog.setVisible(true); if (dialog.isSubmitted()) {
-				 * handleSuggestion(dialog.getSolution(), this.humanPlayer,
-				 * cellClicked);
-				 */
-			}
-		}
-
-	}
-
-	public List<Player> getPlayers() {
-		return players;
-	}
-
 	public BoardCell findCell(int x, int y) {
 
 		x = x / BoardCell.CELL_SIZE;
@@ -463,6 +422,75 @@ public class Board extends JPanel implements MouseListener {
 			for (BoardCell bc : targets)
 				bc.setValidMove(highlighted);
 
+	}
+
+	public String getRoomName(char initial) {
+		if (legendMap.containsKey(initial))
+			return legendMap.get(initial);
+		return "Room initials not stored";
+	}
+
+	// ***********GUI*****************
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		drawCells(g);
+		drawPlayers(g);
+	}
+
+	public void drawCells(Graphics g) {
+		for (int c = 0; c < this.numCols; c++) {
+			for (int r = 0; r < this.numRows; r++) {
+				grid[c][r].drawBoardCells(g);
+			}
+		}
+	}
+
+	public void drawPlayers(Graphics g) {
+		for (Player p : this.players) {
+			p.drawPlayer(g, this);
+		}
+	}
+
+	public Map<Character, String> getLegendMap() {
+		return legendMap;
+	}
+
+	// this method returns the only Board and serves as a constructor for the
+	// Board class
+	public static Board getInstance() {
+		// if (theInstance == null) {
+		// theInstance = new Board();
+		// }
+		return theInstance;
+	}
+
+	public Map<Character, String> getLegend() {
+		return legendMap;
+	}
+
+	public int getNumRows() {
+		return numRows;
+	}
+
+	public int getNumColumns() {
+		return numCols;
+	}
+
+	public BoardCell getCellAt(int row, int col) {
+		return grid[col][row];
+	}
+
+	public Set<BoardCell> getAdjList(int row, int col) {
+		return adjMap.get(grid[col][row]);
+	}
+
+	public Set<BoardCell> getTargets() {
+		return targets;
+	}
+
+	public List<Player> getPlayers() {
+		return players;
 	}
 
 	public List<Card> getDeck() {
@@ -496,30 +524,6 @@ public class Board extends JPanel implements MouseListener {
 		return answer;
 	}
 
-	// ************** NextPlayer clicked **********
-	public void nextPlayer() {
-		if (this.humanPlayer.isTurnUnfinished()) {
-			JOptionPane.showMessageDialog(null, "You need to finish your turn");
-			return;
-		}
-		roll = this.random.nextInt(5) + 1;
-		this.whoseTurn = ((this.whoseTurn + 1) % this.players.size());
-		this.currentPlayer = ((Player) this.players.get(this.whoseTurn));
-
-		this.cGUI.turnDisplay(this.currentPlayer.getName(), roll);
-		calcTargets(this.currentPlayer.getRow(), this.currentPlayer.getColumn(), roll);
-
-		this.currentPlayer.moveNeedsToBeMade(this);
-
-		repaint();
-	}
-
-	public boolean isHumanPlayer() {
-		if (currentPlayer == humanPlayer)
-			return true;
-		return false;
-	}
-
 	/**
 	 * For testing purposes.
 	 * 
@@ -529,26 +533,10 @@ public class Board extends JPanel implements MouseListener {
 		answer = soln;
 	}
 
-	// ***********GUI*****************
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		drawCells(g);
-		drawPlayers(g);
-	}
-
-	public void drawCells(Graphics g) {
-		for (int c = 0; c < this.numCols; c++) {
-			for (int r = 0; r < this.numRows; r++) {
-				grid[c][r].drawBoardCells(g);
-			}
-		}
-	}
-
-	public void drawPlayers(Graphics g) {
-		for (Player p : this.players) {
-			p.drawPlayer(g, this);
-		}
+	public boolean isHumanPlayer() {
+		if (currentPlayer == humanPlayer)
+			return true;
+		return false;
 	}
 
 	public String getCurrentPersonsName() {
