@@ -14,7 +14,18 @@ public abstract class Player {
 	private Color color;
 	protected List<Card> myCards;
 	protected List<Card> seenCards;
-	
+	public int getCol() {
+		return col;
+	}
+
+	public void setCol(int col) {
+		this.col = col;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+	  public Player() {}
 	public Player(String name, Color color, int row, int col){
 	    this.name = name;
 	    this.color = color;
@@ -88,7 +99,7 @@ public abstract class Player {
 	}
 	
 	//GuI
-	
+	public abstract void moveNeedsToBeMade(Board b);
 	  public void drawPlayer(Graphics g, Board board)
 	  {
 	    int playerSize = BoardCell.CELL_SIZE;
@@ -100,4 +111,6 @@ public abstract class Player {
 	    g.setColor(Color.BLACK);
 	    g.drawOval(x, y, playerSize, playerSize);
 	  }
+
+
 }

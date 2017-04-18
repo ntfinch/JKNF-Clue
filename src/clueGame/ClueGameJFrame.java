@@ -58,6 +58,7 @@ public class ClueGameJFrame extends JFrame {
 		// this.setSize(1200, 1200);
 		add(this.board, BorderLayout.CENTER);
 		ControlGUI control = new ControlGUI();
+	    this.board.setControlGUI(control);
 		control.setSize(500, 500);
 		add(control, BorderLayout.SOUTH);
 		PlayerCards pd = new PlayerCards(this.board.getPlayersCards());

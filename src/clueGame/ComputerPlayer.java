@@ -8,9 +8,18 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.JOptionPane;
+
 public class ComputerPlayer extends Player {
 	private BoardCell lastRoom;
-	
+	private boolean acc;
+	private char lRoomChar;
+	private Solution suggestion;
+
+	public ComputerPlayer() {
+		acc = false;
+	}
+
 	public ComputerPlayer(String name, Color color, int row, int col) {
 		super(name, color, row, col);
 	}
@@ -18,7 +27,7 @@ public class ComputerPlayer extends Player {
 	public BoardCell pickLocation(Set<BoardCell> targets) {
 		return pickLocation(targets, new Random());
 	}
-	
+
 	public BoardCell pickLocation(Set<BoardCell> targets, Random rand) {
 		// Converts the targets set into an array list
 		ArrayList<BoardCell> targetList = new ArrayList<BoardCell>(targets);
@@ -26,12 +35,13 @@ public class ComputerPlayer extends Player {
 
 		// Loops through each spot in the list returning if it is a valid room
 		for (int i = 0; i < targetList.size(); i++) {
-			if (targetList.get(i).isRoom() && (lastRoom == null || targetList.get(i).getInitial() != lastRoom.getInitial())) {
+			if (targetList.get(i).isRoom()
+					&& (lastRoom == null || targetList.get(i).getInitial() != lastRoom.getInitial())) {
 				lastRoom = targetList.get(i);
 				return targetList.get(i);
 			}
 		}
-		
+
 		// finds a random number between 0 and the target list size - 1
 		int value = rand.nextInt(targetList.size());
 
@@ -40,14 +50,23 @@ public class ComputerPlayer extends Player {
 	}
 
 	public void makeAccusation() {
+		String guess = this.suggestion.getPerson() + " " + this.suggestion.getRoom() + " " + this.suggestion.getWeapon();
+
+		boolean won = Board.getInstance().checkAccusation(this.suggestion);
+		if (won) {
+			JOptionPane.showMessageDialog(null, "The computer just won, answer is " + guess);
+
+			System.exit(0);
+		} else {
+			JOptionPane.showMessageDialog(null, "The computer made an incorrect guess of " + guess);
+		}
 	}
 
-	public Solution createSuggestion() {
+	public void createSuggestion(Board board, BoardCell cell) {
+		
 		// Get room
-		Board board = Board.getInstance();
-		BoardCell cell = board.getCellAt(row, getColumn());
 		String room = (board.getLegend()).get(cell.getInitial());
-
+		this.suggestion.setRoom(room);
 		// Sort cards
 		List<Card> unseenCards = new ArrayList<Card>(myCards);
 		unseenCards.removeAll(seenCards);
@@ -70,7 +89,7 @@ public class ComputerPlayer extends Player {
 		} else {
 			person = persons.get(ThreadLocalRandom.current().nextInt(0, personsSize)).getName();
 		}
-
+		this.suggestion.person = person;
 		// Get weapon
 		String weapon = "";
 		int weaponsSize = weapons.size();
@@ -80,7 +99,7 @@ public class ComputerPlayer extends Player {
 			weapon = weapons.get(ThreadLocalRandom.current().nextInt(0, weaponsSize)).getName();
 		}
 
-		return new Solution(person, room, weapon);
+		this.suggestion.weapon = weapon;
 	}
 
 	// Used for testing with a fake random
@@ -106,10 +125,24 @@ public class ComputerPlayer extends Player {
 	public Card disproveSuggestion(Solution suggestion) {
 		return disproveSuggestion(suggestion, new Random());
 	}
-	
+
 	public void setLastRoom(BoardCell room) {
 		lastRoom = room;
 	}
 
-	
+	@Override
+	public void moveNeedsToBeMade(Board b) {
+		if (this.acc)
+			makeAccusation();
+		else {
+			Set<BoardCell> targets = b.getTargets();
+			BoardCell loc = pickLocation(targets);
+			setRow(loc.getRow());
+			setCol(loc.getColumn());
+			if (loc.isRoom()) {
+				this.lRoomChar = loc.getInitial();
+				createSuggestion(b, loc);
+			}
+		}
+	}
 }

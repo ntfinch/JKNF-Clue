@@ -31,7 +31,7 @@ import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JPanel;
 
-public class Board extends JPanel {
+public class Board extends JPanel implements MouseListener{
 
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -48,9 +48,11 @@ public class Board extends JPanel {
 	private List<Player> players;
 	private List<Card> deck;
 	private Solution answer;
-
+	private Random random = new Random();
 	private Player currentPlayer;
 	private HumanPlayer humanPlayer;
+	private ControlGUI cGUI;
+	private int whoseTurn,roll;
 
 	public Map<Character, String> getLegendMap() {
 		return legendMap;
@@ -79,8 +81,9 @@ public class Board extends JPanel {
 		} catch (BadConfigFormatException e) {
 			e.printStackTrace();
 		}
+
 		loadBoardConfig();
-		
+
 		try {
 			loadPlayerConfig();
 		} catch (FileNotFoundException e) {
@@ -92,7 +95,8 @@ public class Board extends JPanel {
 		dealDeck(new Random());
 
 		calcAdjacencies();
-		
+		addMouseListener(this);
+
 	}
 
 	public void reset() {
@@ -408,22 +412,49 @@ public class Board extends JPanel {
 		}
 		in.close();
 	}
-	
-	public void mouseClicked(MouseEvent e){
-		BoardCell clicked = findCell(e.getX(), e.getY());
-		if(targets.contains(clicked))
-			JOptionPane.showMessageDialog(null, "Position clicked is not a target from which you can move to");
+
+	public void mouseClicked(MouseEvent e) {
+	    calcTargets(this.currentPlayer.getRow(), this.currentPlayer.getColumn(), roll);
+		if(!this.humanPlayer.isTurnUnfinished() == true){
+			return;
+		}
 		
+		BoardCell cellClicked = findCell(e.getX(), e.getY());
+		if (cellClicked == null)
+			JOptionPane.showMessageDialog(null, "Position clicked is not a target from which you can move to");
+		else{
+			this.humanPlayer.moveMade(cellClicked);
+			highlightCells(false);
+			repaint();
+		}
+
 	}
+
 	public List<Player> getPlayers() {
 		return players;
 	}
-	
-	public BoardCell findCell(int x, int y){
-		int row, col;
-		col = x/BoardCell.CELL_SIZE;
-		row = y/BoardCell.CELL_SIZE;
-		return new BoardCell(row, col, 'C');
+
+	public BoardCell findCell(int x, int y) {
+
+		x = x / BoardCell.CELL_SIZE;
+		y = y / BoardCell.CELL_SIZE;
+		System.out.println("X : " + x);
+		System.out.println("Y : " + y);
+		BoardCell posClicked = new BoardCell(x, y, 'W');
+		for(BoardCell t : targets)
+		System.out.println("ROW: " + t.getRow() + "COL: " + t.getColumn());
+		for(BoardCell b : targets)
+	      if(b.getRow() == x && b.getColumn() == y) 
+	        return posClicked;
+	      
+	    return null;
+	}
+
+	public void highlightCells(boolean highlighted) {
+		if (this.targets != null)
+			for (BoardCell bc : targets)
+				bc.setValidMove(highlighted);
+
 	}
 
 	public List<Card> getDeck() {
@@ -456,14 +487,24 @@ public class Board extends JPanel {
 	public Solution getAnswer() {
 		return answer;
 	}
-	
-	//************** NextPlayer clicked **********
-	public void nextPlayer(){
-		//if(humanPlayer)
+
+	// ************** NextPlayer clicked **********
+	public void nextPlayer() {
+		if(this.humanPlayer.isTurnUnfinished()){
+			JOptionPane.showMessageDialog(null, "You need to finish your turn");
+				return;
+		}
+	    roll = this.random.nextInt(5) + 1;
+	    this.whoseTurn = ((this.whoseTurn + 1) % this.players.size());
+	    this.currentPlayer = ((Player)this.players.get(this.whoseTurn));
+	    
+	    this.cGUI.turnDisplay(this.currentPlayer.getName(), roll);
+	    calcTargets(this.currentPlayer.getRow(), this.currentPlayer.getColumn(), roll);
+	    
+	    this.currentPlayer.moveNeedsToBeMade(this);
+	    
+	    repaint();
 	}
-
-	
-
 
 	public boolean isHumanPlayer() {
 		if (currentPlayer == humanPlayer)
@@ -471,8 +512,6 @@ public class Board extends JPanel {
 		return false;
 	}
 
-
-	
 	/**
 	 * For testing purposes.
 	 * 
@@ -483,7 +522,7 @@ public class Board extends JPanel {
 	}
 
 	// ***********GUI*****************
-@Override
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		drawCells(g);
@@ -503,10 +542,36 @@ public class Board extends JPanel {
 			p.drawPlayer(g, this);
 		}
 	}
-	
-	public List<Card> getPlayersCards(){
+
+	public List<Card> getPlayersCards() {
 		return players.get(0).getCards();
 	}
-	
+	  public void setControlGUI(ControlGUI cGui)
+	  {
+	    this.cGUI = cGui;
+	  }
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }
- 

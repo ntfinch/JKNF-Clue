@@ -29,21 +29,27 @@ public class BoardCell implements Comparable<BoardCell> {
 	}
 
 	public void drawBoardCells(Graphics g) {
-		if (this.isWalkway)
+		if(this.validMove)
+			g.setColor(Color.CYAN);
+		else
+			if (this.isWalkway)
 			g.setColor(Color.GRAY);
 		else
 			g.setColor(blu);
 
-		if (this.isDoorway){
+		if (this.isDoorway) {
 			drawDoorway(g);
-		}
-		
-		//Highlights if valid move
 
-		if (Board.getInstance().getTargets().contains(this)&& Board.getInstance().isHumanPlayer()) {
+		}
+
+		/*// Highlights if valid move
+
+		if (Board.getInstance().getTargets().contains(this) && Board.getInstance().isHumanPlayer()) {
 			g.setColor(Color.RED);
 		}
-
+/
+ *
+ */
 		// Draw individual cells
 		g.fillRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
 
@@ -53,17 +59,28 @@ public class BoardCell implements Comparable<BoardCell> {
 			g.drawRect(this.xPos, this.yPos, CELL_SIZE, CELL_SIZE);
 		}
 		g.setColor(Color.BLUE);
-		g.drawString("Master Bedroom", 3*CELL_SIZE, 4*CELL_SIZE);
-		g.drawString("Office", 11*CELL_SIZE, 2*CELL_SIZE);
-		g.drawString("Library", 16*CELL_SIZE, 2*CELL_SIZE);
-		g.drawString("Game Room", 20*CELL_SIZE, 2*CELL_SIZE);
-		g.drawString("Music Room", 3*CELL_SIZE, 17*CELL_SIZE);
-		g.drawString("Dining Room", 20*CELL_SIZE, 11*CELL_SIZE);
-		g.drawString("Kitchen", 20*CELL_SIZE, 20*CELL_SIZE);
-		g.drawString("Guest Bedroom", 1*CELL_SIZE, 23*CELL_SIZE);
-		g.drawString("Pantry", 11*CELL_SIZE, 24*CELL_SIZE);
+		g.drawString("Master Bedroom", 3 * CELL_SIZE, 4 * CELL_SIZE);
+		g.drawString("Office", 11 * CELL_SIZE, 2 * CELL_SIZE);
+		g.drawString("Library", 16 * CELL_SIZE, 2 * CELL_SIZE);
+		g.drawString("Game Room", 20 * CELL_SIZE, 2 * CELL_SIZE);
+		g.drawString("Music Room", 3 * CELL_SIZE, 17 * CELL_SIZE);
+		g.drawString("Dining Room", 20 * CELL_SIZE, 11 * CELL_SIZE);
+		g.drawString("Kitchen", 20 * CELL_SIZE, 20 * CELL_SIZE);
+		g.drawString("Guest Bedroom", 1 * CELL_SIZE, 23 * CELL_SIZE);
+		g.drawString("Pantry", 11 * CELL_SIZE, 24 * CELL_SIZE);
 
-					
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
+	public void setValidMove(boolean validMove) {
+		this.validMove = validMove;
 	}
 
 	public void drawDoorway(Graphics g) {
@@ -71,7 +88,7 @@ public class BoardCell implements Comparable<BoardCell> {
 		int sideSize = CELL_SIZE;
 		if (this.doorDirection == DoorDirection.LEFT) {
 			for (int i = 0; i < 4; i++) {
-				g.drawLine(this.xPos + i, this.yPos, this.xPos + i, this.yPos + sideSize+sideSize);
+				g.drawLine(this.xPos + i, this.yPos, this.xPos + i, this.yPos + sideSize + sideSize);
 			}
 		} else if (this.doorDirection == DoorDirection.RIGHT) {
 			for (int i = 0; i < 4; i++) {

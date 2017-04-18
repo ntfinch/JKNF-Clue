@@ -1,15 +1,20 @@
 package clueGame;
 
 public class Solution {
-	private String person;
-	private String room;
-	private String weapon;
+	public String person;
+	public String room;
+	public String weapon;
 	
 	public Solution(String person, String room, String weapon) {
 		this.person = person;
 		this.room = room;
 		this.weapon = weapon;
 	}
+	  public Solution() {
+		  person = "";
+		  room = "";
+		  weapon = "";
+	  }
 
 	public Solution(Card person, Card room, Card weapon) {
 		this(person.getName(), room.getName(), weapon.getName());
@@ -44,5 +49,9 @@ public class Solution {
 			}
 		}
 		return false;
+	}
+	public void setRoom(String room2) {
+		// TODO Auto-generated method stub
+		
 	}
 }
