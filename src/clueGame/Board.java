@@ -423,8 +423,6 @@ public class Board extends JPanel implements MouseListener{
 		if (cellClicked == null)
 			JOptionPane.showMessageDialog(null, "Position clicked is not a target from which you can move to");
 		else{
-			System.out.println("Row:: " + cellClicked.getRow());
-			System.out.println("Column:: " + cellClicked.getColumn());
 			this.humanPlayer.moveMade(cellClicked);
 			highlightCells(false);
 			repaint();
@@ -545,6 +543,11 @@ public class Board extends JPanel implements MouseListener{
 			p.drawPlayer(g, this);
 		}
 	}
+	
+	public String getCurrentPersonsName(){
+		return currentPlayer.getName();
+	}
+	
 
 	public List<Card> getPlayersCards() {
 		return players.get(0).getCards();

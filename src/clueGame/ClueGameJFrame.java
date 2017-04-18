@@ -68,8 +68,7 @@ public class ClueGameJFrame extends JFrame {
 	public static void main(String[] args) throws FileNotFoundException, BadConfigFormatException {
 		ClueGameJFrame frame = new ClueGameJFrame();
 		frame.setVisible(true);
-	    JOptionPane.showMessageDialog(frame, "You are John Doe, press Next Player to begin playing Clue", 
-	    	      "Clue Game", 1);
+	    JOptionPane.showMessageDialog(frame, "You are John Doe, press Next Player to begin playing Clue", "Clue Game", 1);
 
 	}
 	

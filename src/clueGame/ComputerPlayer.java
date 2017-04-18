@@ -63,9 +63,11 @@ public class ComputerPlayer extends Player {
 	}
 
 	public void createSuggestion(Board board, BoardCell cell) {
-		
+		suggestion = new Solution();
 		// Get room
-		String room = (board.getLegend()).get(cell.getInitial());
+		System.out.println(cell.getInitial());
+		String room = board.getRoomName(cell.getInitial());
+		//String room = (board.getLegend()).get(cell.getInitial());
 		this.suggestion.setRoom(room);
 		// Sort cards
 		List<Card> unseenCards = new ArrayList<Card>(myCards);
@@ -87,7 +89,10 @@ public class ComputerPlayer extends Player {
 		if (personsSize == 1) {
 			person = persons.get(0).getName();
 		} else {
-			person = persons.get(ThreadLocalRandom.current().nextInt(0, personsSize)).getName();
+			Random r = new Random();
+			System.out.println("persons size :: ");
+			System.out.println(personsSize);
+			person = persons.get(r.nextInt(personsSize)+1).getName();
 		}
 		this.suggestion.person = person;
 		// Get weapon
@@ -96,7 +101,11 @@ public class ComputerPlayer extends Player {
 		if (weaponsSize == 1) {
 			weapon = weapons.get(0).getName();
 		} else {
-			weapon = weapons.get(ThreadLocalRandom.current().nextInt(0, weaponsSize)).getName();
+			Random r = new Random();
+			System.out.println("weapons size :: ");
+			System.out.print(weaponsSize);
+			weapon = weapons.get(r.nextInt(weaponsSize)+1).getName();
+			
 		}
 
 		this.suggestion.weapon = weapon;
@@ -137,8 +146,8 @@ public class ComputerPlayer extends Player {
 		else {
 			Set<BoardCell> targets = b.getTargets();
 			BoardCell loc = pickLocation(targets);
-			setRow(loc.getRow());
-			setCol(loc.getColumn());
+			setRow(loc.getColumn());
+			setCol(loc.getRow());
 			if (loc.isRoom()) {
 				this.lRoomChar = loc.getInitial();
 				createSuggestion(b, loc);
