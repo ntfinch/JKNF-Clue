@@ -64,8 +64,10 @@ public class ComputerPlayer extends Player {
 
 	public void createSuggestion(Board board, BoardCell cell) {
 		suggestion = new Solution();
+		
+		
 		// Get room
-		System.out.println(cell.getInitial());
+		//System.out.println(cell.getInitial());
 		String room = board.getRoomName(cell.getInitial());
 		//String room = (board.getLegend()).get(cell.getInitial());
 		this.suggestion.setRoom(room);
@@ -90,9 +92,7 @@ public class ComputerPlayer extends Player {
 			person = persons.get(0).getName();
 		} else {
 			Random r = new Random();
-			System.out.println("persons size :: ");
-			System.out.println(personsSize);
-			person = persons.get(r.nextInt(personsSize)+1).getName();
+			person = persons.get(r.nextInt(personsSize)).getName();
 		}
 		this.suggestion.person = person;
 		// Get weapon
@@ -102,9 +102,7 @@ public class ComputerPlayer extends Player {
 			weapon = weapons.get(0).getName();
 		} else {
 			Random r = new Random();
-			System.out.println("weapons size :: ");
-			System.out.print(weaponsSize);
-			weapon = weapons.get(r.nextInt(weaponsSize)+1).getName();
+			weapon = weapons.get(r.nextInt(weaponsSize)).getName();
 			
 		}
 
