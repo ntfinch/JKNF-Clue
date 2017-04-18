@@ -107,6 +107,7 @@ public class Board extends JPanel implements MouseListener{
 		players = new ArrayList<Player>();
 	}
 
+	//TODO: dealDeck does not work - does not actually deal cards correctly
 	public void dealDeck(Random rand) {
 		final int cardsPerPlayer = (deck.size() - 3) / players.size();
 
