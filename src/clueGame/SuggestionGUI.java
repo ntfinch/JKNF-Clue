@@ -18,7 +18,9 @@ import javax.swing.border.TitledBorder;
 public class SuggestionGUI extends JPanel {
 public Board board;
 JButton submit, cancel;
-
+private boolean hasBeenSubmitted = false;
+private Solution solution;
+private JComboBox<String> weapon, room, person;
 
 
 public SuggestionGUI() throws FileNotFoundException {
@@ -30,7 +32,7 @@ public SuggestionGUI() throws FileNotFoundException {
 	add(personGuess());
 	add(createLabel("Weapon"));
 	add(bestWeapon());
-	add(submitSuggestion());
+	add(submitSuggestionButton());
 	add(cancelSuggestion());
 }
 
@@ -51,14 +53,14 @@ private Component roomGuess(BoardCell room) {
 }
 private Component personGuess() throws FileNotFoundException {
 	JPanel menu = new JPanel();
-	JComboBox personList = new JComboBox();
-	menu.add(personList);
+	this.person = new JComboBox();
+	menu.add(this.person);
 	menu.setBorder(new TitledBorder("Person Guess"));
 	
-	File person = new File("Person.txt");
-	Scanner personReader = new Scanner(person);
+	File personFile = new File("Person.txt");
+	Scanner personReader = new Scanner(personFile);
 	while (personReader.hasNextLine()) {
-		personList.addItem(personReader.nextLine());
+		this.person.addItem(personReader.nextLine());
 	}
 	
 	personReader.close();
@@ -67,13 +69,13 @@ private Component personGuess() throws FileNotFoundException {
 private Component bestWeapon() throws FileNotFoundException {
 	JPanel menu = new JPanel();
 	menu.setBorder(new TitledBorder("Weapon Guess"));
-	JComboBox weaponList = new JComboBox();
-	menu.add(weaponList);
+	this.weapon = new JComboBox();
+	menu.add(weapon);
 	
-	File weapon = new File("weapon.txt");
-	Scanner weaponReader = new Scanner(weapon);
+	File weaponFile = new File("weapon.txt");
+	Scanner weaponReader = new Scanner(weaponFile);
 	while (weaponReader.hasNextLine()) {
-		weaponList.addItem(weaponReader.nextLine());
+		weapon.addItem(weaponReader.nextLine());
 	}
 	weaponReader.close();
 	return menu;
@@ -84,15 +86,17 @@ private class ButtonActions implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == SuggestionGUI.this.submit)
+		if(e.getSource() == SuggestionGUI.this.submit){
+			hasBeenSubmitted = true;
 			SuggestionGUI.this.makeSuggestionHit();
+		}
 		if(e.getSource() == SuggestionGUI.this.cancel)
 			SuggestionGUI.this.cancelHit();
 	}
 	
 }
 
-private JButton submitSuggestion() {
+private JButton submitSuggestionButton() {
 	submit = new JButton("Submit");
 	this.submit.addActionListener(listener);
 	return submit;
@@ -107,7 +111,8 @@ private JButton cancelSuggestion() {
 
 //TODO
 public void makeSuggestionHit() {
-	
+	solution = new Solution();
+	solution.person = this.person.getSelectedItem().toString();
 }
 public void cancelHit() {
 	

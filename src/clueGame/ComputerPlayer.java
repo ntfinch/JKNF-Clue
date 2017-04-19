@@ -35,7 +35,7 @@ public class ComputerPlayer extends Player {
 			setCol(loc.getRow());
 			if (loc.isRoom()) {
 				this.lRoomChar = loc.getInitial();
-				createSuggestion(b, loc);
+				createSuggestion(b.getRoomName(lRoomChar));
 			}
 		}
 	}
@@ -66,64 +66,69 @@ public class ComputerPlayer extends Player {
 	}
 
 	public void makeAccusation() {
-		String guess = this.suggestion.getPerson() + " " + this.suggestion.getRoom() + " " + this.suggestion.getWeapon();
+		String acc = this.suggestion.getPerson() + " " + this.suggestion.getRoom() + " "
+				+ this.suggestion.getWeapon();
 
 		boolean won = Board.getInstance().checkAccusation(this.suggestion);
 		if (won) {
-			JOptionPane.showMessageDialog(null, "The computer just won, answer is " + guess);
+			JOptionPane.showMessageDialog(null, "The computer just won, answer is " + acc);
 
 			System.exit(0);
 		} else {
-			JOptionPane.showMessageDialog(null, "The computer made an incorrect guess of " + guess);
+			JOptionPane.showMessageDialog(null, "The computer made an incorrect guess of " + acc);
 		}
 	}
 
-	public void createSuggestion(Board board, BoardCell cell) {
+	public void createSuggestion(String currRoom) {
 		suggestion = new Solution();
-		
-		
-		// Get room
-		//System.out.println(cell.getInitial());
-		String room = board.getRoomName(cell.getInitial());
-		//String room = (board.getLegend()).get(cell.getInitial());
-		this.suggestion.setRoom(room);
-		// Sort cards
-		List<Card> unseenCards = new ArrayList<Card>(myCards);
-		unseenCards.removeAll(seenCards);
-		List<Card> weapons = new ArrayList<Card>();
-		List<Card> persons = new ArrayList<Card>();
-		for (Card card : unseenCards) {
-			CardType type = card.getType();
-			if (type.equals(CardType.WEAPON)) {
-				weapons.add(card);
-			} else if (type.equals(CardType.PERSON)) {
-				persons.add(card);
+		this.suggestion.room = currRoom;
+
+		ArrayList<String> suggPeople = new ArrayList();
+		for (String peopleName : Board.getInstance().getPeopleName()) {
+			if (!this.seenCards.contains(peopleName)) {
+				suggPeople.add(peopleName);
 			}
 		}
-
-		// Get person
-		String person = "";
-		int personsSize = persons.size();
-		if (personsSize == 1) {
-			person = persons.get(0).getName();
-		} else {
-			Random r = new Random();
-			person = persons.get(r.nextInt(personsSize)).getName();
+		ArrayList<String> suggWeapons = new ArrayList();
+		for (String s : Board.getInstance().getWeaponName()) {
+			if (!this.seenCards.contains(s)) {
+				suggWeapons.add(s);
+			}
 		}
-		this.suggestion.person = person;
-		// Get weapon
-		String weapon = "";
-		int weaponsSize = weapons.size();
-		if (weaponsSize == 1) {
-			weapon = weapons.get(0).getName();
-		} else {
-			Random r = new Random();
-			weapon = weapons.get(r.nextInt(weaponsSize)).getName();
-			
-		}
-
-		this.suggestion.weapon = weapon;
+		int select = this.rand.nextInt(suggPeople.size());
+		this.suggestion.person = ((String) suggPeople.get(select));
+		select = this.rand.nextInt(suggWeapons.size());
+		this.suggestion.weapon = ((String) suggWeapons.get(select));
 	}
+
+	/*
+	 * 
+	 * // Get room //System.out.println(cell.getInitial()); String room =
+	 * board.getRoomName(cell.getInitial()); //String room =
+	 * (board.getLegend()).get(cell.getInitial());
+	 * this.suggestion.setRoom(room); // Sort cards List<Card> unseenCards = new
+	 * ArrayList<Card>(myCards); unseenCards.removeAll(seenCards); List<Card>
+	 * weapons = new ArrayList<Card>(); List<Card> persons = new
+	 * ArrayList<Card>(); for (Card card : unseenCards) { CardType type =
+	 * card.getType(); if (type.equals(CardType.WEAPON)) { weapons.add(card); }
+	 * else if (type.equals(CardType.PERSON)) { persons.add(card); } }
+	 * 
+	 * // Get person String person = ""; int personsSize = persons.size(); if
+	 * (personsSize == 1) { person = persons.get(0).getName(); } else { Random r
+	 * = new Random(); int bound = r.nextInt(personsSize+1); if (bound >= 0){
+	 * person = persons.get(r.nextInt(personsSize+1)).getName(); } else person =
+	 * persons.get(personsSize).getName(); } this.suggestion.person = person; //
+	 * Get weapon String weapon = ""; int weaponsSize = weapons.size(); if
+	 * (weaponsSize == 1) { weapon = weapons.get(0).getName(); } else { Random r
+	 * = new Random(); int bound = r.nextInt(weaponsSize+1); if (bound >= 1){
+	 * weapon = weapons.get(r.nextInt(weaponsSize+1)).getName(); } else weapon =
+	 * weapons.get(weaponsSize+1).getName();
+	 * 
+	 * }
+	 * 
+	 * this.suggestion.weapon = weapon;
+	 */
+	
 
 	@Override
 	public Card disproveSuggestion(Solution suggestion) {

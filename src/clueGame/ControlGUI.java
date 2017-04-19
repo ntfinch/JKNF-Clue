@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,7 +27,11 @@ public class ControlGUI extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == ControlGUI.this.accusation)
-				Board.getInstance().makeAccusation();
+				try {
+					Board.getInstance().makeAccusation();
+				} catch (FileNotFoundException e1) {
+					System.out.println("file not found");
+				}
 			if(e.getSource() == ControlGUI.this.nextPlayer)
 				ControlGUI.this.nextPlayerHit();
 		}

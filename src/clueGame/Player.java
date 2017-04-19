@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Player {
 	private String name;
@@ -13,7 +14,8 @@ public abstract class Player {
 	private Color color;
 	protected List<Card> myCards;
 	protected List<Card> seenCards;
-
+	protected Random rand = new Random();
+	
 	public Player() {
 	}
 
